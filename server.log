@@ -1,0 +1,8 @@
+2025-06-27 09:30:40,268 - INFO - Servidor de reconstrução v2.6 (Final) iniciado.
+2025-06-27 09:30:40,366 - INFO - [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:5000
+ * Running on http://192.168.200.197:5000
+2025-06-27 09:30:40,371 - INFO - [33mPress CTRL+C to quit[0m
+2025-06-27 09:30:55,780 - INFO - 192.168.200.197 - - [27/Jun/2025 09:30:55] "[33mGET / HTTP/1.1[0m" 404 -
+2025-06-27 09:30:56,153 - INFO - 192.168.200.197 - - [27/Jun/2025 09:30:56] "[33mGET /favicon.ico HTTP/1.1[0m" 404 -
