@@ -1,127 +1,987 @@
-INFO - 2025-06-26 20:25:03,530: Client logger initialized.
-INFO - 2025-06-26 20:25:03,531: Download directory './downloads' ensured.
-INFO - 2025-06-26 20:25:08,512: Successfully connected to 127.0.0.1:6000
-INFO - 2025-06-26 20:25:12,773: Username set to: antonio
-INFO - 2025-06-26 20:25:43,305: Sent: 'OPTION-1'
-INFO - 2025-06-26 20:25:43,307: Sent: 'OK-antonio-H_1-phantom-CGNE'
-ERROR - 2025-06-26 20:31:47,969: Error receiving message: [WinError 10054] Foi forçado o cancelamento de uma conexão existente pelo host remoto
-INFO - 2025-06-26 20:31:47,976: Client disconnected from server.
-WARNING - 2025-06-26 20:31:47,978: Server did not indicate readiness for signal gain: 
-INFO - 2025-06-26 20:40:38,895: Client logger initialized.
-INFO - 2025-06-26 20:40:38,896: Download directory './downloads' ensured.
-INFO - 2025-06-26 20:40:46,116: Successfully connected to 127.0.0.1:6000
-INFO - 2025-06-26 20:40:51,061: Username set to: antonio
-INFO - 2025-06-26 20:41:18,176: Sent: 'OPTION-2'
-INFO - 2025-06-26 20:41:18,186: Sent: 'OK-antonio-H_1-phantom-CGNE'
-INFO - 2025-06-26 20:50:34,486: Client logger initialized.
-INFO - 2025-06-26 20:50:34,487: Download directory './downloads' ensured.
-INFO - 2025-06-26 21:07:38,525: Client logger initialized.
-INFO - 2025-06-26 21:07:38,525: Download directory './downloads' ensured.
-INFO - 2025-06-26 21:07:40,784: Successfully connected to 127.0.0.1:6000
-INFO - 2025-06-26 21:07:44,809: Username set to: antonio
-INFO - 2025-06-26 21:08:06,140: Sent: 'OPTION-2'
-INFO - 2025-06-26 21:08:06,140: Sent: 'OK-antonio-H_1-phantom-CGNE'
-INFO - 2025-06-26 21:08:06,140: Received: 'OK-Ready to receive'
-WARNING - 2025-06-26 21:08:06,140: Server did not indicate readiness for signal gain: OK-Ready to receive
-INFO - 2025-06-26 21:08:35,611: Sent: 'OPTION-1'
-INFO - 2025-06-26 21:08:35,611: Sent: 'OK-antonio-H_1-phantom-CGNE'
-ERROR - 2025-06-26 21:21:59,967: Error receiving message: [WinError 10054] Foi forçado o cancelamento de uma conexão existente pelo host remoto
-INFO - 2025-06-26 21:21:59,970: Client disconnected from server.
-WARNING - 2025-06-26 21:21:59,971: Server did not indicate readiness for signal gain: 
-INFO - 2025-06-26 21:23:19,961: Client logger initialized.
-INFO - 2025-06-26 21:23:19,962: Download directory './downloads' ensured.
-INFO - 2025-06-26 21:23:23,983: Successfully connected to 127.0.0.1:6000
-INFO - 2025-06-26 21:23:28,478: Username set to: Antonio
-INFO - 2025-06-26 21:23:39,948: Sent: 'OPTION-1'
-INFO - 2025-06-26 21:23:39,948: Sent: 'OK-Antonio-H_1-phantom-CGNE'
-INFO - 2025-06-26 21:23:39,949: Received: 'OK-Ready to receive'
-WARNING - 2025-06-26 21:23:39,949: Server did not indicate readiness for signal gain: OK-Ready to receive
-INFO - 2025-06-26 21:26:01,409: Sent: 'OPTION-2'
-INFO - 2025-06-26 21:26:01,410: Sent: 'OK-Antonio-H_2-phantom-CGNE'
-INFO - 2025-06-26 22:48:55,381: Client logger initialized.
-INFO - 2025-06-26 22:48:55,382: Download directory './downloads' ensured.
-INFO - 2025-06-26 22:48:57,002: Successfully connected to 127.0.0.1:6000
-INFO - 2025-06-26 22:49:00,970: Username set to: Antonio
-INFO - 2025-06-26 22:50:17,026: Client logger initialized.
-INFO - 2025-06-26 22:50:17,026: Download directory './downloads' ensured.
-INFO - 2025-06-26 22:50:24,252: Successfully connected to 127.0.0.1:6000
-INFO - 2025-06-26 22:50:28,665: Username set to: Antonio
-INFO - 2025-06-26 22:52:11,540: Client logger initialized.
-INFO - 2025-06-26 22:52:11,540: Download directory './downloads' ensured.
-INFO - 2025-06-26 22:52:13,367: Successfully connected to 127.0.0.1:6000
-INFO - 2025-06-26 22:52:16,402: Username set to: Antonio
-INFO - 2025-06-26 22:52:29,361: Sent: 'OPTION-2'
-INFO - 2025-06-26 22:52:29,361: Sent: 'OK-Antonio-g-30x30-1-phantom-CGNE'
-INFO - 2025-06-26 22:52:29,362: Received: 'OK-Ready to receive'
-WARNING - 2025-06-26 22:52:29,362: Server did not indicate readiness for signal gain: OK-Ready to receive
-INFO - 2025-06-26 22:53:08,985: Sent: 'OPTION-1'
-INFO - 2025-06-26 22:53:08,985: Sent: 'OK-Antonio-g-30x30-2-shepp_logan-CGNR'
-INFO - 2025-06-26 23:09:04,201: Client logger initialized.
-INFO - 2025-06-26 23:09:04,203: Download directory './downloads' ensured.
-INFO - 2025-06-26 23:09:05,986: Successfully connected to 127.0.0.1:6000
-INFO - 2025-06-26 23:09:08,361: Username set to: neto
-INFO - 2025-06-26 23:09:33,363: Sent: 'OPTION-3'
-INFO - 2025-06-26 23:09:33,363: Sent: 'OK-neto-G-1-phantom-CGNE'
-INFO - 2025-06-26 23:09:33,364: Received: 'OK-Ready to receive'
-WARNING - 2025-06-26 23:09:33,364: Server did not indicate readiness for signal gain: OK-Ready to receive
-INFO - 2025-06-26 23:16:56,589: Client logger initialized.
-INFO - 2025-06-26 23:16:56,591: Download directory './downloads' ensured.
-INFO - 2025-06-26 23:16:58,737: Successfully connected to 127.0.0.1:6000
-INFO - 2025-06-26 23:17:01,716: Username set to: antonio
-INFO - 2025-06-26 23:17:12,998: Sent: 'OPTION-2'
-INFO - 2025-06-26 23:17:12,998: Sent: 'OK-antonio-G-1-phantom-CGNE'
-INFO - 2025-06-26 23:17:13,003: Received: 'OK-Ready to receive'
-WARNING - 2025-06-26 23:17:13,004: Server did not indicate readiness for signal gain: OK-Ready to receive
-INFO - 2025-06-26 23:23:36,989: Client logger initialized.
-INFO - 2025-06-26 23:23:36,990: Download directory './downloads' ensured.
-INFO - 2025-06-26 23:23:38,759: Successfully connected to 127.0.0.1:6000
-INFO - 2025-06-26 23:23:40,542: Username set to: neto
-INFO - 2025-06-26 23:23:51,533: Sent: 'OPTION-2'
-INFO - 2025-06-26 23:23:51,533: Sent: 'OK-neto-G-1-phantom-CGNE'
-INFO - 2025-06-26 23:23:51,533: Received: 'OK-Ready to receive'
-WARNING - 2025-06-26 23:23:51,534: Server did not indicate readiness for signal gain: OK-Ready to receive
-INFO - 2025-06-26 23:28:05,702: Client logger initialized.
-INFO - 2025-06-26 23:28:05,703: Download directory './downloads' ensured.
-INFO - 2025-06-26 23:28:10,411: Successfully connected to 127.0.0.1:6000
-INFO - 2025-06-26 23:28:14,383: Username set to: plinio
-INFO - 2025-06-26 23:28:24,835: Sent: 'OPTION-2'
-INFO - 2025-06-26 23:28:24,835: Sent: 'OK-plinio-G-1-phantom-CGNE'
-INFO - 2025-06-26 23:28:24,835: Received: 'OK-Ready to receive'
-INFO - 2025-06-26 23:28:25,413: Generated dummy signal gain of size: 8192
-INFO - 2025-06-26 23:28:25,414: [DEBUG] Enviando signal_gain com shape (8192,) e 65536 bytes...
-INFO - 2025-06-26 23:28:25,414: Sent signal gain size: 65536 bytes.
-INFO - 2025-06-26 23:28:25,414: Sent 2048/65536 bytes of signal gain.
-INFO - 2025-06-26 23:28:25,414: Sent 4096/65536 bytes of signal gain.
-INFO - 2025-06-26 23:28:25,415: Sent 6144/65536 bytes of signal gain.
-INFO - 2025-06-26 23:28:25,415: Sent 8192/65536 bytes of signal gain.
-INFO - 2025-06-26 23:28:25,415: Sent 10240/65536 bytes of signal gain.
-INFO - 2025-06-26 23:28:25,416: Sent 12288/65536 bytes of signal gain.
-INFO - 2025-06-26 23:28:25,416: Sent 14336/65536 bytes of signal gain.
-INFO - 2025-06-26 23:28:25,416: Sent 16384/65536 bytes of signal gain.
-INFO - 2025-06-26 23:28:25,416: Sent 18432/65536 bytes of signal gain.
-INFO - 2025-06-26 23:28:25,416: Sent 20480/65536 bytes of signal gain.
-INFO - 2025-06-26 23:28:25,417: Sent 22528/65536 bytes of signal gain.
-INFO - 2025-06-26 23:28:25,417: Sent 24576/65536 bytes of signal gain.
-INFO - 2025-06-26 23:28:25,417: Sent 26624/65536 bytes of signal gain.
-INFO - 2025-06-26 23:28:25,418: Sent 28672/65536 bytes of signal gain.
-INFO - 2025-06-26 23:28:25,418: Sent 30720/65536 bytes of signal gain.
-INFO - 2025-06-26 23:28:25,418: Sent 32768/65536 bytes of signal gain.
-INFO - 2025-06-26 23:28:25,418: Sent 34816/65536 bytes of signal gain.
-INFO - 2025-06-26 23:28:25,419: Sent 36864/65536 bytes of signal gain.
-INFO - 2025-06-26 23:28:25,419: Sent 38912/65536 bytes of signal gain.
-INFO - 2025-06-26 23:28:25,419: Sent 40960/65536 bytes of signal gain.
-INFO - 2025-06-26 23:28:25,419: Sent 43008/65536 bytes of signal gain.
-INFO - 2025-06-26 23:28:25,420: Sent 45056/65536 bytes of signal gain.
-INFO - 2025-06-26 23:28:25,420: Sent 47104/65536 bytes of signal gain.
-INFO - 2025-06-26 23:28:25,420: Sent 49152/65536 bytes of signal gain.
-INFO - 2025-06-26 23:28:25,420: Sent 51200/65536 bytes of signal gain.
-INFO - 2025-06-26 23:28:25,421: Sent 53248/65536 bytes of signal gain.
-INFO - 2025-06-26 23:28:25,421: Sent 55296/65536 bytes of signal gain.
-INFO - 2025-06-26 23:28:25,421: Sent 57344/65536 bytes of signal gain.
-INFO - 2025-06-26 23:28:25,421: Sent 59392/65536 bytes of signal gain.
-INFO - 2025-06-26 23:28:25,421: Sent 61440/65536 bytes of signal gain.
-INFO - 2025-06-26 23:28:25,422: Sent 63488/65536 bytes of signal gain.
-INFO - 2025-06-26 23:28:25,422: Sent 65536/65536 bytes of signal gain.
-INFO - 2025-06-26 23:28:25,422: Finished sending signal gain data.
-INFO - 2025-06-26 23:28:25,442: Received: 'ERROR-Matriz 'G' não carregada'
-ERROR - 2025-06-26 23:28:25,442: Error from server during reconstruction: ERROR-Matriz 'G' não carregada
+INFO - 2025-06-27 00:08:23,391: Client logger initialized.
+INFO - 2025-06-27 00:08:23,393: Download directory './downloads' ensured.
+INFO - 2025-06-27 00:08:24,396: Successfully connected to 127.0.0.1:6000
+INFO - 2025-06-27 00:08:26,872: Username set to: neto
+INFO - 2025-06-27 00:08:40,872: Sent: 'OPTION-1'
+INFO - 2025-06-27 00:08:40,873: Sent: 'OK-neto-G-1-phantom-CGNE'
+INFO - 2025-06-27 00:08:40,878: Received: 'OK-Ready to receive'
+INFO - 2025-06-27 00:08:40,952: Generated dummy signal gain of size: 8192
+INFO - 2025-06-27 00:08:40,953: [DEBUG] Enviando signal_gain com shape (8192,) e 65536 bytes...
+INFO - 2025-06-27 00:08:40,953: Sent signal gain size: 65536 bytes.
+INFO - 2025-06-27 00:08:40,953: Sent 2048/65536 bytes of signal gain.
+INFO - 2025-06-27 00:08:40,954: Sent 4096/65536 bytes of signal gain.
+INFO - 2025-06-27 00:08:40,954: Sent 6144/65536 bytes of signal gain.
+INFO - 2025-06-27 00:08:40,954: Sent 8192/65536 bytes of signal gain.
+INFO - 2025-06-27 00:08:40,955: Sent 10240/65536 bytes of signal gain.
+INFO - 2025-06-27 00:08:40,955: Sent 12288/65536 bytes of signal gain.
+INFO - 2025-06-27 00:08:40,955: Sent 14336/65536 bytes of signal gain.
+INFO - 2025-06-27 00:08:40,955: Sent 16384/65536 bytes of signal gain.
+INFO - 2025-06-27 00:08:40,956: Sent 18432/65536 bytes of signal gain.
+INFO - 2025-06-27 00:08:40,956: Sent 20480/65536 bytes of signal gain.
+INFO - 2025-06-27 00:08:40,956: Sent 22528/65536 bytes of signal gain.
+INFO - 2025-06-27 00:08:40,956: Sent 24576/65536 bytes of signal gain.
+INFO - 2025-06-27 00:08:40,957: Sent 26624/65536 bytes of signal gain.
+INFO - 2025-06-27 00:08:40,957: Sent 28672/65536 bytes of signal gain.
+INFO - 2025-06-27 00:08:40,957: Sent 30720/65536 bytes of signal gain.
+INFO - 2025-06-27 00:08:40,957: Sent 32768/65536 bytes of signal gain.
+INFO - 2025-06-27 00:08:40,958: Sent 34816/65536 bytes of signal gain.
+INFO - 2025-06-27 00:08:40,958: Sent 36864/65536 bytes of signal gain.
+INFO - 2025-06-27 00:08:40,958: Sent 38912/65536 bytes of signal gain.
+INFO - 2025-06-27 00:08:40,958: Sent 40960/65536 bytes of signal gain.
+INFO - 2025-06-27 00:08:40,959: Sent 43008/65536 bytes of signal gain.
+INFO - 2025-06-27 00:08:40,959: Sent 45056/65536 bytes of signal gain.
+INFO - 2025-06-27 00:08:40,959: Sent 47104/65536 bytes of signal gain.
+INFO - 2025-06-27 00:08:40,959: Sent 49152/65536 bytes of signal gain.
+INFO - 2025-06-27 00:08:40,960: Sent 51200/65536 bytes of signal gain.
+INFO - 2025-06-27 00:08:40,960: Sent 53248/65536 bytes of signal gain.
+INFO - 2025-06-27 00:08:40,960: Sent 55296/65536 bytes of signal gain.
+INFO - 2025-06-27 00:08:40,961: Sent 57344/65536 bytes of signal gain.
+INFO - 2025-06-27 00:08:40,961: Sent 59392/65536 bytes of signal gain.
+INFO - 2025-06-27 00:08:40,961: Sent 61440/65536 bytes of signal gain.
+INFO - 2025-06-27 00:08:40,962: Sent 63488/65536 bytes of signal gain.
+INFO - 2025-06-27 00:08:40,962: Sent 65536/65536 bytes of signal gain.
+INFO - 2025-06-27 00:08:40,962: Finished sending signal gain data.
+INFO - 2025-06-27 00:08:40,983: Received: 'ERROR-Matriz 'G' não carregada'
+ERROR - 2025-06-27 00:08:40,984: Error from server during reconstruction: ERROR-Matriz 'G' não carregada
+INFO - 2025-06-27 00:16:55,072: Client logger initialized.
+INFO - 2025-06-27 00:16:55,073: Download directory './downloads' ensured.
+INFO - 2025-06-27 00:16:57,540: Successfully connected to 127.0.0.1:6000
+INFO - 2025-06-27 00:17:00,087: Username set to: neto
+INFO - 2025-06-27 00:17:11,506: Sent: 'OPTION-2'
+INFO - 2025-06-27 00:17:11,507: Sent: 'OK-neto-G-1-phantom-CGNE'
+INFO - 2025-06-27 00:17:49,879: Client logger initialized.
+INFO - 2025-06-27 00:17:49,881: Download directory './downloads' ensured.
+INFO - 2025-06-27 00:17:51,673: Successfully connected to 127.0.0.1:6000
+INFO - 2025-06-27 00:17:54,147: Username set to: neto
+INFO - 2025-06-27 00:18:03,118: Sent: 'OPTION-2'
+INFO - 2025-06-27 00:18:03,119: Sent: 'OK-neto-G-1-phantom-CGNE'
+INFO - 2025-06-27 00:18:03,119: Received: 'OK-Ready to receive'
+INFO - 2025-06-27 00:18:03,206: Generated dummy signal gain of size: 8192
+INFO - 2025-06-27 00:18:03,206: [DEBUG] Enviando signal_gain com shape (8192,) e 65536 bytes...
+INFO - 2025-06-27 00:18:03,207: Sent signal gain size: 65536 bytes.
+INFO - 2025-06-27 00:18:03,207: Sent 2048/65536 bytes of signal gain.
+INFO - 2025-06-27 00:18:03,208: Sent 4096/65536 bytes of signal gain.
+INFO - 2025-06-27 00:18:03,208: Sent 6144/65536 bytes of signal gain.
+INFO - 2025-06-27 00:18:03,209: Sent 8192/65536 bytes of signal gain.
+INFO - 2025-06-27 00:18:03,209: Sent 10240/65536 bytes of signal gain.
+INFO - 2025-06-27 00:18:03,209: Sent 12288/65536 bytes of signal gain.
+INFO - 2025-06-27 00:18:03,210: Sent 14336/65536 bytes of signal gain.
+INFO - 2025-06-27 00:18:03,210: Sent 16384/65536 bytes of signal gain.
+INFO - 2025-06-27 00:18:03,211: Sent 18432/65536 bytes of signal gain.
+INFO - 2025-06-27 00:18:03,211: Sent 20480/65536 bytes of signal gain.
+INFO - 2025-06-27 00:18:03,211: Sent 22528/65536 bytes of signal gain.
+INFO - 2025-06-27 00:18:03,212: Sent 24576/65536 bytes of signal gain.
+INFO - 2025-06-27 00:18:03,212: Sent 26624/65536 bytes of signal gain.
+INFO - 2025-06-27 00:18:03,212: Sent 28672/65536 bytes of signal gain.
+INFO - 2025-06-27 00:18:03,213: Sent 30720/65536 bytes of signal gain.
+INFO - 2025-06-27 00:18:03,213: Sent 32768/65536 bytes of signal gain.
+INFO - 2025-06-27 00:18:03,213: Sent 34816/65536 bytes of signal gain.
+INFO - 2025-06-27 00:18:03,214: Sent 36864/65536 bytes of signal gain.
+INFO - 2025-06-27 00:18:03,214: Sent 38912/65536 bytes of signal gain.
+INFO - 2025-06-27 00:18:03,214: Sent 40960/65536 bytes of signal gain.
+INFO - 2025-06-27 00:18:03,215: Sent 43008/65536 bytes of signal gain.
+INFO - 2025-06-27 00:18:03,215: Sent 45056/65536 bytes of signal gain.
+INFO - 2025-06-27 00:18:03,215: Sent 47104/65536 bytes of signal gain.
+INFO - 2025-06-27 00:18:03,216: Sent 49152/65536 bytes of signal gain.
+INFO - 2025-06-27 00:18:03,216: Sent 51200/65536 bytes of signal gain.
+INFO - 2025-06-27 00:18:03,217: Sent 53248/65536 bytes of signal gain.
+INFO - 2025-06-27 00:18:03,217: Sent 55296/65536 bytes of signal gain.
+INFO - 2025-06-27 00:18:03,217: Sent 57344/65536 bytes of signal gain.
+INFO - 2025-06-27 00:18:03,218: Sent 59392/65536 bytes of signal gain.
+INFO - 2025-06-27 00:18:03,218: Sent 61440/65536 bytes of signal gain.
+INFO - 2025-06-27 00:18:03,218: Sent 63488/65536 bytes of signal gain.
+INFO - 2025-06-27 00:18:03,218: Sent 65536/65536 bytes of signal gain.
+INFO - 2025-06-27 00:18:03,219: Finished sending signal gain data.
+INFO - 2025-06-27 00:18:03,220: Received: 'ERROR-Matriz 'G' não carregada'
+ERROR - 2025-06-27 00:18:03,221: Error from server during reconstruction: ERROR-Matriz 'G' não carregada
+INFO - 2025-06-27 00:30:09,882: Client logger initialized.
+INFO - 2025-06-27 00:30:09,883: Download directory './downloads' ensured.
+INFO - 2025-06-27 00:30:11,993: Successfully connected to 127.0.0.1:6000
+INFO - 2025-06-27 00:30:14,327: Username set to: neto
+INFO - 2025-06-27 00:30:27,848: Sent: 'OPTION-2'
+INFO - 2025-06-27 00:30:27,848: Sent: 'OK-neto-G_1-phantom-CGNE'
+INFO - 2025-06-27 00:30:27,850: Received: 'OK-Ready to receive'
+INFO - 2025-06-27 00:30:27,899: Generated dummy signal gain of size: 8192
+INFO - 2025-06-27 00:30:27,899: [DEBUG] Enviando signal_gain com shape (8192,) e 65536 bytes...
+INFO - 2025-06-27 00:30:27,899: Sent signal gain size: 65536 bytes.
+INFO - 2025-06-27 00:30:27,899: Sent 2048/65536 bytes of signal gain.
+INFO - 2025-06-27 00:30:27,900: Sent 4096/65536 bytes of signal gain.
+INFO - 2025-06-27 00:30:27,900: Sent 6144/65536 bytes of signal gain.
+INFO - 2025-06-27 00:30:27,900: Sent 8192/65536 bytes of signal gain.
+INFO - 2025-06-27 00:30:27,900: Sent 10240/65536 bytes of signal gain.
+INFO - 2025-06-27 00:30:27,900: Sent 12288/65536 bytes of signal gain.
+INFO - 2025-06-27 00:30:27,900: Sent 14336/65536 bytes of signal gain.
+INFO - 2025-06-27 00:30:27,901: Sent 16384/65536 bytes of signal gain.
+INFO - 2025-06-27 00:30:27,901: Sent 18432/65536 bytes of signal gain.
+INFO - 2025-06-27 00:30:27,901: Sent 20480/65536 bytes of signal gain.
+INFO - 2025-06-27 00:30:27,901: Sent 22528/65536 bytes of signal gain.
+INFO - 2025-06-27 00:30:27,901: Sent 24576/65536 bytes of signal gain.
+INFO - 2025-06-27 00:30:27,902: Sent 26624/65536 bytes of signal gain.
+INFO - 2025-06-27 00:30:27,902: Sent 28672/65536 bytes of signal gain.
+INFO - 2025-06-27 00:30:27,902: Sent 30720/65536 bytes of signal gain.
+INFO - 2025-06-27 00:30:27,902: Sent 32768/65536 bytes of signal gain.
+INFO - 2025-06-27 00:30:27,902: Sent 34816/65536 bytes of signal gain.
+INFO - 2025-06-27 00:30:27,902: Sent 36864/65536 bytes of signal gain.
+INFO - 2025-06-27 00:30:27,902: Sent 38912/65536 bytes of signal gain.
+INFO - 2025-06-27 00:30:27,903: Sent 40960/65536 bytes of signal gain.
+INFO - 2025-06-27 00:30:27,903: Sent 43008/65536 bytes of signal gain.
+INFO - 2025-06-27 00:30:27,903: Sent 45056/65536 bytes of signal gain.
+INFO - 2025-06-27 00:30:27,903: Sent 47104/65536 bytes of signal gain.
+INFO - 2025-06-27 00:30:27,903: Sent 49152/65536 bytes of signal gain.
+INFO - 2025-06-27 00:30:27,903: Sent 51200/65536 bytes of signal gain.
+INFO - 2025-06-27 00:30:27,904: Sent 53248/65536 bytes of signal gain.
+INFO - 2025-06-27 00:30:27,904: Sent 55296/65536 bytes of signal gain.
+INFO - 2025-06-27 00:30:27,904: Sent 57344/65536 bytes of signal gain.
+INFO - 2025-06-27 00:30:27,904: Sent 59392/65536 bytes of signal gain.
+INFO - 2025-06-27 00:30:27,904: Sent 61440/65536 bytes of signal gain.
+INFO - 2025-06-27 00:30:27,904: Sent 63488/65536 bytes of signal gain.
+INFO - 2025-06-27 00:30:27,905: Sent 65536/65536 bytes of signal gain.
+INFO - 2025-06-27 00:30:27,905: Finished sending signal gain data.
+INFO - 2025-06-27 00:30:27,917: Received: 'ERROR-Tamanho do signal_gain (8192) diferente do esperado (50816)'
+ERROR - 2025-06-27 00:30:27,918: Error from server during reconstruction: ERROR-Tamanho do signal_gain (8192) diferente do esperado (50816)
+INFO - 2025-06-27 00:36:00,218: Client logger initialized.
+INFO - 2025-06-27 00:36:00,219: Download directory './downloads' ensured.
+INFO - 2025-06-27 00:36:02,173: Successfully connected to 127.0.0.1:6000
+INFO - 2025-06-27 00:36:04,873: Username set to: neto
+INFO - 2025-06-27 00:36:16,562: Sent: 'OPTION-2'
+INFO - 2025-06-27 00:36:16,562: Sent: 'OK-neto-G_1-phantom-CGNE'
+INFO - 2025-06-27 00:36:16,563: Received: 'OK-Ready to receive'
+INFO - 2025-06-27 00:36:16,624: Generated dummy signal gain of size: 50816
+INFO - 2025-06-27 00:36:16,624: [DEBUG] Enviando signal_gain com shape (50816,) e 406528 bytes...
+INFO - 2025-06-27 00:36:16,624: Sent signal gain size: 406528 bytes.
+INFO - 2025-06-27 00:36:16,625: Sent 2048/406528 bytes of signal gain.
+INFO - 2025-06-27 00:36:16,625: Sent 4096/406528 bytes of signal gain.
+INFO - 2025-06-27 00:36:16,625: Sent 6144/406528 bytes of signal gain.
+INFO - 2025-06-27 00:36:16,625: Sent 8192/406528 bytes of signal gain.
+INFO - 2025-06-27 00:36:16,626: Sent 10240/406528 bytes of signal gain.
+INFO - 2025-06-27 00:36:16,626: Sent 12288/406528 bytes of signal gain.
+INFO - 2025-06-27 00:36:16,626: Sent 14336/406528 bytes of signal gain.
+INFO - 2025-06-27 00:36:16,626: Sent 16384/406528 bytes of signal gain.
+INFO - 2025-06-27 00:36:16,627: Sent 18432/406528 bytes of signal gain.
+INFO - 2025-06-27 00:36:16,627: Sent 20480/406528 bytes of signal gain.
+INFO - 2025-06-27 00:36:16,627: Sent 22528/406528 bytes of signal gain.
+INFO - 2025-06-27 00:36:16,627: Sent 24576/406528 bytes of signal gain.
+INFO - 2025-06-27 00:36:16,627: Sent 26624/406528 bytes of signal gain.
+INFO - 2025-06-27 00:36:16,628: Sent 28672/406528 bytes of signal gain.
+INFO - 2025-06-27 00:36:16,628: Sent 30720/406528 bytes of signal gain.
+INFO - 2025-06-27 00:36:16,628: Sent 32768/406528 bytes of signal gain.
+INFO - 2025-06-27 00:36:16,628: Sent 34816/406528 bytes of signal gain.
+INFO - 2025-06-27 00:36:16,628: Sent 36864/406528 bytes of signal gain.
+INFO - 2025-06-27 00:36:16,629: Sent 38912/406528 bytes of signal gain.
+INFO - 2025-06-27 00:36:16,629: Sent 40960/406528 bytes of signal gain.
+INFO - 2025-06-27 00:36:16,629: Sent 43008/406528 bytes of signal gain.
+INFO - 2025-06-27 00:36:16,629: Sent 45056/406528 bytes of signal gain.
+INFO - 2025-06-27 00:36:16,630: Sent 47104/406528 bytes of signal gain.
+INFO - 2025-06-27 00:36:16,630: Sent 49152/406528 bytes of signal gain.
+INFO - 2025-06-27 00:36:16,630: Sent 51200/406528 bytes of signal gain.
+INFO - 2025-06-27 00:36:16,630: Sent 53248/406528 bytes of signal gain.
+INFO - 2025-06-27 00:36:16,631: Sent 55296/406528 bytes of signal gain.
+INFO - 2025-06-27 00:36:16,631: Sent 57344/406528 bytes of signal gain.
+INFO - 2025-06-27 00:36:16,631: Sent 59392/406528 bytes of signal gain.
+INFO - 2025-06-27 00:36:16,632: Sent 61440/406528 bytes of signal gain.
+INFO - 2025-06-27 00:36:16,632: Sent 63488/406528 bytes of signal gain.
+INFO - 2025-06-27 00:36:16,633: Sent 65536/406528 bytes of signal gain.
+INFO - 2025-06-27 00:36:16,633: Sent 67584/406528 bytes of signal gain.
+INFO - 2025-06-27 00:36:16,633: Sent 69632/406528 bytes of signal gain.
+INFO - 2025-06-27 00:36:16,633: Sent 71680/406528 bytes of signal gain.
+INFO - 2025-06-27 00:36:16,634: Sent 73728/406528 bytes of signal gain.
+INFO - 2025-06-27 00:36:16,634: Sent 75776/406528 bytes of signal gain.
+INFO - 2025-06-27 00:36:16,634: Sent 77824/406528 bytes of signal gain.
+INFO - 2025-06-27 00:36:16,634: Sent 79872/406528 bytes of signal gain.
+INFO - 2025-06-27 00:36:16,634: Sent 81920/406528 bytes of signal gain.
+INFO - 2025-06-27 00:36:16,635: Sent 83968/406528 bytes of signal gain.
+INFO - 2025-06-27 00:36:16,635: Sent 86016/406528 bytes of signal gain.
+INFO - 2025-06-27 00:36:16,635: Sent 88064/406528 bytes of signal gain.
+INFO - 2025-06-27 00:36:16,635: Sent 90112/406528 bytes of signal gain.
+INFO - 2025-06-27 00:36:16,636: Sent 92160/406528 bytes of signal gain.
+INFO - 2025-06-27 00:36:16,636: Sent 94208/406528 bytes of signal gain.
+INFO - 2025-06-27 00:36:16,636: Sent 96256/406528 bytes of signal gain.
+INFO - 2025-06-27 00:36:16,636: Sent 98304/406528 bytes of signal gain.
+INFO - 2025-06-27 00:36:16,637: Sent 100352/406528 bytes of signal gain.
+INFO - 2025-06-27 00:36:16,637: Sent 102400/406528 bytes of signal gain.
+INFO - 2025-06-27 00:36:16,637: Sent 104448/406528 bytes of signal gain.
+INFO - 2025-06-27 00:36:16,637: Sent 106496/406528 bytes of signal gain.
+INFO - 2025-06-27 00:36:16,638: Sent 108544/406528 bytes of signal gain.
+INFO - 2025-06-27 00:36:16,638: Sent 110592/406528 bytes of signal gain.
+INFO - 2025-06-27 00:36:16,638: Sent 112640/406528 bytes of signal gain.
+INFO - 2025-06-27 00:36:16,638: Sent 114688/406528 bytes of signal gain.
+INFO - 2025-06-27 00:36:16,638: Sent 116736/406528 bytes of signal gain.
+INFO - 2025-06-27 00:36:16,639: Sent 118784/406528 bytes of signal gain.
+INFO - 2025-06-27 00:36:16,639: Sent 120832/406528 bytes of signal gain.
+INFO - 2025-06-27 00:36:16,639: Sent 122880/406528 bytes of signal gain.
+INFO - 2025-06-27 00:36:16,639: Sent 124928/406528 bytes of signal gain.
+INFO - 2025-06-27 00:36:16,640: Sent 126976/406528 bytes of signal gain.
+INFO - 2025-06-27 00:36:16,640: Sent 129024/406528 bytes of signal gain.
+INFO - 2025-06-27 00:36:16,640: Sent 131072/406528 bytes of signal gain.
+INFO - 2025-06-27 00:36:16,640: Sent 133120/406528 bytes of signal gain.
+INFO - 2025-06-27 00:36:16,641: Sent 135168/406528 bytes of signal gain.
+INFO - 2025-06-27 00:36:16,641: Sent 137216/406528 bytes of signal gain.
+INFO - 2025-06-27 00:36:16,641: Sent 139264/406528 bytes of signal gain.
+INFO - 2025-06-27 00:36:16,643: Sent 141312/406528 bytes of signal gain.
+INFO - 2025-06-27 00:36:16,643: Sent 143360/406528 bytes of signal gain.
+INFO - 2025-06-27 00:36:16,643: Sent 145408/406528 bytes of signal gain.
+INFO - 2025-06-27 00:36:16,644: Sent 147456/406528 bytes of signal gain.
+INFO - 2025-06-27 00:36:16,644: Sent 149504/406528 bytes of signal gain.
+INFO - 2025-06-27 00:36:16,645: Sent 151552/406528 bytes of signal gain.
+INFO - 2025-06-27 00:36:16,645: Sent 153600/406528 bytes of signal gain.
+INFO - 2025-06-27 00:36:16,646: Sent 155648/406528 bytes of signal gain.
+INFO - 2025-06-27 00:36:16,646: Sent 157696/406528 bytes of signal gain.
+INFO - 2025-06-27 00:36:16,646: Sent 159744/406528 bytes of signal gain.
+INFO - 2025-06-27 00:36:16,647: Sent 161792/406528 bytes of signal gain.
+INFO - 2025-06-27 00:36:16,647: Sent 163840/406528 bytes of signal gain.
+INFO - 2025-06-27 00:36:16,647: Sent 165888/406528 bytes of signal gain.
+INFO - 2025-06-27 00:36:16,647: Sent 167936/406528 bytes of signal gain.
+INFO - 2025-06-27 00:36:16,648: Sent 169984/406528 bytes of signal gain.
+INFO - 2025-06-27 00:36:16,648: Sent 172032/406528 bytes of signal gain.
+INFO - 2025-06-27 00:36:16,648: Sent 174080/406528 bytes of signal gain.
+INFO - 2025-06-27 00:36:16,648: Sent 176128/406528 bytes of signal gain.
+INFO - 2025-06-27 00:36:16,649: Sent 178176/406528 bytes of signal gain.
+INFO - 2025-06-27 00:36:16,649: Sent 180224/406528 bytes of signal gain.
+INFO - 2025-06-27 00:36:16,649: Sent 182272/406528 bytes of signal gain.
+INFO - 2025-06-27 00:36:16,649: Sent 184320/406528 bytes of signal gain.
+INFO - 2025-06-27 00:36:16,649: Sent 186368/406528 bytes of signal gain.
+INFO - 2025-06-27 00:36:16,649: Sent 188416/406528 bytes of signal gain.
+INFO - 2025-06-27 00:36:16,650: Sent 190464/406528 bytes of signal gain.
+INFO - 2025-06-27 00:36:16,650: Sent 192512/406528 bytes of signal gain.
+INFO - 2025-06-27 00:36:16,650: Sent 194560/406528 bytes of signal gain.
+INFO - 2025-06-27 00:36:16,650: Sent 196608/406528 bytes of signal gain.
+INFO - 2025-06-27 00:36:16,650: Sent 198656/406528 bytes of signal gain.
+INFO - 2025-06-27 00:36:16,651: Sent 200704/406528 bytes of signal gain.
+INFO - 2025-06-27 00:36:16,651: Sent 202752/406528 bytes of signal gain.
+INFO - 2025-06-27 00:36:16,651: Sent 204800/406528 bytes of signal gain.
+INFO - 2025-06-27 00:36:16,651: Sent 206848/406528 bytes of signal gain.
+INFO - 2025-06-27 00:36:16,652: Sent 208896/406528 bytes of signal gain.
+INFO - 2025-06-27 00:36:16,652: Sent 210944/406528 bytes of signal gain.
+INFO - 2025-06-27 00:36:16,652: Sent 212992/406528 bytes of signal gain.
+INFO - 2025-06-27 00:36:16,652: Sent 215040/406528 bytes of signal gain.
+INFO - 2025-06-27 00:36:16,653: Sent 217088/406528 bytes of signal gain.
+INFO - 2025-06-27 00:36:16,653: Sent 219136/406528 bytes of signal gain.
+INFO - 2025-06-27 00:36:16,653: Sent 221184/406528 bytes of signal gain.
+INFO - 2025-06-27 00:36:16,653: Sent 223232/406528 bytes of signal gain.
+INFO - 2025-06-27 00:36:16,653: Sent 225280/406528 bytes of signal gain.
+INFO - 2025-06-27 00:36:16,654: Sent 227328/406528 bytes of signal gain.
+INFO - 2025-06-27 00:36:16,654: Sent 229376/406528 bytes of signal gain.
+INFO - 2025-06-27 00:36:16,654: Sent 231424/406528 bytes of signal gain.
+INFO - 2025-06-27 00:36:16,654: Sent 233472/406528 bytes of signal gain.
+INFO - 2025-06-27 00:36:16,655: Sent 235520/406528 bytes of signal gain.
+INFO - 2025-06-27 00:36:16,655: Sent 237568/406528 bytes of signal gain.
+INFO - 2025-06-27 00:36:16,655: Sent 239616/406528 bytes of signal gain.
+INFO - 2025-06-27 00:36:16,655: Sent 241664/406528 bytes of signal gain.
+INFO - 2025-06-27 00:36:16,656: Sent 243712/406528 bytes of signal gain.
+INFO - 2025-06-27 00:36:16,656: Sent 245760/406528 bytes of signal gain.
+INFO - 2025-06-27 00:36:16,656: Sent 247808/406528 bytes of signal gain.
+INFO - 2025-06-27 00:36:16,656: Sent 249856/406528 bytes of signal gain.
+INFO - 2025-06-27 00:36:16,656: Sent 251904/406528 bytes of signal gain.
+INFO - 2025-06-27 00:36:16,657: Sent 253952/406528 bytes of signal gain.
+INFO - 2025-06-27 00:36:16,657: Sent 256000/406528 bytes of signal gain.
+INFO - 2025-06-27 00:36:16,658: Sent 258048/406528 bytes of signal gain.
+INFO - 2025-06-27 00:36:16,658: Sent 260096/406528 bytes of signal gain.
+INFO - 2025-06-27 00:36:16,659: Sent 262144/406528 bytes of signal gain.
+INFO - 2025-06-27 00:36:16,660: Sent 264192/406528 bytes of signal gain.
+INFO - 2025-06-27 00:36:16,661: Sent 266240/406528 bytes of signal gain.
+INFO - 2025-06-27 00:36:16,662: Sent 268288/406528 bytes of signal gain.
+INFO - 2025-06-27 00:36:16,662: Sent 270336/406528 bytes of signal gain.
+INFO - 2025-06-27 00:36:16,662: Sent 272384/406528 bytes of signal gain.
+INFO - 2025-06-27 00:36:16,663: Sent 274432/406528 bytes of signal gain.
+INFO - 2025-06-27 00:36:16,663: Sent 276480/406528 bytes of signal gain.
+INFO - 2025-06-27 00:36:16,663: Sent 278528/406528 bytes of signal gain.
+INFO - 2025-06-27 00:36:16,663: Sent 280576/406528 bytes of signal gain.
+INFO - 2025-06-27 00:36:16,664: Sent 282624/406528 bytes of signal gain.
+INFO - 2025-06-27 00:36:16,664: Sent 284672/406528 bytes of signal gain.
+INFO - 2025-06-27 00:36:16,664: Sent 286720/406528 bytes of signal gain.
+INFO - 2025-06-27 00:36:16,664: Sent 288768/406528 bytes of signal gain.
+INFO - 2025-06-27 00:36:16,665: Sent 290816/406528 bytes of signal gain.
+INFO - 2025-06-27 00:36:16,665: Sent 292864/406528 bytes of signal gain.
+INFO - 2025-06-27 00:36:16,665: Sent 294912/406528 bytes of signal gain.
+INFO - 2025-06-27 00:36:16,665: Sent 296960/406528 bytes of signal gain.
+INFO - 2025-06-27 00:36:16,666: Sent 299008/406528 bytes of signal gain.
+INFO - 2025-06-27 00:36:16,666: Sent 301056/406528 bytes of signal gain.
+INFO - 2025-06-27 00:36:16,666: Sent 303104/406528 bytes of signal gain.
+INFO - 2025-06-27 00:36:16,667: Sent 305152/406528 bytes of signal gain.
+INFO - 2025-06-27 00:36:16,667: Sent 307200/406528 bytes of signal gain.
+INFO - 2025-06-27 00:36:16,667: Sent 309248/406528 bytes of signal gain.
+INFO - 2025-06-27 00:36:16,667: Sent 311296/406528 bytes of signal gain.
+INFO - 2025-06-27 00:36:16,668: Sent 313344/406528 bytes of signal gain.
+INFO - 2025-06-27 00:36:16,668: Sent 315392/406528 bytes of signal gain.
+INFO - 2025-06-27 00:36:16,668: Sent 317440/406528 bytes of signal gain.
+INFO - 2025-06-27 00:36:16,668: Sent 319488/406528 bytes of signal gain.
+INFO - 2025-06-27 00:36:16,669: Sent 321536/406528 bytes of signal gain.
+INFO - 2025-06-27 00:36:16,669: Sent 323584/406528 bytes of signal gain.
+INFO - 2025-06-27 00:36:16,669: Sent 325632/406528 bytes of signal gain.
+INFO - 2025-06-27 00:36:16,669: Sent 327680/406528 bytes of signal gain.
+INFO - 2025-06-27 00:36:16,670: Sent 329728/406528 bytes of signal gain.
+INFO - 2025-06-27 00:36:16,670: Sent 331776/406528 bytes of signal gain.
+INFO - 2025-06-27 00:36:16,670: Sent 333824/406528 bytes of signal gain.
+INFO - 2025-06-27 00:36:16,670: Sent 335872/406528 bytes of signal gain.
+INFO - 2025-06-27 00:36:16,670: Sent 337920/406528 bytes of signal gain.
+INFO - 2025-06-27 00:36:16,671: Sent 339968/406528 bytes of signal gain.
+INFO - 2025-06-27 00:36:16,671: Sent 342016/406528 bytes of signal gain.
+INFO - 2025-06-27 00:36:16,671: Sent 344064/406528 bytes of signal gain.
+INFO - 2025-06-27 00:36:16,671: Sent 346112/406528 bytes of signal gain.
+INFO - 2025-06-27 00:36:16,672: Sent 348160/406528 bytes of signal gain.
+INFO - 2025-06-27 00:36:16,672: Sent 350208/406528 bytes of signal gain.
+INFO - 2025-06-27 00:36:16,672: Sent 352256/406528 bytes of signal gain.
+INFO - 2025-06-27 00:36:16,672: Sent 354304/406528 bytes of signal gain.
+INFO - 2025-06-27 00:36:16,672: Sent 356352/406528 bytes of signal gain.
+INFO - 2025-06-27 00:36:16,673: Sent 358400/406528 bytes of signal gain.
+INFO - 2025-06-27 00:36:16,673: Sent 360448/406528 bytes of signal gain.
+INFO - 2025-06-27 00:36:16,673: Sent 362496/406528 bytes of signal gain.
+INFO - 2025-06-27 00:36:16,673: Sent 364544/406528 bytes of signal gain.
+INFO - 2025-06-27 00:36:16,674: Sent 366592/406528 bytes of signal gain.
+INFO - 2025-06-27 00:36:16,674: Sent 368640/406528 bytes of signal gain.
+INFO - 2025-06-27 00:36:16,674: Sent 370688/406528 bytes of signal gain.
+INFO - 2025-06-27 00:36:16,675: Sent 372736/406528 bytes of signal gain.
+INFO - 2025-06-27 00:36:16,675: Sent 374784/406528 bytes of signal gain.
+INFO - 2025-06-27 00:36:16,675: Sent 376832/406528 bytes of signal gain.
+INFO - 2025-06-27 00:36:16,675: Sent 378880/406528 bytes of signal gain.
+INFO - 2025-06-27 00:36:16,676: Sent 380928/406528 bytes of signal gain.
+INFO - 2025-06-27 00:36:16,677: Sent 382976/406528 bytes of signal gain.
+INFO - 2025-06-27 00:36:16,678: Sent 385024/406528 bytes of signal gain.
+INFO - 2025-06-27 00:36:16,678: Sent 387072/406528 bytes of signal gain.
+INFO - 2025-06-27 00:36:16,679: Sent 389120/406528 bytes of signal gain.
+INFO - 2025-06-27 00:36:16,679: Sent 391168/406528 bytes of signal gain.
+INFO - 2025-06-27 00:36:16,679: Sent 393216/406528 bytes of signal gain.
+INFO - 2025-06-27 00:36:16,679: Sent 395264/406528 bytes of signal gain.
+INFO - 2025-06-27 00:36:16,680: Sent 397312/406528 bytes of signal gain.
+INFO - 2025-06-27 00:36:16,680: Sent 399360/406528 bytes of signal gain.
+INFO - 2025-06-27 00:36:16,681: Sent 401408/406528 bytes of signal gain.
+INFO - 2025-06-27 00:36:16,681: Sent 403456/406528 bytes of signal gain.
+INFO - 2025-06-27 00:36:16,681: Sent 405504/406528 bytes of signal gain.
+INFO - 2025-06-27 00:36:16,681: Sent 406528/406528 bytes of signal gain.
+INFO - 2025-06-27 00:36:16,681: Finished sending signal gain data.
+INFO - 2025-06-27 00:36:16,693: Received: 'ERROR-Falha ao executar algoritmo: tuple index out of range'
+ERROR - 2025-06-27 00:36:16,694: Error from server during reconstruction: ERROR-Falha ao executar algoritmo: tuple index out of range
+INFO - 2025-06-27 00:42:38,978: Client logger initialized.
+INFO - 2025-06-27 00:42:38,979: Download directory './downloads' ensured.
+INFO - 2025-06-27 00:42:40,809: Successfully connected to 127.0.0.1:6000
+INFO - 2025-06-27 00:42:44,687: Username set to: antonio
+INFO - 2025-06-27 00:43:19,399: Sent: 'OPTION-2'
+INFO - 2025-06-27 00:43:19,404: Sent: 'OK-antonio-G_1-phantom-CGNE'
+INFO - 2025-06-27 00:43:19,407: Received: 'OK-Ready to receive'
+INFO - 2025-06-27 00:43:19,510: Generated dummy signal gain of size: 50816
+INFO - 2025-06-27 00:43:19,511: [DEBUG] Enviando signal_gain com shape (50816,) e 406528 bytes...
+INFO - 2025-06-27 00:43:19,511: Sent signal gain size: 406528 bytes.
+INFO - 2025-06-27 00:43:19,511: Sent 2048/406528 bytes of signal gain.
+INFO - 2025-06-27 00:43:19,512: Sent 4096/406528 bytes of signal gain.
+INFO - 2025-06-27 00:43:19,512: Sent 6144/406528 bytes of signal gain.
+INFO - 2025-06-27 00:43:19,512: Sent 8192/406528 bytes of signal gain.
+INFO - 2025-06-27 00:43:19,512: Sent 10240/406528 bytes of signal gain.
+INFO - 2025-06-27 00:43:19,513: Sent 12288/406528 bytes of signal gain.
+INFO - 2025-06-27 00:43:19,513: Sent 14336/406528 bytes of signal gain.
+INFO - 2025-06-27 00:43:19,513: Sent 16384/406528 bytes of signal gain.
+INFO - 2025-06-27 00:43:19,514: Sent 18432/406528 bytes of signal gain.
+INFO - 2025-06-27 00:43:19,514: Sent 20480/406528 bytes of signal gain.
+INFO - 2025-06-27 00:43:19,514: Sent 22528/406528 bytes of signal gain.
+INFO - 2025-06-27 00:43:19,514: Sent 24576/406528 bytes of signal gain.
+INFO - 2025-06-27 00:43:19,515: Sent 26624/406528 bytes of signal gain.
+INFO - 2025-06-27 00:43:19,515: Sent 28672/406528 bytes of signal gain.
+INFO - 2025-06-27 00:43:19,515: Sent 30720/406528 bytes of signal gain.
+INFO - 2025-06-27 00:43:19,515: Sent 32768/406528 bytes of signal gain.
+INFO - 2025-06-27 00:43:19,515: Sent 34816/406528 bytes of signal gain.
+INFO - 2025-06-27 00:43:19,516: Sent 36864/406528 bytes of signal gain.
+INFO - 2025-06-27 00:43:19,516: Sent 38912/406528 bytes of signal gain.
+INFO - 2025-06-27 00:43:19,516: Sent 40960/406528 bytes of signal gain.
+INFO - 2025-06-27 00:43:19,516: Sent 43008/406528 bytes of signal gain.
+INFO - 2025-06-27 00:43:19,516: Sent 45056/406528 bytes of signal gain.
+INFO - 2025-06-27 00:43:19,517: Sent 47104/406528 bytes of signal gain.
+INFO - 2025-06-27 00:43:19,517: Sent 49152/406528 bytes of signal gain.
+INFO - 2025-06-27 00:43:19,517: Sent 51200/406528 bytes of signal gain.
+INFO - 2025-06-27 00:43:19,517: Sent 53248/406528 bytes of signal gain.
+INFO - 2025-06-27 00:43:19,518: Sent 55296/406528 bytes of signal gain.
+INFO - 2025-06-27 00:43:19,518: Sent 57344/406528 bytes of signal gain.
+INFO - 2025-06-27 00:43:19,518: Sent 59392/406528 bytes of signal gain.
+INFO - 2025-06-27 00:43:19,518: Sent 61440/406528 bytes of signal gain.
+INFO - 2025-06-27 00:43:19,519: Sent 63488/406528 bytes of signal gain.
+INFO - 2025-06-27 00:43:19,519: Sent 65536/406528 bytes of signal gain.
+INFO - 2025-06-27 00:43:19,519: Sent 67584/406528 bytes of signal gain.
+INFO - 2025-06-27 00:43:19,519: Sent 69632/406528 bytes of signal gain.
+INFO - 2025-06-27 00:43:19,519: Sent 71680/406528 bytes of signal gain.
+INFO - 2025-06-27 00:43:19,520: Sent 73728/406528 bytes of signal gain.
+INFO - 2025-06-27 00:43:19,520: Sent 75776/406528 bytes of signal gain.
+INFO - 2025-06-27 00:43:19,520: Sent 77824/406528 bytes of signal gain.
+INFO - 2025-06-27 00:43:19,521: Sent 79872/406528 bytes of signal gain.
+INFO - 2025-06-27 00:43:19,521: Sent 81920/406528 bytes of signal gain.
+INFO - 2025-06-27 00:43:19,521: Sent 83968/406528 bytes of signal gain.
+INFO - 2025-06-27 00:43:19,521: Sent 86016/406528 bytes of signal gain.
+INFO - 2025-06-27 00:43:19,521: Sent 88064/406528 bytes of signal gain.
+INFO - 2025-06-27 00:43:19,522: Sent 90112/406528 bytes of signal gain.
+INFO - 2025-06-27 00:43:19,522: Sent 92160/406528 bytes of signal gain.
+INFO - 2025-06-27 00:43:19,522: Sent 94208/406528 bytes of signal gain.
+INFO - 2025-06-27 00:43:19,522: Sent 96256/406528 bytes of signal gain.
+INFO - 2025-06-27 00:43:19,522: Sent 98304/406528 bytes of signal gain.
+INFO - 2025-06-27 00:43:19,523: Sent 100352/406528 bytes of signal gain.
+INFO - 2025-06-27 00:43:19,523: Sent 102400/406528 bytes of signal gain.
+INFO - 2025-06-27 00:43:19,523: Sent 104448/406528 bytes of signal gain.
+INFO - 2025-06-27 00:43:19,523: Sent 106496/406528 bytes of signal gain.
+INFO - 2025-06-27 00:43:19,524: Sent 108544/406528 bytes of signal gain.
+INFO - 2025-06-27 00:43:19,524: Sent 110592/406528 bytes of signal gain.
+INFO - 2025-06-27 00:43:19,524: Sent 112640/406528 bytes of signal gain.
+INFO - 2025-06-27 00:43:19,524: Sent 114688/406528 bytes of signal gain.
+INFO - 2025-06-27 00:43:19,524: Sent 116736/406528 bytes of signal gain.
+INFO - 2025-06-27 00:43:19,525: Sent 118784/406528 bytes of signal gain.
+INFO - 2025-06-27 00:43:19,525: Sent 120832/406528 bytes of signal gain.
+INFO - 2025-06-27 00:43:19,525: Sent 122880/406528 bytes of signal gain.
+INFO - 2025-06-27 00:43:19,526: Sent 124928/406528 bytes of signal gain.
+INFO - 2025-06-27 00:43:19,526: Sent 126976/406528 bytes of signal gain.
+INFO - 2025-06-27 00:43:19,526: Sent 129024/406528 bytes of signal gain.
+INFO - 2025-06-27 00:43:19,526: Sent 131072/406528 bytes of signal gain.
+INFO - 2025-06-27 00:43:19,527: Sent 133120/406528 bytes of signal gain.
+INFO - 2025-06-27 00:43:19,527: Sent 135168/406528 bytes of signal gain.
+INFO - 2025-06-27 00:43:19,527: Sent 137216/406528 bytes of signal gain.
+INFO - 2025-06-27 00:43:19,527: Sent 139264/406528 bytes of signal gain.
+INFO - 2025-06-27 00:43:19,527: Sent 141312/406528 bytes of signal gain.
+INFO - 2025-06-27 00:43:19,528: Sent 143360/406528 bytes of signal gain.
+INFO - 2025-06-27 00:43:19,528: Sent 145408/406528 bytes of signal gain.
+INFO - 2025-06-27 00:43:19,528: Sent 147456/406528 bytes of signal gain.
+INFO - 2025-06-27 00:43:19,528: Sent 149504/406528 bytes of signal gain.
+INFO - 2025-06-27 00:43:19,529: Sent 151552/406528 bytes of signal gain.
+INFO - 2025-06-27 00:43:19,529: Sent 153600/406528 bytes of signal gain.
+INFO - 2025-06-27 00:43:19,529: Sent 155648/406528 bytes of signal gain.
+INFO - 2025-06-27 00:43:19,530: Sent 157696/406528 bytes of signal gain.
+INFO - 2025-06-27 00:43:19,530: Sent 159744/406528 bytes of signal gain.
+INFO - 2025-06-27 00:43:19,530: Sent 161792/406528 bytes of signal gain.
+INFO - 2025-06-27 00:43:19,530: Sent 163840/406528 bytes of signal gain.
+INFO - 2025-06-27 00:43:19,530: Sent 165888/406528 bytes of signal gain.
+INFO - 2025-06-27 00:43:19,531: Sent 167936/406528 bytes of signal gain.
+INFO - 2025-06-27 00:43:19,531: Sent 169984/406528 bytes of signal gain.
+INFO - 2025-06-27 00:43:19,531: Sent 172032/406528 bytes of signal gain.
+INFO - 2025-06-27 00:43:19,531: Sent 174080/406528 bytes of signal gain.
+INFO - 2025-06-27 00:43:19,531: Sent 176128/406528 bytes of signal gain.
+INFO - 2025-06-27 00:43:19,532: Sent 178176/406528 bytes of signal gain.
+INFO - 2025-06-27 00:43:19,532: Sent 180224/406528 bytes of signal gain.
+INFO - 2025-06-27 00:43:19,532: Sent 182272/406528 bytes of signal gain.
+INFO - 2025-06-27 00:43:19,532: Sent 184320/406528 bytes of signal gain.
+INFO - 2025-06-27 00:43:19,533: Sent 186368/406528 bytes of signal gain.
+INFO - 2025-06-27 00:43:19,533: Sent 188416/406528 bytes of signal gain.
+INFO - 2025-06-27 00:43:19,533: Sent 190464/406528 bytes of signal gain.
+INFO - 2025-06-27 00:43:19,533: Sent 192512/406528 bytes of signal gain.
+INFO - 2025-06-27 00:43:19,533: Sent 194560/406528 bytes of signal gain.
+INFO - 2025-06-27 00:43:19,533: Sent 196608/406528 bytes of signal gain.
+INFO - 2025-06-27 00:43:19,534: Sent 198656/406528 bytes of signal gain.
+INFO - 2025-06-27 00:43:19,534: Sent 200704/406528 bytes of signal gain.
+INFO - 2025-06-27 00:43:19,534: Sent 202752/406528 bytes of signal gain.
+INFO - 2025-06-27 00:43:19,534: Sent 204800/406528 bytes of signal gain.
+INFO - 2025-06-27 00:43:19,535: Sent 206848/406528 bytes of signal gain.
+INFO - 2025-06-27 00:43:19,535: Sent 208896/406528 bytes of signal gain.
+INFO - 2025-06-27 00:43:19,535: Sent 210944/406528 bytes of signal gain.
+INFO - 2025-06-27 00:43:19,535: Sent 212992/406528 bytes of signal gain.
+INFO - 2025-06-27 00:43:19,535: Sent 215040/406528 bytes of signal gain.
+INFO - 2025-06-27 00:43:19,536: Sent 217088/406528 bytes of signal gain.
+INFO - 2025-06-27 00:43:19,536: Sent 219136/406528 bytes of signal gain.
+INFO - 2025-06-27 00:43:19,536: Sent 221184/406528 bytes of signal gain.
+INFO - 2025-06-27 00:43:19,537: Sent 223232/406528 bytes of signal gain.
+INFO - 2025-06-27 00:43:19,538: Sent 225280/406528 bytes of signal gain.
+INFO - 2025-06-27 00:43:19,538: Sent 227328/406528 bytes of signal gain.
+INFO - 2025-06-27 00:43:19,538: Sent 229376/406528 bytes of signal gain.
+INFO - 2025-06-27 00:43:19,539: Sent 231424/406528 bytes of signal gain.
+INFO - 2025-06-27 00:43:19,539: Sent 233472/406528 bytes of signal gain.
+INFO - 2025-06-27 00:43:19,539: Sent 235520/406528 bytes of signal gain.
+INFO - 2025-06-27 00:43:19,540: Sent 237568/406528 bytes of signal gain.
+INFO - 2025-06-27 00:43:19,540: Sent 239616/406528 bytes of signal gain.
+INFO - 2025-06-27 00:43:19,540: Sent 241664/406528 bytes of signal gain.
+INFO - 2025-06-27 00:43:19,541: Sent 243712/406528 bytes of signal gain.
+INFO - 2025-06-27 00:43:19,541: Sent 245760/406528 bytes of signal gain.
+INFO - 2025-06-27 00:43:19,541: Sent 247808/406528 bytes of signal gain.
+INFO - 2025-06-27 00:43:19,541: Sent 249856/406528 bytes of signal gain.
+INFO - 2025-06-27 00:43:19,541: Sent 251904/406528 bytes of signal gain.
+INFO - 2025-06-27 00:43:19,542: Sent 253952/406528 bytes of signal gain.
+INFO - 2025-06-27 00:43:19,542: Sent 256000/406528 bytes of signal gain.
+INFO - 2025-06-27 00:43:19,542: Sent 258048/406528 bytes of signal gain.
+INFO - 2025-06-27 00:43:19,542: Sent 260096/406528 bytes of signal gain.
+INFO - 2025-06-27 00:43:19,542: Sent 262144/406528 bytes of signal gain.
+INFO - 2025-06-27 00:43:19,542: Sent 264192/406528 bytes of signal gain.
+INFO - 2025-06-27 00:43:19,543: Sent 266240/406528 bytes of signal gain.
+INFO - 2025-06-27 00:43:19,543: Sent 268288/406528 bytes of signal gain.
+INFO - 2025-06-27 00:43:19,543: Sent 270336/406528 bytes of signal gain.
+INFO - 2025-06-27 00:43:19,543: Sent 272384/406528 bytes of signal gain.
+INFO - 2025-06-27 00:43:19,543: Sent 274432/406528 bytes of signal gain.
+INFO - 2025-06-27 00:43:19,544: Sent 276480/406528 bytes of signal gain.
+INFO - 2025-06-27 00:43:19,544: Sent 278528/406528 bytes of signal gain.
+INFO - 2025-06-27 00:43:19,544: Sent 280576/406528 bytes of signal gain.
+INFO - 2025-06-27 00:43:19,544: Sent 282624/406528 bytes of signal gain.
+INFO - 2025-06-27 00:43:19,544: Sent 284672/406528 bytes of signal gain.
+INFO - 2025-06-27 00:43:19,544: Sent 286720/406528 bytes of signal gain.
+INFO - 2025-06-27 00:43:19,545: Sent 288768/406528 bytes of signal gain.
+INFO - 2025-06-27 00:43:19,547: Sent 290816/406528 bytes of signal gain.
+INFO - 2025-06-27 00:43:19,547: Sent 292864/406528 bytes of signal gain.
+INFO - 2025-06-27 00:43:19,547: Sent 294912/406528 bytes of signal gain.
+INFO - 2025-06-27 00:43:19,548: Sent 296960/406528 bytes of signal gain.
+INFO - 2025-06-27 00:43:19,548: Sent 299008/406528 bytes of signal gain.
+INFO - 2025-06-27 00:43:19,548: Sent 301056/406528 bytes of signal gain.
+INFO - 2025-06-27 00:43:19,548: Sent 303104/406528 bytes of signal gain.
+INFO - 2025-06-27 00:43:19,548: Sent 305152/406528 bytes of signal gain.
+INFO - 2025-06-27 00:43:19,549: Sent 307200/406528 bytes of signal gain.
+INFO - 2025-06-27 00:43:19,549: Sent 309248/406528 bytes of signal gain.
+INFO - 2025-06-27 00:43:19,549: Sent 311296/406528 bytes of signal gain.
+INFO - 2025-06-27 00:43:19,549: Sent 313344/406528 bytes of signal gain.
+INFO - 2025-06-27 00:43:19,549: Sent 315392/406528 bytes of signal gain.
+INFO - 2025-06-27 00:43:19,550: Sent 317440/406528 bytes of signal gain.
+INFO - 2025-06-27 00:43:19,550: Sent 319488/406528 bytes of signal gain.
+INFO - 2025-06-27 00:43:19,550: Sent 321536/406528 bytes of signal gain.
+INFO - 2025-06-27 00:43:19,550: Sent 323584/406528 bytes of signal gain.
+INFO - 2025-06-27 00:43:19,550: Sent 325632/406528 bytes of signal gain.
+INFO - 2025-06-27 00:43:19,550: Sent 327680/406528 bytes of signal gain.
+INFO - 2025-06-27 00:43:19,551: Sent 329728/406528 bytes of signal gain.
+INFO - 2025-06-27 00:43:19,551: Sent 331776/406528 bytes of signal gain.
+INFO - 2025-06-27 00:43:19,551: Sent 333824/406528 bytes of signal gain.
+INFO - 2025-06-27 00:43:19,551: Sent 335872/406528 bytes of signal gain.
+INFO - 2025-06-27 00:43:19,551: Sent 337920/406528 bytes of signal gain.
+INFO - 2025-06-27 00:43:19,551: Sent 339968/406528 bytes of signal gain.
+INFO - 2025-06-27 00:43:19,552: Sent 342016/406528 bytes of signal gain.
+INFO - 2025-06-27 00:43:19,552: Sent 344064/406528 bytes of signal gain.
+INFO - 2025-06-27 00:43:19,552: Sent 346112/406528 bytes of signal gain.
+INFO - 2025-06-27 00:43:19,552: Sent 348160/406528 bytes of signal gain.
+INFO - 2025-06-27 00:43:19,553: Sent 350208/406528 bytes of signal gain.
+INFO - 2025-06-27 00:43:19,553: Sent 352256/406528 bytes of signal gain.
+INFO - 2025-06-27 00:43:19,553: Sent 354304/406528 bytes of signal gain.
+INFO - 2025-06-27 00:43:19,553: Sent 356352/406528 bytes of signal gain.
+INFO - 2025-06-27 00:43:19,554: Sent 358400/406528 bytes of signal gain.
+INFO - 2025-06-27 00:43:19,554: Sent 360448/406528 bytes of signal gain.
+INFO - 2025-06-27 00:43:19,555: Sent 362496/406528 bytes of signal gain.
+INFO - 2025-06-27 00:43:19,555: Sent 364544/406528 bytes of signal gain.
+INFO - 2025-06-27 00:43:19,556: Sent 366592/406528 bytes of signal gain.
+INFO - 2025-06-27 00:43:19,556: Sent 368640/406528 bytes of signal gain.
+INFO - 2025-06-27 00:43:19,556: Sent 370688/406528 bytes of signal gain.
+INFO - 2025-06-27 00:43:19,556: Sent 372736/406528 bytes of signal gain.
+INFO - 2025-06-27 00:43:19,556: Sent 374784/406528 bytes of signal gain.
+INFO - 2025-06-27 00:43:19,557: Sent 376832/406528 bytes of signal gain.
+INFO - 2025-06-27 00:43:19,557: Sent 378880/406528 bytes of signal gain.
+INFO - 2025-06-27 00:43:19,557: Sent 380928/406528 bytes of signal gain.
+INFO - 2025-06-27 00:43:19,557: Sent 382976/406528 bytes of signal gain.
+INFO - 2025-06-27 00:43:19,558: Sent 385024/406528 bytes of signal gain.
+INFO - 2025-06-27 00:43:19,558: Sent 387072/406528 bytes of signal gain.
+INFO - 2025-06-27 00:43:19,558: Sent 389120/406528 bytes of signal gain.
+INFO - 2025-06-27 00:43:19,558: Sent 391168/406528 bytes of signal gain.
+INFO - 2025-06-27 00:43:19,559: Sent 393216/406528 bytes of signal gain.
+INFO - 2025-06-27 00:43:19,559: Sent 395264/406528 bytes of signal gain.
+INFO - 2025-06-27 00:43:19,559: Sent 397312/406528 bytes of signal gain.
+INFO - 2025-06-27 00:43:19,559: Sent 399360/406528 bytes of signal gain.
+INFO - 2025-06-27 00:43:19,560: Sent 401408/406528 bytes of signal gain.
+INFO - 2025-06-27 00:43:19,560: Sent 403456/406528 bytes of signal gain.
+INFO - 2025-06-27 00:43:19,560: Sent 405504/406528 bytes of signal gain.
+INFO - 2025-06-27 00:43:19,560: Sent 406528/406528 bytes of signal gain.
+INFO - 2025-06-27 00:43:19,560: Finished sending signal gain data.
+INFO - 2025-06-27 00:43:19,575: Received: 'ERROR-Falha ao executar algoritmo: tuple index out of range'
+ERROR - 2025-06-27 00:43:19,611: Error from server during reconstruction: ERROR-Falha ao executar algoritmo: tuple index out of range
+INFO - 2025-06-27 00:43:34,915: Sent: 'OPTION-1'
+INFO - 2025-06-27 00:43:34,915: Sent: 'OK-antonio-G_1-phantom-CGNE'
+INFO - 2025-06-27 00:43:34,920: Received: 'OK-Ready to receive'
+INFO - 2025-06-27 00:43:34,921: Generated dummy signal gain of size: 50816
+INFO - 2025-06-27 00:43:34,921: [DEBUG] Enviando signal_gain com shape (50816,) e 406528 bytes...
+INFO - 2025-06-27 00:43:34,921: Sent signal gain size: 406528 bytes.
+INFO - 2025-06-27 00:43:34,922: Sent 2048/406528 bytes of signal gain.
+INFO - 2025-06-27 00:43:34,922: Sent 4096/406528 bytes of signal gain.
+INFO - 2025-06-27 00:43:34,922: Sent 6144/406528 bytes of signal gain.
+INFO - 2025-06-27 00:43:34,922: Sent 8192/406528 bytes of signal gain.
+INFO - 2025-06-27 00:43:34,922: Sent 10240/406528 bytes of signal gain.
+INFO - 2025-06-27 00:43:34,922: Sent 12288/406528 bytes of signal gain.
+INFO - 2025-06-27 00:43:34,923: Sent 14336/406528 bytes of signal gain.
+INFO - 2025-06-27 00:43:34,923: Sent 16384/406528 bytes of signal gain.
+INFO - 2025-06-27 00:43:34,923: Sent 18432/406528 bytes of signal gain.
+INFO - 2025-06-27 00:43:34,923: Sent 20480/406528 bytes of signal gain.
+INFO - 2025-06-27 00:43:34,923: Sent 22528/406528 bytes of signal gain.
+INFO - 2025-06-27 00:43:34,924: Sent 24576/406528 bytes of signal gain.
+INFO - 2025-06-27 00:43:34,924: Sent 26624/406528 bytes of signal gain.
+INFO - 2025-06-27 00:43:34,924: Sent 28672/406528 bytes of signal gain.
+INFO - 2025-06-27 00:43:34,924: Sent 30720/406528 bytes of signal gain.
+INFO - 2025-06-27 00:43:34,924: Sent 32768/406528 bytes of signal gain.
+INFO - 2025-06-27 00:43:34,924: Sent 34816/406528 bytes of signal gain.
+INFO - 2025-06-27 00:43:34,925: Sent 36864/406528 bytes of signal gain.
+INFO - 2025-06-27 00:43:34,925: Sent 38912/406528 bytes of signal gain.
+INFO - 2025-06-27 00:43:34,925: Sent 40960/406528 bytes of signal gain.
+INFO - 2025-06-27 00:43:34,925: Sent 43008/406528 bytes of signal gain.
+INFO - 2025-06-27 00:43:34,925: Sent 45056/406528 bytes of signal gain.
+INFO - 2025-06-27 00:43:34,925: Sent 47104/406528 bytes of signal gain.
+INFO - 2025-06-27 00:43:34,926: Sent 49152/406528 bytes of signal gain.
+INFO - 2025-06-27 00:43:34,926: Sent 51200/406528 bytes of signal gain.
+INFO - 2025-06-27 00:43:34,927: Sent 53248/406528 bytes of signal gain.
+INFO - 2025-06-27 00:43:34,927: Sent 55296/406528 bytes of signal gain.
+INFO - 2025-06-27 00:43:34,928: Sent 57344/406528 bytes of signal gain.
+INFO - 2025-06-27 00:43:34,928: Sent 59392/406528 bytes of signal gain.
+INFO - 2025-06-27 00:43:34,929: Sent 61440/406528 bytes of signal gain.
+INFO - 2025-06-27 00:43:34,929: Sent 63488/406528 bytes of signal gain.
+INFO - 2025-06-27 00:43:34,929: Sent 65536/406528 bytes of signal gain.
+INFO - 2025-06-27 00:43:34,930: Sent 67584/406528 bytes of signal gain.
+INFO - 2025-06-27 00:43:34,930: Sent 69632/406528 bytes of signal gain.
+INFO - 2025-06-27 00:43:34,930: Sent 71680/406528 bytes of signal gain.
+INFO - 2025-06-27 00:43:34,931: Sent 73728/406528 bytes of signal gain.
+INFO - 2025-06-27 00:43:34,931: Sent 75776/406528 bytes of signal gain.
+INFO - 2025-06-27 00:43:34,931: Sent 77824/406528 bytes of signal gain.
+INFO - 2025-06-27 00:43:34,931: Sent 79872/406528 bytes of signal gain.
+INFO - 2025-06-27 00:43:34,931: Sent 81920/406528 bytes of signal gain.
+INFO - 2025-06-27 00:43:34,932: Sent 83968/406528 bytes of signal gain.
+INFO - 2025-06-27 00:43:34,932: Sent 86016/406528 bytes of signal gain.
+INFO - 2025-06-27 00:43:34,932: Sent 88064/406528 bytes of signal gain.
+INFO - 2025-06-27 00:43:34,932: Sent 90112/406528 bytes of signal gain.
+INFO - 2025-06-27 00:43:34,932: Sent 92160/406528 bytes of signal gain.
+INFO - 2025-06-27 00:43:34,933: Sent 94208/406528 bytes of signal gain.
+INFO - 2025-06-27 00:43:34,933: Sent 96256/406528 bytes of signal gain.
+INFO - 2025-06-27 00:43:34,933: Sent 98304/406528 bytes of signal gain.
+INFO - 2025-06-27 00:43:34,933: Sent 100352/406528 bytes of signal gain.
+INFO - 2025-06-27 00:43:34,933: Sent 102400/406528 bytes of signal gain.
+INFO - 2025-06-27 00:43:34,934: Sent 104448/406528 bytes of signal gain.
+INFO - 2025-06-27 00:43:34,934: Sent 106496/406528 bytes of signal gain.
+INFO - 2025-06-27 00:43:34,934: Sent 108544/406528 bytes of signal gain.
+INFO - 2025-06-27 00:43:34,934: Sent 110592/406528 bytes of signal gain.
+INFO - 2025-06-27 00:43:34,934: Sent 112640/406528 bytes of signal gain.
+INFO - 2025-06-27 00:43:34,934: Sent 114688/406528 bytes of signal gain.
+INFO - 2025-06-27 00:43:34,935: Sent 116736/406528 bytes of signal gain.
+INFO - 2025-06-27 00:43:34,935: Sent 118784/406528 bytes of signal gain.
+INFO - 2025-06-27 00:43:34,935: Sent 120832/406528 bytes of signal gain.
+INFO - 2025-06-27 00:43:34,935: Sent 122880/406528 bytes of signal gain.
+INFO - 2025-06-27 00:43:34,936: Sent 124928/406528 bytes of signal gain.
+INFO - 2025-06-27 00:43:34,936: Sent 126976/406528 bytes of signal gain.
+INFO - 2025-06-27 00:43:34,936: Sent 129024/406528 bytes of signal gain.
+INFO - 2025-06-27 00:43:34,936: Sent 131072/406528 bytes of signal gain.
+INFO - 2025-06-27 00:43:34,936: Sent 133120/406528 bytes of signal gain.
+INFO - 2025-06-27 00:43:34,936: Sent 135168/406528 bytes of signal gain.
+INFO - 2025-06-27 00:43:34,937: Sent 137216/406528 bytes of signal gain.
+INFO - 2025-06-27 00:43:34,937: Sent 139264/406528 bytes of signal gain.
+INFO - 2025-06-27 00:43:34,937: Sent 141312/406528 bytes of signal gain.
+INFO - 2025-06-27 00:43:34,937: Sent 143360/406528 bytes of signal gain.
+INFO - 2025-06-27 00:43:34,937: Sent 145408/406528 bytes of signal gain.
+INFO - 2025-06-27 00:43:34,938: Sent 147456/406528 bytes of signal gain.
+INFO - 2025-06-27 00:43:34,938: Sent 149504/406528 bytes of signal gain.
+INFO - 2025-06-27 00:43:34,938: Sent 151552/406528 bytes of signal gain.
+INFO - 2025-06-27 00:43:34,938: Sent 153600/406528 bytes of signal gain.
+INFO - 2025-06-27 00:43:34,939: Sent 155648/406528 bytes of signal gain.
+INFO - 2025-06-27 00:43:34,939: Sent 157696/406528 bytes of signal gain.
+INFO - 2025-06-27 00:43:34,939: Sent 159744/406528 bytes of signal gain.
+INFO - 2025-06-27 00:43:34,939: Sent 161792/406528 bytes of signal gain.
+INFO - 2025-06-27 00:43:34,939: Sent 163840/406528 bytes of signal gain.
+INFO - 2025-06-27 00:43:34,940: Sent 165888/406528 bytes of signal gain.
+INFO - 2025-06-27 00:43:34,940: Sent 167936/406528 bytes of signal gain.
+INFO - 2025-06-27 00:43:34,940: Sent 169984/406528 bytes of signal gain.
+INFO - 2025-06-27 00:43:34,940: Sent 172032/406528 bytes of signal gain.
+INFO - 2025-06-27 00:43:34,940: Sent 174080/406528 bytes of signal gain.
+INFO - 2025-06-27 00:43:34,941: Sent 176128/406528 bytes of signal gain.
+INFO - 2025-06-27 00:43:34,941: Sent 178176/406528 bytes of signal gain.
+INFO - 2025-06-27 00:43:34,941: Sent 180224/406528 bytes of signal gain.
+INFO - 2025-06-27 00:43:34,941: Sent 182272/406528 bytes of signal gain.
+INFO - 2025-06-27 00:43:34,942: Sent 184320/406528 bytes of signal gain.
+INFO - 2025-06-27 00:43:34,942: Sent 186368/406528 bytes of signal gain.
+INFO - 2025-06-27 00:43:34,942: Sent 188416/406528 bytes of signal gain.
+INFO - 2025-06-27 00:43:34,942: Sent 190464/406528 bytes of signal gain.
+INFO - 2025-06-27 00:43:34,942: Sent 192512/406528 bytes of signal gain.
+INFO - 2025-06-27 00:43:34,943: Sent 194560/406528 bytes of signal gain.
+INFO - 2025-06-27 00:43:34,945: Sent 196608/406528 bytes of signal gain.
+INFO - 2025-06-27 00:43:34,946: Sent 198656/406528 bytes of signal gain.
+INFO - 2025-06-27 00:43:34,946: Sent 200704/406528 bytes of signal gain.
+INFO - 2025-06-27 00:43:34,946: Sent 202752/406528 bytes of signal gain.
+INFO - 2025-06-27 00:43:34,946: Sent 204800/406528 bytes of signal gain.
+INFO - 2025-06-27 00:43:34,947: Sent 206848/406528 bytes of signal gain.
+INFO - 2025-06-27 00:43:34,947: Sent 208896/406528 bytes of signal gain.
+INFO - 2025-06-27 00:43:34,947: Sent 210944/406528 bytes of signal gain.
+INFO - 2025-06-27 00:43:34,947: Sent 212992/406528 bytes of signal gain.
+INFO - 2025-06-27 00:43:34,947: Sent 215040/406528 bytes of signal gain.
+INFO - 2025-06-27 00:43:34,948: Sent 217088/406528 bytes of signal gain.
+INFO - 2025-06-27 00:43:34,948: Sent 219136/406528 bytes of signal gain.
+INFO - 2025-06-27 00:43:34,948: Sent 221184/406528 bytes of signal gain.
+INFO - 2025-06-27 00:43:34,948: Sent 223232/406528 bytes of signal gain.
+INFO - 2025-06-27 00:43:34,948: Sent 225280/406528 bytes of signal gain.
+INFO - 2025-06-27 00:43:34,948: Sent 227328/406528 bytes of signal gain.
+INFO - 2025-06-27 00:43:34,949: Sent 229376/406528 bytes of signal gain.
+INFO - 2025-06-27 00:43:34,949: Sent 231424/406528 bytes of signal gain.
+INFO - 2025-06-27 00:43:34,949: Sent 233472/406528 bytes of signal gain.
+INFO - 2025-06-27 00:43:34,949: Sent 235520/406528 bytes of signal gain.
+INFO - 2025-06-27 00:43:34,949: Sent 237568/406528 bytes of signal gain.
+INFO - 2025-06-27 00:43:34,950: Sent 239616/406528 bytes of signal gain.
+INFO - 2025-06-27 00:43:34,950: Sent 241664/406528 bytes of signal gain.
+INFO - 2025-06-27 00:43:34,950: Sent 243712/406528 bytes of signal gain.
+INFO - 2025-06-27 00:43:34,950: Sent 245760/406528 bytes of signal gain.
+INFO - 2025-06-27 00:43:34,950: Sent 247808/406528 bytes of signal gain.
+INFO - 2025-06-27 00:43:34,951: Sent 249856/406528 bytes of signal gain.
+INFO - 2025-06-27 00:43:34,951: Sent 251904/406528 bytes of signal gain.
+INFO - 2025-06-27 00:43:34,951: Sent 253952/406528 bytes of signal gain.
+INFO - 2025-06-27 00:43:34,951: Sent 256000/406528 bytes of signal gain.
+INFO - 2025-06-27 00:43:34,951: Sent 258048/406528 bytes of signal gain.
+INFO - 2025-06-27 00:43:34,952: Sent 260096/406528 bytes of signal gain.
+INFO - 2025-06-27 00:43:34,952: Sent 262144/406528 bytes of signal gain.
+INFO - 2025-06-27 00:43:34,952: Sent 264192/406528 bytes of signal gain.
+INFO - 2025-06-27 00:43:34,952: Sent 266240/406528 bytes of signal gain.
+INFO - 2025-06-27 00:43:34,953: Sent 268288/406528 bytes of signal gain.
+INFO - 2025-06-27 00:43:34,953: Sent 270336/406528 bytes of signal gain.
+INFO - 2025-06-27 00:43:34,953: Sent 272384/406528 bytes of signal gain.
+INFO - 2025-06-27 00:43:34,953: Sent 274432/406528 bytes of signal gain.
+INFO - 2025-06-27 00:43:34,953: Sent 276480/406528 bytes of signal gain.
+INFO - 2025-06-27 00:43:34,954: Sent 278528/406528 bytes of signal gain.
+INFO - 2025-06-27 00:43:34,954: Sent 280576/406528 bytes of signal gain.
+INFO - 2025-06-27 00:43:34,954: Sent 282624/406528 bytes of signal gain.
+INFO - 2025-06-27 00:43:34,954: Sent 284672/406528 bytes of signal gain.
+INFO - 2025-06-27 00:43:34,954: Sent 286720/406528 bytes of signal gain.
+INFO - 2025-06-27 00:43:34,954: Sent 288768/406528 bytes of signal gain.
+INFO - 2025-06-27 00:43:34,955: Sent 290816/406528 bytes of signal gain.
+INFO - 2025-06-27 00:43:34,955: Sent 292864/406528 bytes of signal gain.
+INFO - 2025-06-27 00:43:34,955: Sent 294912/406528 bytes of signal gain.
+INFO - 2025-06-27 00:43:34,955: Sent 296960/406528 bytes of signal gain.
+INFO - 2025-06-27 00:43:34,956: Sent 299008/406528 bytes of signal gain.
+INFO - 2025-06-27 00:43:34,956: Sent 301056/406528 bytes of signal gain.
+INFO - 2025-06-27 00:43:34,956: Sent 303104/406528 bytes of signal gain.
+INFO - 2025-06-27 00:43:34,956: Sent 305152/406528 bytes of signal gain.
+INFO - 2025-06-27 00:43:34,956: Sent 307200/406528 bytes of signal gain.
+INFO - 2025-06-27 00:43:34,957: Sent 309248/406528 bytes of signal gain.
+INFO - 2025-06-27 00:43:34,957: Sent 311296/406528 bytes of signal gain.
+INFO - 2025-06-27 00:43:34,957: Sent 313344/406528 bytes of signal gain.
+INFO - 2025-06-27 00:43:34,957: Sent 315392/406528 bytes of signal gain.
+INFO - 2025-06-27 00:43:34,957: Sent 317440/406528 bytes of signal gain.
+INFO - 2025-06-27 00:43:34,958: Sent 319488/406528 bytes of signal gain.
+INFO - 2025-06-27 00:43:34,958: Sent 321536/406528 bytes of signal gain.
+INFO - 2025-06-27 00:43:34,958: Sent 323584/406528 bytes of signal gain.
+INFO - 2025-06-27 00:43:34,958: Sent 325632/406528 bytes of signal gain.
+INFO - 2025-06-27 00:43:34,958: Sent 327680/406528 bytes of signal gain.
+INFO - 2025-06-27 00:43:34,959: Sent 329728/406528 bytes of signal gain.
+INFO - 2025-06-27 00:43:34,959: Sent 331776/406528 bytes of signal gain.
+INFO - 2025-06-27 00:43:34,959: Sent 333824/406528 bytes of signal gain.
+INFO - 2025-06-27 00:43:34,959: Sent 335872/406528 bytes of signal gain.
+INFO - 2025-06-27 00:43:34,960: Sent 337920/406528 bytes of signal gain.
+INFO - 2025-06-27 00:43:34,960: Sent 339968/406528 bytes of signal gain.
+INFO - 2025-06-27 00:43:34,960: Sent 342016/406528 bytes of signal gain.
+INFO - 2025-06-27 00:43:34,961: Sent 344064/406528 bytes of signal gain.
+INFO - 2025-06-27 00:43:34,962: Sent 346112/406528 bytes of signal gain.
+INFO - 2025-06-27 00:43:34,962: Sent 348160/406528 bytes of signal gain.
+INFO - 2025-06-27 00:43:34,962: Sent 350208/406528 bytes of signal gain.
+INFO - 2025-06-27 00:43:34,962: Sent 352256/406528 bytes of signal gain.
+INFO - 2025-06-27 00:43:34,962: Sent 354304/406528 bytes of signal gain.
+INFO - 2025-06-27 00:43:34,963: Sent 356352/406528 bytes of signal gain.
+INFO - 2025-06-27 00:43:34,963: Sent 358400/406528 bytes of signal gain.
+INFO - 2025-06-27 00:43:34,963: Sent 360448/406528 bytes of signal gain.
+INFO - 2025-06-27 00:43:34,963: Sent 362496/406528 bytes of signal gain.
+INFO - 2025-06-27 00:43:34,963: Sent 364544/406528 bytes of signal gain.
+INFO - 2025-06-27 00:43:34,963: Sent 366592/406528 bytes of signal gain.
+INFO - 2025-06-27 00:43:34,964: Sent 368640/406528 bytes of signal gain.
+INFO - 2025-06-27 00:43:34,964: Sent 370688/406528 bytes of signal gain.
+INFO - 2025-06-27 00:43:34,964: Sent 372736/406528 bytes of signal gain.
+INFO - 2025-06-27 00:43:34,964: Sent 374784/406528 bytes of signal gain.
+INFO - 2025-06-27 00:43:34,964: Sent 376832/406528 bytes of signal gain.
+INFO - 2025-06-27 00:43:34,964: Sent 378880/406528 bytes of signal gain.
+INFO - 2025-06-27 00:43:34,965: Sent 380928/406528 bytes of signal gain.
+INFO - 2025-06-27 00:43:34,965: Sent 382976/406528 bytes of signal gain.
+INFO - 2025-06-27 00:43:34,965: Sent 385024/406528 bytes of signal gain.
+INFO - 2025-06-27 00:43:34,965: Sent 387072/406528 bytes of signal gain.
+INFO - 2025-06-27 00:43:34,965: Sent 389120/406528 bytes of signal gain.
+INFO - 2025-06-27 00:43:34,965: Sent 391168/406528 bytes of signal gain.
+INFO - 2025-06-27 00:43:34,965: Sent 393216/406528 bytes of signal gain.
+INFO - 2025-06-27 00:43:34,966: Sent 395264/406528 bytes of signal gain.
+INFO - 2025-06-27 00:43:34,966: Sent 397312/406528 bytes of signal gain.
+INFO - 2025-06-27 00:43:34,966: Sent 399360/406528 bytes of signal gain.
+INFO - 2025-06-27 00:43:34,966: Sent 401408/406528 bytes of signal gain.
+INFO - 2025-06-27 00:43:34,966: Sent 403456/406528 bytes of signal gain.
+INFO - 2025-06-27 00:43:34,967: Sent 405504/406528 bytes of signal gain.
+INFO - 2025-06-27 00:43:34,967: Sent 406528/406528 bytes of signal gain.
+INFO - 2025-06-27 00:43:34,967: Finished sending signal gain data.
+INFO - 2025-06-27 00:43:34,967: Received: 'ERROR-Falha ao executar algoritmo: tuple index out of range'
+ERROR - 2025-06-27 00:43:34,968: Error from server during reconstruction: ERROR-Falha ao executar algoritmo: tuple index out of range
+INFO - 2025-06-27 00:43:50,246: Sent: 'OPTION-5'
+INFO - 2025-06-27 00:43:50,246: Sent: 'OK'
+INFO - 2025-06-27 01:04:56,801: Client logger initialized.
+INFO - 2025-06-27 01:04:56,801: Download directory './downloads' ensured.
+INFO - 2025-06-27 01:04:58,604: Successfully connected to 127.0.0.1:6000
+INFO - 2025-06-27 01:05:00,866: Username set to: neto
+INFO - 2025-06-27 01:05:36,779: Sent: 'OPTION-2'
+INFO - 2025-06-27 01:05:36,780: Sent: 'OK-neto-G_1-phantom-CGNE'
+INFO - 2025-06-27 01:05:36,782: Received: 'OK-Ready to receive'
+INFO - 2025-06-27 01:05:36,829: Generated dummy signal gain of size: 50816
+INFO - 2025-06-27 01:05:36,830: [DEBUG] Enviando signal_gain com shape (50816,) e 406528 bytes...
+INFO - 2025-06-27 01:05:36,830: Sent signal gain size: 406528 bytes.
+INFO - 2025-06-27 01:05:36,830: Sent 2048/406528 bytes of signal gain.
+INFO - 2025-06-27 01:05:36,831: Sent 4096/406528 bytes of signal gain.
+INFO - 2025-06-27 01:05:36,831: Sent 6144/406528 bytes of signal gain.
+INFO - 2025-06-27 01:05:36,831: Sent 8192/406528 bytes of signal gain.
+INFO - 2025-06-27 01:05:36,831: Sent 10240/406528 bytes of signal gain.
+INFO - 2025-06-27 01:05:36,831: Sent 12288/406528 bytes of signal gain.
+INFO - 2025-06-27 01:05:36,831: Sent 14336/406528 bytes of signal gain.
+INFO - 2025-06-27 01:05:36,832: Sent 16384/406528 bytes of signal gain.
+INFO - 2025-06-27 01:05:36,832: Sent 18432/406528 bytes of signal gain.
+INFO - 2025-06-27 01:05:36,832: Sent 20480/406528 bytes of signal gain.
+INFO - 2025-06-27 01:05:36,832: Sent 22528/406528 bytes of signal gain.
+INFO - 2025-06-27 01:05:36,832: Sent 24576/406528 bytes of signal gain.
+INFO - 2025-06-27 01:05:36,832: Sent 26624/406528 bytes of signal gain.
+INFO - 2025-06-27 01:05:36,833: Sent 28672/406528 bytes of signal gain.
+INFO - 2025-06-27 01:05:36,833: Sent 30720/406528 bytes of signal gain.
+INFO - 2025-06-27 01:05:36,833: Sent 32768/406528 bytes of signal gain.
+INFO - 2025-06-27 01:05:36,833: Sent 34816/406528 bytes of signal gain.
+INFO - 2025-06-27 01:05:36,833: Sent 36864/406528 bytes of signal gain.
+INFO - 2025-06-27 01:05:36,833: Sent 38912/406528 bytes of signal gain.
+INFO - 2025-06-27 01:05:36,834: Sent 40960/406528 bytes of signal gain.
+INFO - 2025-06-27 01:05:36,834: Sent 43008/406528 bytes of signal gain.
+INFO - 2025-06-27 01:05:36,834: Sent 45056/406528 bytes of signal gain.
+INFO - 2025-06-27 01:05:36,834: Sent 47104/406528 bytes of signal gain.
+INFO - 2025-06-27 01:05:36,834: Sent 49152/406528 bytes of signal gain.
+INFO - 2025-06-27 01:05:36,834: Sent 51200/406528 bytes of signal gain.
+INFO - 2025-06-27 01:05:36,834: Sent 53248/406528 bytes of signal gain.
+INFO - 2025-06-27 01:05:36,835: Sent 55296/406528 bytes of signal gain.
+INFO - 2025-06-27 01:05:36,835: Sent 57344/406528 bytes of signal gain.
+INFO - 2025-06-27 01:05:36,835: Sent 59392/406528 bytes of signal gain.
+INFO - 2025-06-27 01:05:36,835: Sent 61440/406528 bytes of signal gain.
+INFO - 2025-06-27 01:05:36,835: Sent 63488/406528 bytes of signal gain.
+INFO - 2025-06-27 01:05:36,835: Sent 65536/406528 bytes of signal gain.
+INFO - 2025-06-27 01:05:36,836: Sent 67584/406528 bytes of signal gain.
+INFO - 2025-06-27 01:05:36,836: Sent 69632/406528 bytes of signal gain.
+INFO - 2025-06-27 01:05:36,836: Sent 71680/406528 bytes of signal gain.
+INFO - 2025-06-27 01:05:36,836: Sent 73728/406528 bytes of signal gain.
+INFO - 2025-06-27 01:05:36,836: Sent 75776/406528 bytes of signal gain.
+INFO - 2025-06-27 01:05:36,836: Sent 77824/406528 bytes of signal gain.
+INFO - 2025-06-27 01:05:36,837: Sent 79872/406528 bytes of signal gain.
+INFO - 2025-06-27 01:05:36,837: Sent 81920/406528 bytes of signal gain.
+INFO - 2025-06-27 01:05:36,837: Sent 83968/406528 bytes of signal gain.
+INFO - 2025-06-27 01:05:36,837: Sent 86016/406528 bytes of signal gain.
+INFO - 2025-06-27 01:05:36,837: Sent 88064/406528 bytes of signal gain.
+INFO - 2025-06-27 01:05:36,837: Sent 90112/406528 bytes of signal gain.
+INFO - 2025-06-27 01:05:36,838: Sent 92160/406528 bytes of signal gain.
+INFO - 2025-06-27 01:05:36,838: Sent 94208/406528 bytes of signal gain.
+INFO - 2025-06-27 01:05:36,838: Sent 96256/406528 bytes of signal gain.
+INFO - 2025-06-27 01:05:36,838: Sent 98304/406528 bytes of signal gain.
+INFO - 2025-06-27 01:05:36,838: Sent 100352/406528 bytes of signal gain.
+INFO - 2025-06-27 01:05:36,839: Sent 102400/406528 bytes of signal gain.
+INFO - 2025-06-27 01:05:36,839: Sent 104448/406528 bytes of signal gain.
+INFO - 2025-06-27 01:05:36,839: Sent 106496/406528 bytes of signal gain.
+INFO - 2025-06-27 01:05:36,839: Sent 108544/406528 bytes of signal gain.
+INFO - 2025-06-27 01:05:36,839: Sent 110592/406528 bytes of signal gain.
+INFO - 2025-06-27 01:05:36,840: Sent 112640/406528 bytes of signal gain.
+INFO - 2025-06-27 01:05:36,840: Sent 114688/406528 bytes of signal gain.
+INFO - 2025-06-27 01:05:36,840: Sent 116736/406528 bytes of signal gain.
+INFO - 2025-06-27 01:05:36,840: Sent 118784/406528 bytes of signal gain.
+INFO - 2025-06-27 01:05:36,841: Sent 120832/406528 bytes of signal gain.
+INFO - 2025-06-27 01:05:36,841: Sent 122880/406528 bytes of signal gain.
+INFO - 2025-06-27 01:05:36,841: Sent 124928/406528 bytes of signal gain.
+INFO - 2025-06-27 01:05:36,841: Sent 126976/406528 bytes of signal gain.
+INFO - 2025-06-27 01:05:36,841: Sent 129024/406528 bytes of signal gain.
+INFO - 2025-06-27 01:05:36,842: Sent 131072/406528 bytes of signal gain.
+INFO - 2025-06-27 01:05:36,842: Sent 133120/406528 bytes of signal gain.
+INFO - 2025-06-27 01:05:36,842: Sent 135168/406528 bytes of signal gain.
+INFO - 2025-06-27 01:05:36,842: Sent 137216/406528 bytes of signal gain.
+INFO - 2025-06-27 01:05:36,842: Sent 139264/406528 bytes of signal gain.
+INFO - 2025-06-27 01:05:36,843: Sent 141312/406528 bytes of signal gain.
+INFO - 2025-06-27 01:05:36,843: Sent 143360/406528 bytes of signal gain.
+INFO - 2025-06-27 01:05:36,843: Sent 145408/406528 bytes of signal gain.
+INFO - 2025-06-27 01:05:36,843: Sent 147456/406528 bytes of signal gain.
+INFO - 2025-06-27 01:05:36,843: Sent 149504/406528 bytes of signal gain.
+INFO - 2025-06-27 01:05:36,844: Sent 151552/406528 bytes of signal gain.
+INFO - 2025-06-27 01:05:36,844: Sent 153600/406528 bytes of signal gain.
+INFO - 2025-06-27 01:05:36,844: Sent 155648/406528 bytes of signal gain.
+INFO - 2025-06-27 01:05:36,844: Sent 157696/406528 bytes of signal gain.
+INFO - 2025-06-27 01:05:36,844: Sent 159744/406528 bytes of signal gain.
+INFO - 2025-06-27 01:05:36,845: Sent 161792/406528 bytes of signal gain.
+INFO - 2025-06-27 01:05:36,845: Sent 163840/406528 bytes of signal gain.
+INFO - 2025-06-27 01:05:36,845: Sent 165888/406528 bytes of signal gain.
+INFO - 2025-06-27 01:05:36,845: Sent 167936/406528 bytes of signal gain.
+INFO - 2025-06-27 01:05:36,845: Sent 169984/406528 bytes of signal gain.
+INFO - 2025-06-27 01:05:36,846: Sent 172032/406528 bytes of signal gain.
+INFO - 2025-06-27 01:05:36,846: Sent 174080/406528 bytes of signal gain.
+INFO - 2025-06-27 01:05:36,846: Sent 176128/406528 bytes of signal gain.
+INFO - 2025-06-27 01:05:36,846: Sent 178176/406528 bytes of signal gain.
+INFO - 2025-06-27 01:05:36,846: Sent 180224/406528 bytes of signal gain.
+INFO - 2025-06-27 01:05:36,847: Sent 182272/406528 bytes of signal gain.
+INFO - 2025-06-27 01:05:36,847: Sent 184320/406528 bytes of signal gain.
+INFO - 2025-06-27 01:05:36,847: Sent 186368/406528 bytes of signal gain.
+INFO - 2025-06-27 01:05:36,847: Sent 188416/406528 bytes of signal gain.
+INFO - 2025-06-27 01:05:36,847: Sent 190464/406528 bytes of signal gain.
+INFO - 2025-06-27 01:05:36,847: Sent 192512/406528 bytes of signal gain.
+INFO - 2025-06-27 01:05:36,848: Sent 194560/406528 bytes of signal gain.
+INFO - 2025-06-27 01:05:36,848: Sent 196608/406528 bytes of signal gain.
+INFO - 2025-06-27 01:05:36,848: Sent 198656/406528 bytes of signal gain.
+INFO - 2025-06-27 01:05:36,848: Sent 200704/406528 bytes of signal gain.
+INFO - 2025-06-27 01:05:36,849: Sent 202752/406528 bytes of signal gain.
+INFO - 2025-06-27 01:05:36,849: Sent 204800/406528 bytes of signal gain.
+INFO - 2025-06-27 01:05:36,849: Sent 206848/406528 bytes of signal gain.
+INFO - 2025-06-27 01:05:36,849: Sent 208896/406528 bytes of signal gain.
+INFO - 2025-06-27 01:05:36,850: Sent 210944/406528 bytes of signal gain.
+INFO - 2025-06-27 01:05:36,850: Sent 212992/406528 bytes of signal gain.
+INFO - 2025-06-27 01:05:36,850: Sent 215040/406528 bytes of signal gain.
+INFO - 2025-06-27 01:05:36,850: Sent 217088/406528 bytes of signal gain.
+INFO - 2025-06-27 01:05:36,850: Sent 219136/406528 bytes of signal gain.
+INFO - 2025-06-27 01:05:36,851: Sent 221184/406528 bytes of signal gain.
+INFO - 2025-06-27 01:05:36,851: Sent 223232/406528 bytes of signal gain.
+INFO - 2025-06-27 01:05:36,851: Sent 225280/406528 bytes of signal gain.
+INFO - 2025-06-27 01:05:36,851: Sent 227328/406528 bytes of signal gain.
+INFO - 2025-06-27 01:05:36,852: Sent 229376/406528 bytes of signal gain.
+INFO - 2025-06-27 01:05:36,852: Sent 231424/406528 bytes of signal gain.
+INFO - 2025-06-27 01:05:36,852: Sent 233472/406528 bytes of signal gain.
+INFO - 2025-06-27 01:05:36,852: Sent 235520/406528 bytes of signal gain.
+INFO - 2025-06-27 01:05:36,852: Sent 237568/406528 bytes of signal gain.
+INFO - 2025-06-27 01:05:36,853: Sent 239616/406528 bytes of signal gain.
+INFO - 2025-06-27 01:05:36,853: Sent 241664/406528 bytes of signal gain.
+INFO - 2025-06-27 01:05:36,853: Sent 243712/406528 bytes of signal gain.
+INFO - 2025-06-27 01:05:36,853: Sent 245760/406528 bytes of signal gain.
+INFO - 2025-06-27 01:05:36,853: Sent 247808/406528 bytes of signal gain.
+INFO - 2025-06-27 01:05:36,854: Sent 249856/406528 bytes of signal gain.
+INFO - 2025-06-27 01:05:36,854: Sent 251904/406528 bytes of signal gain.
+INFO - 2025-06-27 01:05:36,854: Sent 253952/406528 bytes of signal gain.
+INFO - 2025-06-27 01:05:36,854: Sent 256000/406528 bytes of signal gain.
+INFO - 2025-06-27 01:05:36,855: Sent 258048/406528 bytes of signal gain.
+INFO - 2025-06-27 01:05:36,855: Sent 260096/406528 bytes of signal gain.
+INFO - 2025-06-27 01:05:36,855: Sent 262144/406528 bytes of signal gain.
+INFO - 2025-06-27 01:05:36,855: Sent 264192/406528 bytes of signal gain.
+INFO - 2025-06-27 01:05:36,855: Sent 266240/406528 bytes of signal gain.
+INFO - 2025-06-27 01:05:36,855: Sent 268288/406528 bytes of signal gain.
+INFO - 2025-06-27 01:05:36,856: Sent 270336/406528 bytes of signal gain.
+INFO - 2025-06-27 01:05:36,856: Sent 272384/406528 bytes of signal gain.
+INFO - 2025-06-27 01:05:36,856: Sent 274432/406528 bytes of signal gain.
+INFO - 2025-06-27 01:05:36,856: Sent 276480/406528 bytes of signal gain.
+INFO - 2025-06-27 01:05:36,856: Sent 278528/406528 bytes of signal gain.
+INFO - 2025-06-27 01:05:36,857: Sent 280576/406528 bytes of signal gain.
+INFO - 2025-06-27 01:05:36,857: Sent 282624/406528 bytes of signal gain.
+INFO - 2025-06-27 01:05:36,857: Sent 284672/406528 bytes of signal gain.
+INFO - 2025-06-27 01:05:36,857: Sent 286720/406528 bytes of signal gain.
+INFO - 2025-06-27 01:05:36,857: Sent 288768/406528 bytes of signal gain.
+INFO - 2025-06-27 01:05:36,858: Sent 290816/406528 bytes of signal gain.
+INFO - 2025-06-27 01:05:36,858: Sent 292864/406528 bytes of signal gain.
+INFO - 2025-06-27 01:05:36,858: Sent 294912/406528 bytes of signal gain.
+INFO - 2025-06-27 01:05:36,858: Sent 296960/406528 bytes of signal gain.
+INFO - 2025-06-27 01:05:36,858: Sent 299008/406528 bytes of signal gain.
+INFO - 2025-06-27 01:05:36,859: Sent 301056/406528 bytes of signal gain.
+INFO - 2025-06-27 01:05:36,859: Sent 303104/406528 bytes of signal gain.
+INFO - 2025-06-27 01:05:36,859: Sent 305152/406528 bytes of signal gain.
+INFO - 2025-06-27 01:05:36,860: Sent 307200/406528 bytes of signal gain.
+INFO - 2025-06-27 01:05:36,860: Sent 309248/406528 bytes of signal gain.
+INFO - 2025-06-27 01:05:36,860: Sent 311296/406528 bytes of signal gain.
+INFO - 2025-06-27 01:05:36,860: Sent 313344/406528 bytes of signal gain.
+INFO - 2025-06-27 01:05:36,860: Sent 315392/406528 bytes of signal gain.
+INFO - 2025-06-27 01:05:36,861: Sent 317440/406528 bytes of signal gain.
+INFO - 2025-06-27 01:05:36,861: Sent 319488/406528 bytes of signal gain.
+INFO - 2025-06-27 01:05:36,861: Sent 321536/406528 bytes of signal gain.
+INFO - 2025-06-27 01:05:36,861: Sent 323584/406528 bytes of signal gain.
+INFO - 2025-06-27 01:05:36,861: Sent 325632/406528 bytes of signal gain.
+INFO - 2025-06-27 01:05:36,861: Sent 327680/406528 bytes of signal gain.
+INFO - 2025-06-27 01:05:36,862: Sent 329728/406528 bytes of signal gain.
+INFO - 2025-06-27 01:05:36,862: Sent 331776/406528 bytes of signal gain.
+INFO - 2025-06-27 01:05:36,862: Sent 333824/406528 bytes of signal gain.
+INFO - 2025-06-27 01:05:36,862: Sent 335872/406528 bytes of signal gain.
+INFO - 2025-06-27 01:05:36,863: Sent 337920/406528 bytes of signal gain.
+INFO - 2025-06-27 01:05:36,863: Sent 339968/406528 bytes of signal gain.
+INFO - 2025-06-27 01:05:36,864: Sent 342016/406528 bytes of signal gain.
+INFO - 2025-06-27 01:05:36,864: Sent 344064/406528 bytes of signal gain.
+INFO - 2025-06-27 01:05:36,864: Sent 346112/406528 bytes of signal gain.
+INFO - 2025-06-27 01:05:36,865: Sent 348160/406528 bytes of signal gain.
+INFO - 2025-06-27 01:05:36,866: Sent 350208/406528 bytes of signal gain.
+INFO - 2025-06-27 01:05:36,866: Sent 352256/406528 bytes of signal gain.
+INFO - 2025-06-27 01:05:36,866: Sent 354304/406528 bytes of signal gain.
+INFO - 2025-06-27 01:05:36,866: Sent 356352/406528 bytes of signal gain.
+INFO - 2025-06-27 01:05:36,866: Sent 358400/406528 bytes of signal gain.
+INFO - 2025-06-27 01:05:36,867: Sent 360448/406528 bytes of signal gain.
+INFO - 2025-06-27 01:05:36,867: Sent 362496/406528 bytes of signal gain.
+INFO - 2025-06-27 01:05:36,867: Sent 364544/406528 bytes of signal gain.
+INFO - 2025-06-27 01:05:36,867: Sent 366592/406528 bytes of signal gain.
+INFO - 2025-06-27 01:05:36,867: Sent 368640/406528 bytes of signal gain.
+INFO - 2025-06-27 01:05:36,868: Sent 370688/406528 bytes of signal gain.
+INFO - 2025-06-27 01:05:36,868: Sent 372736/406528 bytes of signal gain.
+INFO - 2025-06-27 01:05:36,868: Sent 374784/406528 bytes of signal gain.
+INFO - 2025-06-27 01:05:36,868: Sent 376832/406528 bytes of signal gain.
+INFO - 2025-06-27 01:05:36,868: Sent 378880/406528 bytes of signal gain.
+INFO - 2025-06-27 01:05:36,869: Sent 380928/406528 bytes of signal gain.
+INFO - 2025-06-27 01:05:36,869: Sent 382976/406528 bytes of signal gain.
+INFO - 2025-06-27 01:05:36,869: Sent 385024/406528 bytes of signal gain.
+INFO - 2025-06-27 01:05:36,869: Sent 387072/406528 bytes of signal gain.
+INFO - 2025-06-27 01:05:36,869: Sent 389120/406528 bytes of signal gain.
+INFO - 2025-06-27 01:05:36,870: Sent 391168/406528 bytes of signal gain.
+INFO - 2025-06-27 01:05:36,870: Sent 393216/406528 bytes of signal gain.
+INFO - 2025-06-27 01:05:36,870: Sent 395264/406528 bytes of signal gain.
+INFO - 2025-06-27 01:05:36,870: Sent 397312/406528 bytes of signal gain.
+INFO - 2025-06-27 01:05:36,871: Sent 399360/406528 bytes of signal gain.
+INFO - 2025-06-27 01:05:36,871: Sent 401408/406528 bytes of signal gain.
+INFO - 2025-06-27 01:05:36,871: Sent 403456/406528 bytes of signal gain.
+INFO - 2025-06-27 01:05:36,871: Sent 405504/406528 bytes of signal gain.
+INFO - 2025-06-27 01:05:36,871: Sent 406528/406528 bytes of signal gain.
+INFO - 2025-06-27 01:05:36,872: Finished sending signal gain data.
+INFO - 2025-06-27 01:05:36,890: Received: 'ERROR-Falha ao executar algoritmo: 'str' object has no attribute 'shape''
+ERROR - 2025-06-27 01:05:36,890: Error from server during reconstruction: ERROR-Falha ao executar algoritmo: 'str' object has no attribute 'shape'

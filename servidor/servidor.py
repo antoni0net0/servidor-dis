@@ -11,6 +11,9 @@ import csv
 import os
 import queue
 
+
+# TODO: ajeitar o menu na hora de escolher o csv, ele ta errado, botar somente os que tem uma coluna (todos menos os de H_1 e H_2)
+
 class ServerConfig:
     """
     Configuration class for server parameters.
@@ -29,7 +32,7 @@ class ServerConfig:
         self.DATA_DIR = "./data"
         # Lista de arquivos de matriz disponíveis (nome base, sem extensão)
         self.MATRIX_FILES = [
-            "H-1", "H-2", "G-1", "G-2", "g-30x30-1", "g-30x30-2", "A-30x30-1", "A-60x60-2"
+            "H_1", "H_2", "G_1", "G_2", "g_30x30_1", "g_30x30_2", "A_30x30_1", "A_60x60_1"
         ]
 class Server:
     """
@@ -248,50 +251,61 @@ class Server:
                 self._send_message(client_socket, address, "ERROR-Invalid option")
                 return
 
-        response_parts = []
+
+        # NOVO FLUXO: escolha de modelagem antes do algoritmo
         if option in [1, 2, 3]:
-            response_raw = self._receive_message(client_socket, address)
-            if not response_raw:
-                return
-            response_parts = response_raw.split("-")
-            if response_parts[0] != "OK":
-                self.logger.warning(f"Client {address} did not send 'OK' for processing option.")
+            # 1. Envie lista de matrizes disponíveis (2D)
+            available_matrices = [k for k, v in self.matrices.items() if v is not None and len(v.shape) == 2]
+            self._send_message(client_socket, address, "MATRICES-" + ",".join(available_matrices))
+            chosen_matrix = self._receive_message(client_socket, address)
+            if chosen_matrix not in available_matrices:
+                self._send_message(client_socket, address, "ERROR-Matriz inválida")
                 return
 
-        model = response_parts[2] if len(response_parts) > 2 else ""
-        image_model = response_parts[3] if len(response_parts) > 3 else ""
-        username = response_parts[1] if len(response_parts) > 1 else ""
-        algorithm_model = response_parts[4] if len(response_parts) > 4 else ""
-
-        if option == 1:
-            # Option 1: Process with queueing
-            if not self.semaphore.acquire(blocking=False):
-                self.logger.info(f"Client {address} put in waiting queue.")
-                self.waiting_queue.put(th.Thread(target=self._process_client_request, args=(client_socket, address, model, image_model, username, algorithm_model)))
-                self._send_message(client_socket, address, 'WAIT-Wait in queue')
+            # 2. Envie lista de vetores disponíveis (arquivos 1D)
+            data_files = os.listdir(self.config.DATA_DIR)
+            available_vectors = [f[:-4] for f in data_files if (f.endswith('.npy') or f.endswith('.csv')) and f[:-4] not in available_matrices]
+            self._send_message(client_socket, address, "VECTORS-" + ",".join(available_vectors))
+            chosen_vector = self._receive_message(client_socket, address)
+            if chosen_vector not in available_vectors:
+                self._send_message(client_socket, address, "ERROR-Vetor inválido")
                 return
+
+            # 3. Recebe algoritmo
+            self._send_message(client_socket, address, "ALGORITHMS-CGNE,CGNR")
+            chosen_algorithm = self._receive_message(client_socket, address)
+            if chosen_algorithm not in ["CGNE", "CGNR"]:
+                self._send_message(client_socket, address, "ERROR-Algoritmo inválido")
+                return
+
+            # 4. Recebe username e imagem
+            self._send_message(client_socket, address, "SEND-USER-IMAGE")
+            user_image = self._receive_message(client_socket, address)
+            user_image_parts = user_image.split('-')
+            username = user_image_parts[0] if len(user_image_parts) > 0 else ""
+            image_model = user_image_parts[1] if len(user_image_parts) > 1 else ""
+
+            # Carrega matriz e vetor
+            matriz = self.matrices.get(chosen_matrix)
+            vetor_path_npy = os.path.join(self.config.DATA_DIR, f"{chosen_vector}.npy")
+            vetor_path_csv = os.path.join(self.config.DATA_DIR, f"{chosen_vector}.csv")
+            if os.path.exists(vetor_path_npy):
+                vetor = np.load(vetor_path_npy)
+            elif os.path.exists(vetor_path_csv):
+                vetor = np.loadtxt(vetor_path_csv, delimiter=',')
             else:
-                self.logger.info(f"Client {address} acquired semaphore and will be processed immediately.")
-                try:
-                    self._send_message(client_socket, address, 'OK-Ready to receive')
-                    signal_gain = self._receive_signal_gain(client_socket, address)
-                    if signal_gain is not None:
-                        self._reconstruct_image(client_socket, address, model, image_model, signal_gain, username, algorithm_model)
-                finally:
-                    self.semaphore.release()
-                    self.logger.info(f"Semaphore released for {address}.")
-                    if not self.waiting_queue.empty():
-                        next_client_thread = self.waiting_queue.get()
-                        next_client_thread.start()
-                        self.logger.info(f"Started processing next client from queue.")
+                self._send_message(client_socket, address, "ERROR-Vetor não encontrado")
+                return
 
-        elif option in [2, 3]:
-            # Options 2 & 3: Process directly (original behavior without explicit queueing check)
-            self._send_message(client_socket, address, 'OK-Ready to receive')
-            signal_gain = self._receive_signal_gain(client_socket, address)
-            if signal_gain is not None:
-                self._reconstruct_image(client_socket, address, model, image_model, signal_gain, username, algorithm_model)
-            self._handle_client_options(client_socket, address) # Loop back to options after processing
+            # Processa
+            if chosen_algorithm == "CGNE":
+                resultado, iterations = self._calculate_cgne(vetor, matriz)
+            else:
+                resultado, iterations = self._calculate_cgnr(vetor, matriz)
+
+            # Aqui você pode seguir com o fluxo normal de salvar imagem, enviar resposta, etc.
+            self._send_message(client_socket, address, f"OK-Process finished-{iterations}")
+            return
 
         elif option == 4:
             # Option 4: Send report
@@ -425,43 +439,31 @@ class Server:
                 self.logger.info(f"Client {address} selected file: {chosen_filename}")
                 return chosen_filename
 
-    def _calculate_cgne(self, g: np.ndarray, model: str) -> tuple[np.ndarray, int]:
-        """Calcula reconstrução de imagem usando CGNE."""
-        # model agora pode ser qualquer base_name de matriz
-        H_matrix = self.matrices.get(model)
+    def _calculate_cgne(self, g: np.ndarray, H_matrix: np.ndarray) -> tuple[np.ndarray, int]:
+        """Calcula reconstrução de imagem usando CGNE, recebendo H e g explicitamente."""
         if H_matrix is None:
-            raise ValueError(f"Matriz '{model}' não carregada.")
+            raise ValueError("Matriz H não carregada.")
+        if g is None:
+            raise ValueError("Vetor g não fornecido.")
+        if len(H_matrix.shape) != 2:
+            raise ValueError(f"Matriz H deve ser 2D, shape atual: {H_matrix.shape}")
+        if g.shape[0] != H_matrix.shape[0]:
+            raise ValueError(f"Vetor g deve ter o mesmo número de linhas que H. g: {g.shape}, H: {H_matrix.shape}")
         f = np.zeros(H_matrix.shape[1])
-        r = g - np.dot(H_matrix, f)
-        p = np.dot(H_matrix.T, r)
+        r = g - H_matrix @ f
+        p = H_matrix.T @ r
         iter_count = 0
-
-        max_iter = 100  # Limite de iterações para evitar lentidão
-
+        max_iter = 100
         for i in range(max_iter):
-            alpha_numerator = np.dot(r.T, r)
-            alpha_denominator = np.dot(p.T, p)
-            if alpha_denominator == 0:
-                break
-            alpha = alpha_numerator / alpha_denominator
-
+            alpha = np.dot(r, r) / np.dot(p, p)
             f = f + alpha * p
-            r_next = r - alpha * np.dot(H_matrix, p)
-
-            error = abs(np.linalg.norm(r, ord=2) - np.linalg.norm(r_next, ord=2))
-            if error < 1e-4:
+            r_next = r - alpha * (H_matrix @ p)
+            if np.abs(np.linalg.norm(r) - np.linalg.norm(r_next)) < 1e-4:
                 break
-
-            beta_numerator = np.dot(r_next.T, r_next)
-            beta_denominator = np.dot(r.T, r)
-            if beta_denominator == 0:
-                break
-            beta = beta_numerator / beta_denominator
-
-            p = beta * p + np.dot(H_matrix.T, r_next)
+            beta = np.dot(r_next, r_next) / np.dot(r, r)
+            p = beta * p + H_matrix.T @ r_next
             r = r_next
             iter_count += 1
-
         return f, iter_count
 
     def _calculate_cgnr(self, g: np.ndarray, model: str) -> tuple[np.ndarray, int]:

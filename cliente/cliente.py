@@ -151,7 +151,7 @@ class Client:
         # Modelos disponíveis (deve bater com o servidor)
 
         available_models = [
-            "H-1", "H-2", "G-1", "G-2", "g-30x30-1", "g-30x30-2", "A-30x30-1", "A-60x60-2"
+            "H_1", "H_2", "G_1", "G_2", "g_30x30_1", "g_30x30_2", "A_30x30_1", "A_60x60_1"
         ]
         print("Escolha um Modelo de Matriz:")
         for idx, m in enumerate(available_models, 1):
@@ -187,35 +187,19 @@ class Client:
 
     def _generate_dummy_signal_gain(self, model: str) -> np.ndarray:
         """Generates a dummy signal gain array for testing."""
-        # The server expects 'g' from g = Hf. The size of 'g' depends on H.shape[0].
-        # For a dummy, we can just create an array of a reasonable size.
-        # In a real scenario, this would come from a sensor or pre-processing.
-        
-        # Based on typical H matrices for image reconstruction, g's length
-        # could be related to the number of projections or detector elements.
-        # Let's assume a fixed size for demonstration, or a size dependent on a known image size.
-        
-        # A common scenario for H is that H * f = g, where H is M x N, f is N x 1 (flattened image),
-        # and g is M x 1 (projection data). So len(g) = M.
-        # If H_1 is 10000x2500 and H_2 is 1600x400 (from original server code comments/logic implies this sort of size)
-        # We need g to have len = H.shape[0]
-        
-        # For simplicity, let's create a signal that matches a common projection data size.
-        # A 64x64 image (4096 pixels) often results in projection data of ~6000-10000 length.
-        # Let's assume a size that roughly corresponds to the server's expected input for `g`.
-        # The server calculates len_image = int(np.sqrt(len(resultado))), meaning `resultado` (f)
-        # needs to be a perfect square for reshaping.
-        # The server expects len(g) to be large for progress reporting.
-        
-        # Let's generate a synthetic signal gain for a 64x64 image (4096 pixels)
-        # if H_1.shape[0] is say 8192
-        dummy_size = 8192 # Example size, matching a common tomography measurement array size.
-                         # This should ideally match `H_matrix.shape[0]` from the server's perspective.
-                         # For this example, we assume server's H_1 or H_2 will handle this size for g.
-        
-        # Generate some random float data, scaled to be non-zero but not too large
+        # Dicionário com o tamanho correto para cada modelo
+        model_sizes = {
+            "H_1": 10000,
+            "H_2": 1600,
+            "G_1": 50816,
+            "G_2": 50816,
+            "g_30x30_1": 900,
+            "g_30x30_2": 900,
+            "A_30x30_1": 900,
+            "A_60x60_2": 3600,
+        }
+        dummy_size = model_sizes.get(model, 8192)  # fallback para 8192 se não encontrar
         signal_gain = np.random.rand(dummy_size).astype(np.float64) * 100 + 50
-        
         self.logger.info(f"Generated dummy signal gain of size: {signal_gain.shape[0]}")
         return signal_gain
 
@@ -270,8 +254,8 @@ class Client:
             self.logger.info("Server reported busy, client waiting in queue.")
             server_response = self._receive_message() # Wait for o próximo OK
 
-        # Aceita tanto OK-Pode receber quanto OK-Ready to receive
-        if server_response.startswith("OK-Pode receber") or server_response.startswith("OK-Ready to receive"):
+        # Aceita apenas OK-Ready to receive
+        if server_response.startswith("OK-Ready to receive"):
             print("Server is ready to receive signal gain data.")
             signal_gain = self._generate_dummy_signal_gain(model)
             self._send_signal_gain(signal_gain)
@@ -450,7 +434,7 @@ class Client:
             return
 
         self._send_message("OPTION-5")
-        self._send_message("OK-Disconnect")
+        self._send_message("OK")
         
         response = self._receive_message()
         if response == "OK-8-Desconectado":
