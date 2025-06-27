@@ -1,0 +1,96 @@
+INFO - 2025-06-26 20:24:18,240: Logger initialized.
+INFO - 2025-06-26 20:24:18,241: Server socket created on port: '6000'
+INFO - 2025-06-26 20:24:18,279: NPY files not found. Loading from CSV and saving as NPY.
+INFO - 2025-06-26 20:31:47,954: Server socket finalized!
+INFO - 2025-06-26 20:31:47,956: Server resources released.
+INFO - 2025-06-26 20:40:21,015: Logger initialized.
+INFO - 2025-06-26 20:40:21,017: Server socket created on port: '6000'
+INFO - 2025-06-26 20:40:21,063: NPY files not found. Loading from CSV and saving as NPY.
+INFO - 2025-06-26 20:50:18,982: Logger initialized.
+INFO - 2025-06-26 20:50:18,983: Server socket created on port: '6000'
+INFO - 2025-06-26 20:50:18,998: NPY files not found. Loading from CSV and saving as NPY.
+INFO - 2025-06-26 21:05:18,700: Logger initialized.
+INFO - 2025-06-26 21:05:18,701: Server socket created on port: '6000'
+INFO - 2025-06-26 21:05:22,436: Matrices loaded from .npy files.
+INFO - 2025-06-26 21:07:32,610: Server was initialized!
+INFO - 2025-06-26 21:07:40,787: New client connected: ('127.0.0.1', 50767). Total clients: 1
+INFO - 2025-06-26 21:08:06,140: Sender: ('127.0.0.1', 50767) - Received: 'OPTION-2'
+INFO - 2025-06-26 21:08:06,140: Sender: ('127.0.0.1', 50767) - Received: 'OK-antonio-H_1-phantom-CGNE'
+INFO - 2025-06-26 21:08:06,140: Recipient: ('127.0.0.1', 50767) - Sent: 'OK-Ready to receive'
+INFO - 2025-06-26 21:08:35,611: Sender: ('127.0.0.1', 50767) - Received: 'Data size 5715160600973028657'
+INFO - 2025-06-26 21:22:34,076: Logger initialized.
+INFO - 2025-06-26 21:22:34,077: Server socket created on port: '6000'
+INFO - 2025-06-26 21:22:40,986: Matrices loaded from .npy files.
+INFO - 2025-06-26 21:23:09,958: Server was initialized!
+INFO - 2025-06-26 21:23:23,986: New client connected: ('127.0.0.1', 50872). Total clients: 1
+INFO - 2025-06-26 21:23:39,948: Sender: ('127.0.0.1', 50872) - Received: 'OPTION-1'
+INFO - 2025-06-26 21:23:39,948: Sender: ('127.0.0.1', 50872) - Received: 'OK-Antonio-H_1-phantom-CGNE'
+INFO - 2025-06-26 21:23:39,948: Client ('127.0.0.1', 50872) acquired semaphore and will be processed immediately.
+INFO - 2025-06-26 21:23:39,949: Recipient: ('127.0.0.1', 50872) - Sent: 'OK-Ready to receive'
+INFO - 2025-06-26 21:26:01,410: Sender: ('127.0.0.1', 50872) - Received: 'Data size 5715160600973028658'
+ERROR - 2025-06-26 21:36:30,648: Error receiving signal gain from ('127.0.0.1', 50872): [WinError 10054] Foi forçado o cancelamento de uma conexão existente pelo host remoto
+INFO - 2025-06-26 21:36:30,652: Semaphore released for ('127.0.0.1', 50872).
+INFO - 2025-06-26 22:47:34,772: Logger initialized.
+INFO - 2025-06-26 22:47:34,774: Server socket created on port: '6000'
+INFO - 2025-06-26 22:47:46,380: Matriz 'H-1' carregada de arquivo .npy.
+INFO - 2025-06-26 22:47:46,687: Matriz 'H-2' carregada de arquivo .npy.
+INFO - 2025-06-26 22:47:46,690: Matriz 'G-1' carregada de arquivo .npy.
+INFO - 2025-06-26 22:47:46,692: Matriz 'G-2' carregada de arquivo .npy.
+INFO - 2025-06-26 22:47:46,694: Matriz 'g-30x30-1' carregada de arquivo .npy.
+INFO - 2025-06-26 22:47:46,696: Matriz 'g-30x30-2' carregada de arquivo .npy.
+INFO - 2025-06-26 22:47:46,697: Matriz 'A-30x30-1' carregada de arquivo .npy.
+WARNING - 2025-06-26 22:47:46,697: Arquivo de matriz 'A-60x60-2' não encontrado em .npy nem .csv.
+INFO - 2025-06-26 22:47:50,215: Server was initialized!
+INFO - 2025-06-26 22:48:57,006: New client connected: ('127.0.0.1', 51920). Total clients: 1
+INFO - 2025-06-26 22:50:13,694: Sender: ('127.0.0.1', 51920) - Received: ''
+INFO - 2025-06-26 22:50:24,252: New client connected: ('127.0.0.1', 51950). Total clients: 2
+INFO - 2025-06-26 22:52:06,589: Sender: ('127.0.0.1', 51950) - Received: ''
+INFO - 2025-06-26 22:52:13,367: New client connected: ('127.0.0.1', 51971). Total clients: 3
+INFO - 2025-06-26 22:52:29,361: Sender: ('127.0.0.1', 51971) - Received: 'OPTION-2'
+INFO - 2025-06-26 22:52:29,361: Sender: ('127.0.0.1', 51971) - Received: 'OK-Antonio-g-30x30-1-phantom-CGNE'
+INFO - 2025-06-26 22:52:29,362: Recipient: ('127.0.0.1', 51971) - Sent: 'OK-Ready to receive'
+INFO - 2025-06-26 22:53:08,985: Sender: ('127.0.0.1', 51971) - Received: 'Data size 5715160600973028657'
+ERROR - 2025-06-26 22:53:39,513: Error receiving signal gain from ('127.0.0.1', 51971): [WinError 10054] Foi forçado o cancelamento de uma conexão existente pelo host remoto
+ERROR - 2025-06-26 22:53:39,530: Failed to receive message from ('127.0.0.1', 51971). Client removed: [WinError 10038] Foi tentada uma operação em algum item que não é um soquete
+INFO - 2025-06-26 23:08:39,059: Logger initialized.
+INFO - 2025-06-26 23:08:39,060: Server socket created on port: '6000'
+INFO - 2025-06-26 23:08:49,998: Matriz 'H-1' carregada de arquivo .npy.
+INFO - 2025-06-26 23:08:50,317: Matriz 'H-2' carregada de arquivo .npy.
+INFO - 2025-06-26 23:08:50,321: Matriz 'G-1' carregada de arquivo .npy.
+INFO - 2025-06-26 23:08:50,324: Matriz 'G-2' carregada de arquivo .npy.
+INFO - 2025-06-26 23:08:50,326: Matriz 'g-30x30-1' carregada de arquivo .npy.
+INFO - 2025-06-26 23:08:50,329: Matriz 'g-30x30-2' carregada de arquivo .npy.
+INFO - 2025-06-26 23:08:50,331: Matriz 'A-30x30-1' carregada de arquivo .npy.
+WARNING - 2025-06-26 23:08:50,331: Arquivo de matriz 'A-60x60-2' não encontrado em .npy nem .csv.
+INFO - 2025-06-26 23:08:59,352: Server was initialized!
+INFO - 2025-06-26 23:09:05,991: New client connected: ('127.0.0.1', 52211). Total clients: 1
+INFO - 2025-06-26 23:09:33,363: Sender: ('127.0.0.1', 52211) - Received: 'OPTION-3'
+INFO - 2025-06-26 23:09:33,364: Sender: ('127.0.0.1', 52211) - Received: 'OK-neto-G-1-phantom-CGNE'
+INFO - 2025-06-26 23:09:33,364: Recipient: ('127.0.0.1', 52211) - Sent: 'OK-Ready to receive'
+ERROR - 2025-06-26 23:14:40,472: Client ('127.0.0.1', 52211) disconnected during signal gain size reception.
+INFO - 2025-06-26 23:14:40,506: Sender: ('127.0.0.1', 52211) - Received: ''
+INFO - 2025-06-26 23:15:22,657: Logger initialized.
+INFO - 2025-06-26 23:15:22,659: Server socket created on port: '6000'
+INFO - 2025-06-26 23:15:28,797: Matriz 'H-1' carregada de arquivo .npy.
+INFO - 2025-06-26 23:15:29,113: Matriz 'H-2' carregada de arquivo .npy.
+INFO - 2025-06-26 23:15:29,117: Matriz 'G-1' carregada de arquivo .npy.
+INFO - 2025-06-26 23:15:29,119: Matriz 'G-2' carregada de arquivo .npy.
+INFO - 2025-06-26 23:15:29,121: Matriz 'g-30x30-1' carregada de arquivo .npy.
+INFO - 2025-06-26 23:15:29,124: Matriz 'g-30x30-2' carregada de arquivo .npy.
+INFO - 2025-06-26 23:15:29,127: Matriz 'A-30x30-1' carregada de arquivo .npy.
+WARNING - 2025-06-26 23:15:29,129: Arquivo de matriz 'A-60x60-2' não encontrado em .npy nem .csv.
+INFO - 2025-06-26 23:15:35,943: Logger initialized.
+CRITICAL - 2025-06-26 23:15:35,946: Failed to initialize server socket: [WinError 10048] Normalmente é permitida apenas uma utilização de cada endereço de soquete (protocolo/endereço de rede/porta)
+INFO - 2025-06-26 23:15:35,969: Server socket finalized!
+INFO - 2025-06-26 23:15:35,970: Server resources released.
+INFO - 2025-06-26 23:16:44,878: Server was initialized!
+INFO - 2025-06-26 23:16:58,765: New client connected: ('127.0.0.1', 52353). Total clients: 1
+INFO - 2025-06-26 23:17:12,999: Sender: ('127.0.0.1', 52353) - Received: 'OPTION-2'
+INFO - 2025-06-26 23:17:13,001: Sender: ('127.0.0.1', 52353) - Received: 'OK-antonio-G-1-phantom-CGNE'
+INFO - 2025-06-26 23:17:13,003: Recipient: ('127.0.0.1', 52353) - Sent: 'OK-Ready to receive'
+ERROR - 2025-06-26 23:23:32,475: Client ('127.0.0.1', 52353) disconnected during signal gain size reception.
+INFO - 2025-06-26 23:23:32,502: Sender: ('127.0.0.1', 52353) - Received: ''
+INFO - 2025-06-26 23:23:38,760: New client connected: ('127.0.0.1', 52424). Total clients: 2
+INFO - 2025-06-26 23:23:51,533: Sender: ('127.0.0.1', 52424) - Received: 'OPTION-2'
+INFO - 2025-06-26 23:23:51,533: Sender: ('127.0.0.1', 52424) - Received: 'OK-neto-G-1-phantom-CGNE'
+INFO - 2025-06-26 23:23:51,533: Recipient: ('127.0.0.1', 52424) - Sent: 'OK-Ready to receive'

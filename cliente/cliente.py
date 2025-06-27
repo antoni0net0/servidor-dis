@@ -144,31 +144,45 @@ class Client:
         return choice
 
     def _choose_reconstruction_parameters(self) -> tuple[str, str, str]:
-        """Guides the user through choosing image reconstruction parameters."""
+        """Guia o usuário para escolher os parâmetros de reconstrução de imagem."""
         self._clear_screen()
         self._print_title()
-        
-        print("Choose a Model (H_1 or H_2):")
+
+        # Modelos disponíveis (deve bater com o servidor)
+
+        available_models = [
+            "H-1", "H-2", "G-1", "G-2", "g-30x30-1", "g-30x30-2", "A-30x30-1", "A-60x60-2"
+        ]
+        print("Escolha um Modelo de Matriz:")
+        for idx, m in enumerate(available_models, 1):
+            print(f"{idx}. {m}")
         model = ""
-        while model.upper() not in ["H_1", "H_2"]:
-            model = input("Enter H_1 or H_2: ").strip()
-            if model.upper() not in ["H_1", "H_2"]:
-                print("Invalid model. Please enter H_1 or H_2.")
-        
-        print("\nChoose an Image Model (e.g., 'phantom', 'shepp_logan'):")
-        image_model = input("Enter image model name (e.g., 'phantom'): ").strip()
+        while True:
+            try:
+                model_input = input(f"Digite o número do modelo desejado (1-{len(available_models)}): ").strip()
+                model_idx = int(model_input) - 1
+                if 0 <= model_idx < len(available_models):
+                    model = available_models[model_idx]
+                    break
+                else:
+                    print(f"Número inválido. Escolha um número entre 1 e {len(available_models)}.")
+            except ValueError:
+                print("Entrada inválida. Digite apenas o número correspondente ao modelo.")
+
+        print("\nEscolha um Modelo de Imagem (ex: 'phantom', 'shepp_logan'):")
+        image_model = input("Digite o nome do modelo de imagem (ex: 'phantom'): ").strip()
         if not image_model:
             image_model = "default_image" # Fallback
-            print(f"No image model entered, using default: {image_model}")
+            print(f"Nenhum modelo informado, usando padrão: {image_model}")
 
-        print("\nChoose an Algorithm Model (CGNE or CGNR):")
+        print("\nEscolha o Algoritmo (CGNE ou CGNR):")
         algorithm_model = ""
         while algorithm_model.upper() not in ["CGNE", "CGNR"]:
-            algorithm_model = input("Enter CGNE or CGNR: ").strip()
+            algorithm_model = input("Digite CGNE ou CGNR: ").strip()
             if algorithm_model.upper() not in ["CGNE", "CGNR"]:
-                print("Invalid algorithm. Please enter CGNE or CGNR.")
-        
-        return model.upper(), image_model, algorithm_model.upper()
+                print("Algoritmo inválido. Digite CGNE ou CGNR.")
+
+        return model, image_model, algorithm_model.upper()
 
 
     def _generate_dummy_signal_gain(self, model: str) -> np.ndarray:
@@ -207,36 +221,38 @@ class Client:
 
 
     def _send_signal_gain(self, signal_gain: np.ndarray) -> None:
-        """Sends the signal gain numpy array to the server."""
+        """Sends the signal gain numpy array to the server, com prints de debug."""
         try:
             data_bytes = signal_gain.tobytes()
             size = len(data_bytes)
-            
-            # Send the size of the data first (8 bytes, big-endian)
-            self._send_message(f"{size}".encode('utf-8').hex()) # Send size as hex string to avoid encoding issues with direct bytes
-            # The server expects `int.from_bytes(data_size, byteorder='big')`
-            # So we need to send bytes directly here, not an encoded string.
+            print(f"[DEBUG] Enviando signal_gain com shape {signal_gain.shape} e {size} bytes...")
+            self.logger.info(f"[DEBUG] Enviando signal_gain com shape {signal_gain.shape} e {size} bytes...")
 
+            # ENVIE APENAS OS 8 BYTES BINÁRIOS
             self.client_socket.sendall(size.to_bytes(8, byteorder='big'))
             self.logger.info(f"Sent signal gain size: {size} bytes.")
+            print(f"[DEBUG] Tamanho enviado: {size} bytes")
 
-            # Send the actual data in chunks
+            # Envie os dados em blocos
             sent_bytes = 0
             while sent_bytes < size:
                 chunk = data_bytes[sent_bytes : sent_bytes + self.config.BUFFER_SIZE]
                 self.client_socket.sendall(chunk)
                 sent_bytes += len(chunk)
+                print(f"[DEBUG] Enviados {sent_bytes}/{size} bytes...")
                 self.logger.info(f"Sent {sent_bytes}/{size} bytes of signal gain.")
+            print("[DEBUG] signal_gain enviado com sucesso!")
             self.logger.info("Finished sending signal gain data.")
         except socket.error as e:
+            print(f"[ERRO] Falha ao enviar signal_gain: {e}")
             self.logger.error(f"Error sending signal gain: {e}")
             self.is_connected = False
             self._handle_disconnect()
         except Exception as e:
+            print(f"[ERRO] Erro inesperado ao enviar signal_gain: {e}")
             self.logger.error(f"Unexpected error during signal gain sending: {e}")
             self.is_connected = False
             self._handle_disconnect()
-
 
     def _reconstruct_image_request(self, option_type: int) -> None:
         """Handles the image reconstruction request flow."""
@@ -248,25 +264,17 @@ class Client:
         self._send_message(request_message)
         
         server_response = self._receive_message()
+
         if server_response.startswith("WAIT"):
             print("Server is busy. Please wait in line...")
             self.logger.info("Server reported busy, client waiting in queue.")
-            # In a real application, you might want to block or provide
-            # an indicator that the client is waiting. For now, we'll
-            # just wait for the next message from the server which
-            # will be 'OK-Pode receber' when it's their turn.
-            server_response = self._receive_message() # Wait for the OK-Pode receber
-            if not server_response.startswith("OK-Pode receber"):
-                print("Did not receive 'OK-Pode receber' as expected after waiting.")
-                self.logger.warning("Did not receive expected 'OK-Pode receber' from server.")
-                time.sleep(2)
-                return
+            server_response = self._receive_message() # Wait for o próximo OK
 
-        if server_response.startswith("OK-Pode receber"):
+        # Aceita tanto OK-Pode receber quanto OK-Ready to receive
+        if server_response.startswith("OK-Pode receber") or server_response.startswith("OK-Ready to receive"):
             print("Server is ready to receive signal gain data.")
             signal_gain = self._generate_dummy_signal_gain(model)
             self._send_signal_gain(signal_gain)
-            
             final_response = self._receive_message()
             if final_response == "OK-Process finished":
                 print("Image reconstruction completed successfully on server.")

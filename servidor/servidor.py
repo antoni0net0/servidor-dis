@@ -27,10 +27,10 @@ class ServerConfig:
         
         self.CONTENT_DIR = "./content"
         self.DATA_DIR = "./data"
-        self.H_1_CSV = "H-1.csv"
-        self.H_2_CSV = "H-2.csv"
-        self.H_1_NPY = "H-1.npy"
-        self.H_2_NPY = "H-2.npy"
+        # Lista de arquivos de matriz disponíveis (nome base, sem extensão)
+        self.MATRIX_FILES = [
+            "H-1", "H-2", "G-1", "G-2", "g-30x30-1", "g-30x30-2", "A-30x30-1", "A-60x60-2"
+        ]
 class Server:
     """
     Implements a multi-threaded server for image reconstruction.
@@ -48,8 +48,8 @@ class Server:
         self.server_address = (self.config.SERVER_NAME, self.config.SERVER_PORT)
         self.connected_clients = [] # Initialize here to prevent AttributeError in __del__ if init fails early
 
-        self.H_1 = None
-        self.H_2 = None
+        # Dicionário para armazenar todas as matrizes carregadas
+        self.matrices = {}
 
         self.semaphore = th.Semaphore(self.config.MAX_SIMULTANEOUS_CLIENTS)
         self.waiting_queue = queue.Queue()
@@ -90,26 +90,38 @@ class Server:
             raise
 
     def _load_matrices(self):
-        """Loads H_1 and H_2 matrices from .npy or .csv files."""
+        """Carrega todas as matrizes disponíveis (npy ou csv) para reconstrução de imagem."""
         self._clear_screen()
         self._print_title()
-        print('Loading base files...')
-        h_1_npy_path = os.path.join(self.config.DATA_DIR, self.config.H_1_NPY)
-        h_2_npy_path = os.path.join(self.config.DATA_DIR, self.config.H_2_NPY)
-        h_1_csv_path = os.path.join(self.config.DATA_DIR, self.config.H_1_CSV)
-        h_2_csv_path = os.path.join(self.config.DATA_DIR, self.config.H_2_CSV)
-
-        if os.path.exists(h_1_npy_path) and os.path.exists(h_2_npy_path):
-            self.H_1 = np.load(h_1_npy_path)
-            self.H_2 = np.load(h_2_npy_path)
-            self.logger.info("Matrices loaded from .npy files.")
-        else:
-            self.logger.info("NPY files not found. Loading from CSV and saving as NPY.")
-            self.H_1 = np.genfromtxt(h_1_csv_path, delimiter=',')
-            self.H_2 = np.genfromtxt(h_2_csv_path, delimiter=',')
-            np.save(h_1_npy_path, self.H_1)
-            np.save(h_2_npy_path, self.H_2)
-            self.logger.info("Matrices loaded from .csv files and saved as .npy files.")
+        print('Carregando arquivos de matriz disponíveis...')
+        for base_name in self.config.MATRIX_FILES:
+            npy_path = os.path.join(self.config.DATA_DIR, f"{base_name}.npy")
+            csv_path = os.path.join(self.config.DATA_DIR, f"{base_name}.csv")
+            try:
+                if os.path.exists(npy_path):
+                    try:
+                        self.matrices[base_name] = np.load(npy_path)
+                        self.logger.info(f"Matriz '{base_name}' carregada de arquivo .npy.")
+                        print(f"[OK] {base_name}.npy carregado com shape {self.matrices[base_name].shape}")
+                    except Exception as e:
+                        self.logger.error(f"Erro ao carregar '{base_name}.npy': {e}")
+                        print(f"[ERRO] Falha ao carregar {base_name}.npy: {e}")
+                elif os.path.exists(csv_path):
+                    try:
+                        self.matrices[base_name] = np.genfromtxt(csv_path, delimiter=',')
+                        np.save(npy_path, self.matrices[base_name])
+                        self.logger.info(f"Matriz '{base_name}' carregada de .csv e salva como .npy.")
+                        print(f"[OK] {base_name}.csv carregado com shape {self.matrices[base_name].shape}")
+                    except Exception as e:
+                        self.logger.error(f"Erro ao carregar '{base_name}.csv': {e}")
+                        print(f"[ERRO] Falha ao carregar {base_name}.csv: {e}")
+                else:
+                    self.logger.warning(f"Arquivo de matriz '{base_name}' não encontrado em .npy nem .csv.")
+                    print(f"[AVISO] {base_name} não encontrado em .npy nem .csv")
+            except Exception as e:
+                self.logger.error(f"Erro inesperado ao tentar carregar '{base_name}': {e}")
+                print(f"[ERRO] Erro inesperado ao tentar carregar {base_name}: {e}")
+        print(f"Matrizes disponíveis: {list(self.matrices.keys())}")
     
     def __del__(self):
         """Cleans up resources when the server object is deleted."""
@@ -290,12 +302,9 @@ class Server:
         elif option == 5:
             # Option 5: Disconnect
             if response_parts[0] == "OK":
-                self.logger.warning(f"Client disconnected: {address}")
+                self._send_message(client_socket, address, 'OK-8-Desconectado')
                 self._remove_client(client_socket)
-                self._send_message(client_socket, address, 'OK-8-Disconnected')
-                self._clear_screen()
-                self._print_title()
-                print(f"{len(self.connected_clients)} client(s) connected...")
+                return
         else:
             self.logger.warning(f"Unknown option {option} from client {address}.")
             self._send_message(client_socket, address, "ERROR-Unknown option")
@@ -417,23 +426,22 @@ class Server:
                 return chosen_filename
 
     def _calculate_cgne(self, g: np.ndarray, model: str) -> tuple[np.ndarray, int]:
-        """Calculates image reconstruction using the Conjugate Gradient Normal Equation (CGNE) method."""
-        H_matrix = self.H_1 if model == "H_1" else self.H_2
+        """Calcula reconstrução de imagem usando CGNE."""
+        # model agora pode ser qualquer base_name de matriz
+        H_matrix = self.matrices.get(model)
+        if H_matrix is None:
+            raise ValueError(f"Matriz '{model}' não carregada.")
         f = np.zeros(H_matrix.shape[1])
         r = g - np.dot(H_matrix, f)
         p = np.dot(H_matrix.T, r)
         iter_count = 0
 
-        # Progress reporting setup
-        total_elements = len(g)
-        progress_increment = total_elements // 100
-        last_reported_progress = -1
+        max_iter = 100  # Limite de iterações para evitar lentidão
 
-        for i in range(total_elements): # Iterating up to len(g) for progress, but convergence is key
+        for i in range(max_iter):
             alpha_numerator = np.dot(r.T, r)
             alpha_denominator = np.dot(p.T, p)
             if alpha_denominator == 0:
-                self.logger.warning(f"CGNE: Alpha denominator is zero. Terminating early at iteration {iter_count}.")
                 break
             alpha = alpha_numerator / alpha_denominator
 
@@ -442,16 +450,11 @@ class Server:
 
             error = abs(np.linalg.norm(r, ord=2) - np.linalg.norm(r_next, ord=2))
             if error < 1e-4:
-                self.logger.info(f"CGNE: Error less than 1e-4 at iteration {iter_count}.")
                 break
-
-            if iter_count >= 10 and error > 1e-3: # Allow more iterations if not converged quickly
-                self.logger.info(f"CGNE: Passed 10 iterations with error {error}. Continuing.")
 
             beta_numerator = np.dot(r_next.T, r_next)
             beta_denominator = np.dot(r.T, r)
             if beta_denominator == 0:
-                self.logger.warning(f"CGNE: Beta denominator is zero. Terminating early at iteration {iter_count}.")
                 break
             beta = beta_numerator / beta_denominator
 
@@ -459,38 +462,26 @@ class Server:
             r = r_next
             iter_count += 1
 
-            current_progress = i // progress_increment if progress_increment > 0 else 0
-            if current_progress > last_reported_progress:
-                last_reported_progress = current_progress
-                self._clear_screen()
-                self._print_title()
-                print(f'Processing: {last_reported_progress}% of {total_elements} packages')
-                self.logger.info(f'Processing: {last_reported_progress}% of {total_elements} packages')
-
-        print('Processing finished')
-        self.logger.info("CGNE processing finished.")
         return f, iter_count
 
     def _calculate_cgnr(self, g: np.ndarray, model: str) -> tuple[np.ndarray, int]:
-        """Calculates image reconstruction using the Conjugate Gradient Normal Residual (CGNR) method."""
-        H_matrix = self.H_1 if model == "H_1" else self.H_2
+        """Calcula reconstrução de imagem usando CGNR."""
+        H_matrix = self.matrices.get(model)
+        if H_matrix is None:
+            raise ValueError(f"Matriz '{model}' não carregada.")
         f = np.zeros(H_matrix.shape[1])
         r = g - np.dot(H_matrix, f)
         z = np.dot(H_matrix.T, r)
         p = z
         iter_count = 0
 
-        # Progress reporting setup
-        total_elements = len(g)
-        progress_increment = total_elements // 100
-        last_reported_progress = -1
+        max_iter = 100  # Limite de iterações para evitar lentidão
 
-        for i in range(total_elements): # Iterating up to len(g) for progress, but convergence is key
+        for i in range(max_iter):
             w = np.dot(H_matrix, p)
             alpha_numerator = np.dot(z.T, z)
             alpha_denominator = np.dot(w.T, w)
             if alpha_denominator == 0:
-                self.logger.warning(f"CGNR: Alpha denominator is zero. Terminating early at iteration {iter_count}.")
                 break
             alpha = alpha_numerator / alpha_denominator
 
@@ -500,13 +491,11 @@ class Server:
 
             error = abs(np.linalg.norm(r, ord=2) - np.linalg.norm(r_next, ord=2))
             if error < 1e-4:
-                self.logger.info(f"CGNR: Error less than 1e-4 at iteration {iter_count}.")
                 break
 
             beta_numerator = np.dot(z_next.T, z_next)
             beta_denominator = np.dot(z.T, z)
             if beta_denominator == 0:
-                self.logger.warning(f"CGNR: Beta denominator is zero. Terminating early at iteration {iter_count}.")
                 break
             beta = beta_numerator / beta_denominator
 
@@ -515,16 +504,6 @@ class Server:
             z = z_next
             iter_count += 1
 
-            current_progress = i // progress_increment if progress_increment > 0 else 0
-            if current_progress > last_reported_progress:
-                last_reported_progress = current_progress
-                self._clear_screen()
-                self._print_title()
-                print(f'Processing: {last_reported_progress}% of {total_elements} packages')
-                self.logger.info(f'Processing: {last_reported_progress}% of {total_elements} packages')
-
-        print('Processing finished')
-        self.logger.info("CGNR processing finished.")
         return f, iter_count
 
     def _receive_signal_gain(self, client_socket: socket.socket, address: tuple) -> np.ndarray | None:
@@ -563,7 +542,7 @@ class Server:
     def _reconstruct_image(self, client_socket: socket.socket, address: tuple, model: str, image_model: str, signal_gain: np.ndarray, username: str, algorithm_model: str) -> None:
         """
         Reconstructs the image, saves a performance report, and sends a
-        confirmation to the client.
+        confirmation to the client. Agora com logs detalhados de shapes e erros.
         """
         process = psutil.Process(os.getpid())
 
@@ -572,16 +551,36 @@ class Server:
         start_cpu_percent = process.cpu_percent(interval=None) # Non-blocking
         start_memory_rss = process.memory_info().rss
 
+        self.logger.info(f"[RECON] Usuário: {username}, Modelo: {model}, Algoritmo: {algorithm_model}, Imagem: {image_model}")
+        # Log shapes das matrizes e do sinal recebido
+        matriz = self.matrices.get(model)
+        if matriz is None:
+            self.logger.error(f"[RECON] Matriz '{model}' não carregada!")
+            self._send_message(client_socket, address, f"ERROR-Matriz '{model}' não carregada")
+            return
+        self.logger.info(f"[RECON] Shape da matriz '{model}': {matriz.shape}")
+        self.logger.info(f"[RECON] Shape do signal_gain recebido: {signal_gain.shape}")
+
+        if signal_gain.shape[0] != matriz.shape[0]:
+            self.logger.error(f"[RECON] Tamanho do signal_gain ({signal_gain.shape[0]}) diferente do número de linhas da matriz ({matriz.shape[0]})!")
+            self._send_message(client_socket, address, f"ERROR-Tamanho do signal_gain ({signal_gain.shape[0]}) diferente do esperado ({matriz.shape[0]})")
+            return
+
         reconstructed_image_data = None
         iterations = 0
 
-        if algorithm_model == "CGNE":
-            reconstructed_image_data, iterations = self._calculate_cgne(signal_gain, model)
-        elif algorithm_model == "CGNR":
-            reconstructed_image_data, iterations = self._calculate_cgnr(signal_gain, model)
-        else:
-            self.logger.error(f"Unknown algorithm model: {algorithm_model}")
-            self._send_message(client_socket, address, "ERROR-Unknown algorithm")
+        try:
+            if algorithm_model == "CGNE":
+                reconstructed_image_data, iterations = self._calculate_cgne(signal_gain, model)
+            elif algorithm_model == "CGNR":
+                reconstructed_image_data, iterations = self._calculate_cgnr(signal_gain, model)
+            else:
+                self.logger.error(f"Unknown algorithm model: {algorithm_model}")
+                self._send_message(client_socket, address, "ERROR-Unknown algorithm")
+                return
+        except Exception as e:
+            self.logger.error(f"[RECON] Erro ao executar algoritmo {algorithm_model}: {e}")
+            self._send_message(client_socket, address, f"ERROR-Falha ao executar algoritmo: {e}")
             return
 
         if reconstructed_image_data is None:
@@ -592,12 +591,16 @@ class Server:
         # Reshape the 1D array back into a square image
         image_dim = int(np.sqrt(len(reconstructed_image_data)))
         if image_dim * image_dim != len(reconstructed_image_data):
-            self.logger.error(f"Reconstructed data length {len(reconstructed_image_data)} is not a perfect square for image reshaping.")
-            # Handle error, perhaps pad or resize if necessary, or just send error to client
-            self._send_message(client_socket, address, "ERROR-Invalid image data size")
+            self.logger.error(f"[RECON] Reconstructed data length {len(reconstructed_image_data)} is not a perfect square for image reshaping.")
+            self._send_message(client_socket, address, f"ERROR-Invalid image data size: {len(reconstructed_image_data)}")
             return
-            
-        reconstructed_image = reconstructed_image_data.reshape((image_dim, image_dim), order='F') # 'F' for Fortran-like order (column-major)
+
+        try:
+            reconstructed_image = reconstructed_image_data.reshape((image_dim, image_dim), order='F') # 'F' for Fortran-like order (column-major)
+        except Exception as e:
+            self.logger.error(f"[RECON] Erro ao fazer reshape da imagem: {e}")
+            self._send_message(client_socket, address, f"ERROR-Reshape: {e}")
+            return
 
         end_datetime = datetime.datetime.now()
         end_time = time.time()
@@ -605,10 +608,6 @@ class Server:
         end_memory_rss = process.memory_info().rss
 
         total_processing_time = end_time - start_time
-        # CPU usage might need a small interval to be accurate if measured this way.
-        # psutil.cpu_percent() measures system-wide CPU usage over an interval if interval is not None.
-        # For per-process usage, you might want to consider `process.cpu_times()` for start/end.
-        # For simplicity, keeping the original logic, but note this might not be precise per process.
         cpu_usage_diff = end_cpu_percent - start_cpu_percent
         memory_usage_mb = (end_memory_rss - start_memory_rss) / (1024 ** 2)
 
@@ -625,18 +624,22 @@ class Server:
         report_filename = f"{username}-{model}-{image_model}-{algorithm_model}.png"
         report_filepath = os.path.join(self.config.CONTENT_DIR, report_filename)
 
-        plt.figure(figsize=(8, 6)) # Create a new figure
-        plt.imshow(reconstructed_image, cmap='gray')
-        plt.title('Performance Report and Reconstructed Image')
-        # Adjust text position based on figure coordinates (0 to 1)
-        plt.gcf().text(0.02, 0.5, report_info, fontsize=9, color='white', ha='left', va='center',
-                       bbox=dict(facecolor='black', alpha=0.6, edgecolor='none', boxstyle='round,pad=0.5'))
-        plt.axis('off') # Hide axes for a cleaner look
-        plt.tight_layout(rect=[0.25, 0, 1, 1]) # Adjust layout to make space for text
-        plt.savefig(report_filepath)
-        plt.close() # Close the figure to free up memory
+        try:
+            plt.figure(figsize=(8, 6)) # Create a new figure
+            plt.imshow(reconstructed_image, cmap='gray')
+            plt.title('Performance Report and Reconstructed Image')
+            plt.gcf().text(0.02, 0.5, report_info, fontsize=9, color='white', ha='left', va='center',
+                        bbox=dict(facecolor='black', alpha=0.6, edgecolor='none', boxstyle='round,pad=0.5'))
+            plt.axis('off') # Hide axes for a cleaner look
+            plt.tight_layout(rect=[0.25, 0, 1, 1]) # Adjust layout to make space for text
+            plt.savefig(report_filepath)
+            plt.close() # Close the figure to free up memory
+            self.logger.info(f"Performance report saved to {report_filepath}")
+        except Exception as e:
+            self.logger.error(f"[RECON] Erro ao salvar imagem: {e}")
+            self._send_message(client_socket, address, f"ERROR-Falha ao salvar imagem: {e}")
+            return
 
-        self.logger.info(f"Performance report saved to {report_filepath}")
         self._send_message(client_socket, address, 'OK-Process finished')
 
     def run(self) -> None:
