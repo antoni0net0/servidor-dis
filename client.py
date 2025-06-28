@@ -6,8 +6,8 @@ import logging
 import threading
 from datetime import datetime
 from matplotlib import pyplot as plt
-
 import os
+
 os.makedirs("log", exist_ok=True)
 logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(message)s', handlers=[logging.FileHandler(os.path.join("log", "client.log"))])
 

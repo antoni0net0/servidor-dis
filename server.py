@@ -93,24 +93,29 @@ def reconstruct_cgnr(H: np.ndarray, g: np.ndarray, max_iterations: int, tol=5e-3
 def reconstruct_cgne(H: np.ndarray, g: np.ndarray, max_iterations: int, tol=1e-6, min_iterations=10, reg_factor: float = 0.0, logger=None) -> tuple[np.ndarray, int, float]:
     N = H.shape[1]
     f = np.zeros((N, 1), dtype=np.float32)
-    r = g.reshape(-1, 1) - H @ f
+    g = g.reshape(-1, 1)
+    r = g - H @ f
     p = H.T @ r
     initial_residual_norm = np.linalg.norm(r)
     final_iterations = 0
+    min_div = 1e-12
 
     for i in range(1, max_iterations + 1):
-        r_norm_sq = float(r.T @ r)
-        p_norm_sq = float(p.T @ p)
-        if p_norm_sq < 1e-12:
+        Hp = H @ p
+        alpha_num = float(r.T @ r)
+        alpha_den = float(Hp.T @ Hp) + min_div
+        if alpha_den < min_div:
             break
-        alpha = r_norm_sq / p_norm_sq
+        alpha = alpha_num / alpha_den
         f_new = f + alpha * p
         r_new = r - alpha * (H @ p)
-        beta = float(r_new.T @ r_new) / r_norm_sq
+        beta_num = float(r_new.T @ r_new)
+        beta_den = float(r.T @ r) + min_div
+        beta = beta_num / beta_den
         p_new = H.T @ r_new + beta * p
 
         current_residual_norm = np.linalg.norm(r_new)
-        relative_error = current_residual_norm / initial_residual_norm
+        relative_error = current_residual_norm / (initial_residual_norm + min_div)
 
         if logger is not None:
             logger.info(f"Iteracao {i}: erro relativo = {relative_error:.6f}")
@@ -123,12 +128,13 @@ def reconstruct_cgne(H: np.ndarray, g: np.ndarray, max_iterations: int, tol=1e-6
                 logger.info(f"Convergiu com erro relativo {relative_error:.2e} < {tol:.2e}")
             break
 
+    # Regularizacao e nao-negatividade
     if reg_factor > 0.0:
         f = np.maximum(f - reg_factor, 0)
     else:
         f = np.maximum(f, 0)
 
-    final_error = np.linalg.norm(g.reshape(-1, 1) - H @ f) / np.linalg.norm(g)
+    final_error = np.linalg.norm(g - H @ f) / (np.linalg.norm(g) + min_div)
     return f.flatten(), final_iterations, final_error
 
 app = Flask(__name__)
