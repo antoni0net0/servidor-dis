@@ -7,7 +7,9 @@ import threading
 from datetime import datetime
 from matplotlib import pyplot as plt
 
-logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(message)s', handlers=[logging.FileHandler("client.log")])
+import os
+os.makedirs("log", exist_ok=True)
+logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(message)s', handlers=[logging.FileHandler(os.path.join("log", "client.log"))])
 
 class ReconstructionClientApp(tk.Tk):
     def __init__(self):
@@ -110,17 +112,27 @@ class ReconstructionClientApp(tk.Tk):
         return data_vector
 
     def save_result_as_image(self) -> str:
-        if self.last_result_data is None: return ""
+        import os
+        if self.last_result_data is None:
+            return ""
         try:
             display_data = self.process_image_for_display(self.last_result_data)
             image_2d, dim = self.reshape_image_data(display_data)
-            if image_2d is None: return ""
-            fig = plt.figure("Salvar Imagem"); plt.imshow(image_2d, cmap='gray', aspect='auto', interpolation='nearest')
-            plt.colorbar(label="Intensidade (Escala Aplicada)"); plt.title(f"Imagem {dim}x{dim} ({self.last_algorithm_used})")
-            filename = f"resultado_{self.username.get()}_{self.algorithm.get()}_{datetime.now().strftime('%Y%m%d_%H%M%S')}.png"
-            plt.savefig(filename, dpi=300, bbox_inches='tight'); plt.close(fig)
+            if image_2d is None:
+                return ""
+            fig = plt.figure("Salvar Imagem")
+            plt.imshow(image_2d, cmap='gray', aspect='auto', interpolation='nearest')
+            plt.colorbar(label="Intensidade (Escala Aplicada)")
+            plt.title(f"Imagem {dim}x{dim} ({self.last_algorithm_used})")
+            output_dir = "outputs"
+            os.makedirs(output_dir, exist_ok=True)
+            filename = os.path.join(output_dir, f"resultado_{self.username.get()}_{self.algorithm.get()}_{datetime.now().strftime('%Y%m%d_%H%M%S')}.png")
+            plt.savefig(filename, dpi=300, bbox_inches='tight')
+            plt.close(fig)
             return filename
-        except Exception as e: self.log(f"Erro ao salvar o gráfico: {e}"); return ""
+        except Exception as e:
+            self.log(f"Erro ao salvar o grafico: {e}")
+            return ""
 
     def plot_result(self):
         if self.last_result_data is None: return
