@@ -22,8 +22,8 @@ class ReconstructionClientApp(tk.Tk):
         self.path_h, self.path_g = tk.StringVar(), tk.StringVar()
         self.username = tk.StringVar(value="user_default")
         self.algorithm = tk.StringVar(value="CGNE") # Padrão para o algoritmo que gerou a imagem de referência
-        self.use_regularization = tk.BooleanVar(value=True)
-        self.use_log_scale = tk.BooleanVar(value=True)
+        self.use_regularization = tk.BooleanVar(value=False)
+        self.use_log_scale = tk.BooleanVar(value=False)
         self.reg_factor = tk.DoubleVar(value=0.1) # Novo: Variável para o fator de regularização
 
         # --- Construção da Interface ---
