@@ -25,6 +25,7 @@ class ReconstructionClientApp(tk.Tk):
         self.use_regularization = tk.BooleanVar(value=False)
         self.use_log_scale = tk.BooleanVar(value=False)
         self.reg_factor = tk.DoubleVar(value=0.1) # Novo: Variável para o fator de regularização
+        self.zoom_factor = tk.IntVar(value=1) # Novo: Fator de zoom
 
         # --- Construção da Interface ---
         main_frame = ttk.Frame(self, padding="10")
@@ -42,12 +43,16 @@ class ReconstructionClientApp(tk.Tk):
         ttk.Button(input_frame, text="Selecionar Vetor G (.csv)", command=self.select_g_file).grid(row=3, column=0, sticky="ew", padx=5, pady=2)
         ttk.Label(input_frame, textvariable=self.path_g, wraplength=450).grid(row=3, column=1, columnspan=2, sticky="w", padx=5)
         
-        # Frame para os controles de regularização
+
+        # Frame para os controles de regularização e zoom
         reg_frame = ttk.Frame(input_frame)
         reg_frame.grid(row=4, column=0, columnspan=3, sticky="w")
         ttk.Checkbutton(reg_frame, text="Usar Regularização", variable=self.use_regularization).pack(side="left", padx=5, pady=5)
         ttk.Label(reg_frame, text="Fator:").pack(side="left", pady=5)
         ttk.Entry(reg_frame, textvariable=self.reg_factor, width=8).pack(side="left", pady=5)
+        # Novo: Zoom
+        ttk.Label(reg_frame, text="Zoom:").pack(side="left", padx=10)
+        ttk.Spinbox(reg_frame, from_=1, to=10, textvariable=self.zoom_factor, width=4).pack(side="left", pady=5)
 
         ttk.Checkbutton(input_frame, text="Usar Escala Logarítmica (Visualização)", variable=self.use_log_scale).grid(row=5, column=0, columnspan=3, sticky="w", padx=5, pady=5)
 
@@ -82,30 +87,70 @@ class ReconstructionClientApp(tk.Tk):
     def run_reconstruction(self):
         try:
             user, algo, path_h, path_g = self.username.get(), self.algorithm.get(), self.path_h.get(), self.path_g.get()
-            if not all([user, algo, path_h, path_g]): self.log("ERRO: Todos os campos devem ser preenchidos."); return
+            if not all([user, algo, path_h, path_g]):
+                self.log("ERRO: Todos os campos devem ser preenchidos."); return
 
-            self.log("Carregando dados..."); H = np.loadtxt(path_h, delimiter=',', dtype=np.float32); g = np.loadtxt(path_g, delimiter=',', dtype=np.float32)
-            
-            payload = {"user": user, "algorithm": algo, "H": H.tolist(), "g": g.tolist(), "regularization": self.use_regularization.get(), "reg_factor": self.reg_factor.get()}
+            payload = {
+                "user": user,
+                "algorithm": algo,
+                "model_path": path_h,
+                "signal_path": path_g,
+                "regularization": self.use_regularization.get(),
+                "reg_factor": self.reg_factor.get()
+            }
 
             self.log(f"Enviando requisição (Alg: {algo}, Reg: {self.use_regularization.get()}, Fator: {self.reg_factor.get()})...")
-            response = requests.post("http://127.0.0.1:5000/reconstruct", json=payload, timeout=300)
+            response = requests.post("http://127.0.0.1:5000/reconstruct", json=payload, timeout=3600)
             response.raise_for_status()
-            
-            results = response.json()
-            self.last_result_data, self.last_algorithm_used = np.array(results['image_data']), results['metadata']['algorithm_used']
-            self.log(f"Resposta recebida. Imagem contém {self.last_result_data.shape[0]} pixels.")
-            
+
+            # Salva imagem recebida e aplica zoom se necessário
+            output_dir = "outputs"
+            os.makedirs(output_dir, exist_ok=True)
+            nome_usuario = user.replace(' ', '_')
+            nome_alg = algo.upper()
+            output_filename = os.path.join(output_dir, f"resultado_{nome_usuario}_{nome_alg}_{datetime.now().strftime('%Y%m%d_%H%M%S')}.png")
+
+            # Salva temporariamente
+            temp_filename = output_filename + ".tmp"
+            with open(temp_filename, 'wb') as f:
+                f.write(response.content)
+
+            # Aplica zoom se necessário
+            zoom = self.zoom_factor.get()
+            try:
+                from PIL import Image
+                img = Image.open(temp_filename)
+                if zoom > 1:
+                    w, h = img.size
+                    img = img.resize((w*zoom, h*zoom), resample=Image.NEAREST)
+                img.save(output_filename)
+                os.remove(temp_filename)
+            except Exception as e:
+                # Se não conseguir abrir, só renomeia
+                os.rename(temp_filename, output_filename)
+                self.log(f"[AVISO] Não foi possível aplicar zoom: {e}")
+
+            self.log(f"SUCESSO: Imagem salva em '{output_filename}' (zoom x{zoom})")
+
+            # Extrai metadados dos headers
             self.log("\n--- METADADOS DA RECONSTRUÇÃO ---")
-            for key, value in results['metadata'].items(): self.log(f"{str(key)+':':<35} {value}")
+            for key in [
+                'X-Usuario', 'X-Algoritmo', 'X-Inicio', 'X-Fim', 'X-Tamanho',
+                'X-Iteracoes', 'X-Tempo', 'X-Cpu', 'X-Mem']:
+                value = response.headers.get(key, '')
+                if value:
+                    self.log(f"{key[2:]:<20}: {value}")
             self.log("----------------------------------\n")
 
-            output_filename = self.save_result_as_image()
-            self.log(f"SUCESSO: Gráfico salvo em '{output_filename}'")
-            self.plot_button.config(state="normal")
-        except requests.exceptions.RequestException as e: self.log(f"ERRO DE COMUNICAÇÃO: {e}")
-        except Exception as e: self.log(f"ERRO INESPERADO: {e}")
-        finally: self.run_button.config(state="normal")
+            self.last_result_data = None
+            self.last_algorithm_used = algo
+            self.plot_button.config(state="disabled")
+        except requests.exceptions.RequestException as e:
+            self.log(f"ERRO DE COMUNICAÇÃO: {e}")
+        except Exception as e:
+            self.log(f"ERRO INESPERADO: {e}")
+        finally:
+            self.run_button.config(state="normal")
 
     def process_image_for_display(self, data_vector):
         if self.use_log_scale.get(): self.log("Aplicando escala logarítmica."); return np.log1p(np.abs(data_vector))

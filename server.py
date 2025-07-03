@@ -1,13 +1,20 @@
 # -----------------------------------------------------------------------------
 # server.py - Servidor de Reconstrução de Imagem (v2.6)
 # -----------------------------------------------------------------------------
+
 import numpy as np
 from datetime import datetime
-from flask import Flask, request, jsonify
+from flask import Flask, request, jsonify, send_file, make_response
 import logging
 from numba import jit
-
+import threading
 import os
+import io
+from PIL import Image
+import psutil
+import time
+import matplotlib.pyplot as plt
+
 os.makedirs("log", exist_ok=True)
 logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(levelname)s - %(message)s', handlers=[logging.FileHandler(os.path.join("log", "server.log")), logging.StreamHandler()])
 
@@ -137,74 +144,116 @@ def reconstruct_cgne(H: np.ndarray, g: np.ndarray, max_iterations: int, tol=1e-6
     final_error = np.linalg.norm(g - H @ f) / (np.linalg.norm(g) + min_div)
     return f.flatten(), final_iterations, final_error
 
+
+# Semáforos para concorrência
+semaforo_clientes = threading.Semaphore(2)
+semaforo_processos = threading.Semaphore(5)
+
+# Cache de modelos
+modelos = {}
+
 app = Flask(__name__)
+
 
 @app.route('/reconstruct', methods=['POST'])
 def handle_reconstruction():
-    data = request.get_json()
-    if not all(k in data for k in ['user', 'algorithm', 'H', 'g']):
-        return jsonify({"error": "Requisicao incompleta."}), 400
+    """
+    Novo endpoint: recebe caminho dos arquivos, lê do disco, processa e retorna PNG com metadados nos headers.
+    Espera JSON: {"user":..., "algorithm":..., "model_path":..., "signal_path":..., ...}
+    """
+    with semaforo_clientes:
+        data = request.get_json()
+        if not all(k in data for k in ['user', 'algorithm', 'model_path', 'signal_path']):
+            return jsonify({"error": "Requisicao incompleta. Esperado: user, algorithm, model_path, signal_path"}), 400
 
-    user, algorithm = data['user'], data['algorithm']
-    use_regularization = data.get("regularization", False)
-    # Recebe o fator do cliente, com 0.1 como valor padrao de seguranca
-    reg_factor = data.get("reg_factor", 0.1)
+        user = data['user']
+        algorithm = data['algorithm']
+        model_path = data['model_path']
+        signal_path = data['signal_path']
+        use_regularization = data.get("regularization", False)
+        reg_factor = data.get("reg_factor", 0.1)
 
-    logging.info(f"Req de '{user}' para '{algorithm}' (Reg: {use_regularization}, Fator: {reg_factor})")
+        logging.info(f"Req de '{user}' para '{algorithm}' (Reg: {use_regularization}, Fator: {reg_factor})")
 
-    H_matrix = np.array(data['H'], dtype=np.float32)
-    g_vector = np.array(data['g'], dtype=np.float32)
-    
-    g_processed = apply_signal_gain(g_vector)
-    
-    if use_regularization:
-        # Usa o fator recebido do cliente para calcular lambda
-        lambda_reg = np.max(np.abs(H_matrix.T @ g_vector)) * reg_factor
-        logging.info(f"Regularizacao ativada com lambda (fator {reg_factor}) = {lambda_reg:.4f}")
-        H_to_use = np.vstack([H_matrix, lambda_reg * np.identity(H_matrix.shape[1], dtype=np.float32)])
-        g_to_use = np.hstack([g_processed, np.zeros(H_matrix.shape[1], dtype=np.float32)])
-    else:
-        logging.info("Regularizacao nao solicitada.")
-        H_to_use, g_to_use = H_matrix, g_processed
+        start_time = time.time()
+        start_dt = datetime.now().strftime('%Y-%m-%d %H:%M:%S')
 
-    start_time = datetime.now()
-    image = None
-    iters = None
-    final_error = None
-    try:
-        if algorithm == 'CGNR':
-            result = reconstruct_cgnr(H_to_use, g_to_use, 100)
-            if isinstance(result, tuple) and len(result) == 2:
-                image, iters = result
-                final_error = None
-            elif isinstance(result, tuple) and len(result) == 3:
-                image, iters, final_error = result
-                logging.warning("reconstruct_cgnr retornou 3 valores!")
-            else:
-                raise ValueError("Retorno inesperado de reconstruct_cgnr: " + str(result))
-        elif algorithm == 'CGNE':
-            result = reconstruct_cgne(H_to_use, g_to_use, 100)
-            if isinstance(result, tuple) and len(result) == 3:
-                image, iters, final_error = result
-            elif isinstance(result, tuple) and len(result) == 2:
-                image, iters = result
-                final_error = None
-                logging.warning("reconstruct_cgne retornou apenas 2 valores!")
-            else:
-                raise ValueError("Retorno inesperado de reconstruct_cgne: " + str(result))
-            logging.info(f"CGNE: iters={iters}, erro_final={final_error}")
-        else:
-            return jsonify({"error": f"Algoritmo '{algorithm}' não suportado."}), 400
-    except Exception as e:
-        logging.error(f"Erro ao executar reconstrução: {e}")
-        return jsonify({"error": f"Erro interno na reconstrução: {e}"}), 500
+        with semaforo_processos:
+            try:
+                # Carrega modelo (matriz H) do disco, com cache
+                if model_path in modelos:
+                    H_matrix = modelos[model_path]
+                else:
+                    H_matrix = np.loadtxt(model_path, delimiter=',', dtype=np.float32)
+                    modelos[model_path] = H_matrix
 
-    end_time = datetime.now()
-    logging.info(f"Concluido em {end_time - start_time}. Iters: {iters}.")
+                g_vector = np.loadtxt(signal_path, delimiter=',', dtype=np.float32)
+                g_processed = apply_signal_gain(g_vector)
 
-    response_data = { "metadata": { "user_id": user, "algorithm_used": algorithm, "start_time": start_time.isoformat(), "end_time": end_time.isoformat(), "duration_seconds": (end_time - start_time).total_seconds(), "image_size_pixels": len(image), "iterations_executed": iters, "regularization_used": use_regularization, "regularization_factor": reg_factor, "stopped_by_tolerance": iters < 100 }, "image_data": image.tolist() }
-    return jsonify(response_data)
+                if use_regularization:
+                    lambda_reg = np.max(np.abs(H_matrix.T @ g_vector)) * reg_factor
+                    logging.info(f"Regularizacao ativada com lambda (fator {reg_factor}) = {lambda_reg:.4f}")
+                    H_to_use = np.vstack([H_matrix, lambda_reg * np.identity(H_matrix.shape[1], dtype=np.float32)])
+                    g_to_use = np.hstack([g_processed, np.zeros(H_matrix.shape[1], dtype=np.float32)])
+                else:
+                    logging.info("Regularizacao nao solicitada.")
+                    H_to_use, g_to_use = H_matrix, g_processed
+
+                # Reconstrução
+                if algorithm.upper() == 'CGNR':
+                    f, iters, final_error = reconstruct_cgnr(H_to_use, g_to_use, 100)
+                elif algorithm.upper() == 'CGNE':
+                    f, iters, final_error = reconstruct_cgne(H_to_use, g_to_use, 100)
+                else:
+                    return jsonify({"error": f"Algoritmo '{algorithm}' não suportado."}), 400
+
+                # Normaliza para 0–255
+                f = f.flatten()
+                f_min, f_max = f.min(), f.max()
+                if f_max != f_min:
+                    f_norm = (f - f_min) / (f_max - f_min) * 255
+                else:
+                    f_norm = np.full_like(f, 128)
+
+                lado = int(np.sqrt(len(f_norm)))
+                imagem_array = f_norm[:lado*lado].reshape((lado, lado), order='F')
+                imagem_array = np.clip(imagem_array, 0, 255)
+                imagem = Image.fromarray(imagem_array.astype('uint8'))
+
+                img_bytes = io.BytesIO()
+                imagem.save(img_bytes, format='PNG')
+                img_bytes.seek(0)
+
+                end_time = time.time()
+                end_dt = datetime.now().strftime('%Y-%m-%d %H:%M:%S')
+
+                mem = psutil.virtual_memory()
+                cpu = psutil.cpu_percent(interval=1)
+
+                response = make_response(send_file(img_bytes, mimetype='image/png', download_name='reconstruida.png'))
+                response.headers['X-Usuario'] = user
+                response.headers['X-Algoritmo'] = algorithm
+                response.headers['X-Inicio'] = start_dt
+                response.headers['X-Fim'] = end_dt
+                response.headers['X-Tamanho'] = f"{lado}x{lado}"
+                response.headers['X-Iteracoes'] = str(iters)
+                response.headers['X-Tempo'] = str(end_time - start_time)
+                response.headers['X-Cpu'] = str(cpu)
+                response.headers['X-Mem'] = str(mem.percent)
+                return response
+            except Exception as e:
+                logging.error(f"Erro ao executar reconstrução: {e}")
+                return jsonify({'error': str(e)}), 500
+
+
+# endpoint para verificar se o servidor ligou
+@app.route('/ping', methods=["GET"])
+def ping():
+    return 'OK', 200
 
 if __name__ == '__main__':
     logging.info("Servidor de reconstrucao v2.6 (Final) iniciado.")
-    app.run(host='0.0.0.0', port=5000, debug=False)
+    print("Endpoints disponíveis:")
+    print("  POST /reconstruct - Processa imagem")
+    print("  GET /ping - Testa servidor")
+    app.run(host='0.0.0.0', port=5000, threaded=True, debug=False)
