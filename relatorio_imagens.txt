@@ -50,3 +50,13 @@
 2025-07-04 16:53:08 | Arquivo: outputs\resultado_Carol_CGNE_20250704_165308.png | Usuario: Carol | Algoritmo: CGNE | Iteracoes: 5 | Tempo: 0.12732243537902832s | Tamanho: 30x30
 2025-07-04 16:53:45 | Arquivo: outputs\resultado_Ana_CGNR_20250704_165345.png | Usuario: Ana | Algoritmo: CGNR | Iteracoes: 5 | Tempo: 33.67509841918945s | Tamanho: 60x60
 2025-07-04 16:53:52 | Arquivo: outputs\resultado_Leonardo_CGNR_20250704_165351.png | Usuario: Leonardo | Algoritmo: CGNR | Iteracoes: 5 | Tempo: 3.307279348373413s | Tamanho: 30x30
+2025-07-04 17:11:41 | Arquivo: outputs\resultado_Ana_CGNE_20250704_171141.png | Usuario: Ana | Algoritmo: CGNE | Iteracoes: 5 | Tempo: 22.05532455444336s | Tamanho: 30x30
+2025-07-04 17:11:50 | Arquivo: outputs\resultado_Eduarda_CGNR_20250704_171149.png | Usuario: Eduarda | Algoritmo: CGNR | Iteracoes: 5 | Tempo: 5.714744329452515s | Tamanho: 30x30
+2025-07-04 17:12:08 | Arquivo: outputs\resultado_Alice_CGNE_20250704_171207.png | Usuario: Alice | Algoritmo: CGNE | Iteracoes: 5 | Tempo: 47.72599124908447s | Tamanho: 60x60
+2025-07-04 17:12:12 | Arquivo: outputs\resultado_José_CGNE_20250704_171212.png | Usuario: José | Algoritmo: CGNE | Iteracoes: 5 | Tempo: 0.9241600036621094s | Tamanho: 60x60
+2025-07-04 17:12:20 | Arquivo: outputs\resultado_Lucas_CGNR_20250704_171220.png | Usuario: Lucas | Algoritmo: CGNR | Iteracoes: 5 | Tempo: 5.275087118148804s | Tamanho: 30x30
+2025-07-04 17:12:25 | Arquivo: outputs\resultado_Alice_CGNE_20250704_171225.png | Usuario: Alice | Algoritmo: CGNE | Iteracoes: 5 | Tempo: 0.9813694953918457s | Tamanho: 60x60
+2025-07-04 17:12:28 | Arquivo: outputs\resultado_Alice_CGNE_20250704_171228.png | Usuario: Alice | Algoritmo: CGNE | Iteracoes: 5 | Tempo: 0.2124340534210205s | Tamanho: 30x30
+2025-07-04 17:12:32 | Arquivo: outputs\resultado_Maria_CGNE_20250704_171232.png | Usuario: Maria | Algoritmo: CGNE | Iteracoes: 5 | Tempo: 40.44018864631653s | Tamanho: 60x60
+2025-07-04 17:12:38 | Arquivo: outputs\resultado_Eduarda_CGNR_20250704_171238.png | Usuario: Eduarda | Algoritmo: CGNR | Iteracoes: 5 | Tempo: 2.8634181022644043s | Tamanho: 30x30
+2025-07-04 17:12:42 | Arquivo: outputs\resultado_Daniel_CGNE_20250704_171242.png | Usuario: Daniel | Algoritmo: CGNE | Iteracoes: 5 | Tempo: 0.8263640403747559s | Tamanho: 60x60

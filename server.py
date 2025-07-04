@@ -1,3 +1,5 @@
+# Dicionário global para status e metadados dos jobs batch
+batch_status_dict = {}
 import numpy as np
 from datetime import datetime
 from flask import Flask, request, jsonify, send_file, make_response
@@ -8,10 +10,120 @@ import queue
 import os
 import io
 from PIL import Image
+import random
 import psutil
 import time
 import matplotlib.pyplot as plt
 import gc
+
+app = Flask(__name__)
+
+@app.route('/batch_reconstruct', methods=['POST'])
+def batch_reconstruct():
+    """
+    Recebe uma lista de jobs para reconstrução e enfileira todos para processamento assíncrono.
+    Cada job deve conter: user, algorithm, model_path, signal_path, regularization, reg_factor.
+    O servidor responde imediatamente e processa cada job em background, salvando as imagens em 'outputs/'.
+    """
+    jobs = request.get_json()
+    if not isinstance(jobs, list) or not jobs:
+        return jsonify({"error": "Envie uma lista de jobs no corpo da requisição."}), 400
+
+    os.makedirs("outputs", exist_ok=True)
+    ids = []
+
+    for job in jobs:
+        # Gera um id único para cada job
+        job_id = f"job_{int(time.time()*1000)}_{random.randint(1000,9999)}"
+        ids.append(job_id)
+        def process_job(job=job, job_id=job_id):
+            try:
+                user = job.get('user', 'anon')
+                algorithm = job.get('algorithm', 'CGNE')
+                model_path = job.get('model_path')
+                signal_path = job.get('signal_path')
+                use_regularization = job.get('regularization', False)
+                reg_factor = job.get('reg_factor', 0.1)
+                if not (model_path and signal_path):
+                    logging.error(f"[BATCH] Job {job_id} faltando model_path ou signal_path.")
+                    return
+                if not os.path.isfile(model_path) or not os.path.isfile(signal_path):
+                    logging.error(f"[BATCH] Job {job_id} arquivos não encontrados.")
+                    return
+                # Carrega modelo e sinal
+                if model_path in modelos:
+                    H_matrix = modelos[model_path]
+                else:
+                    H_matrix = np.loadtxt(model_path, delimiter=',', dtype=np.float32)
+                    modelos[model_path] = H_matrix
+                g_vector = np.loadtxt(signal_path, delimiter=',', dtype=np.float32)
+                g_processed = apply_signal_gain(g_vector)
+                if use_regularization:
+                    lambda_reg = np.max(np.abs(H_matrix.T @ g_vector)) * reg_factor
+                    H_to_use = np.vstack([H_matrix, lambda_reg * np.identity(H_matrix.shape[1], dtype=np.float32)])
+                    g_to_use = np.hstack([g_processed, np.zeros(H_matrix.shape[1], dtype=np.float32)])
+                else:
+                    H_to_use, g_to_use = H_matrix, g_processed
+                tol_requisito = 1e-4
+                start_time = time.time()
+                start_dt = datetime.now().strftime('%Y-%m-%d %H:%M:%S')
+                if algorithm.upper() == 'CGNR':
+                    f, iters, final_error = reconstruct_cgnr(H_to_use, g_to_use, 5, tol=tol_requisito)
+                elif algorithm.upper() == 'CGNE':
+                    f, iters, final_error = reconstruct_cgne(H_to_use, g_to_use, 5, tol=tol_requisito)
+                else:
+                    logging.error(f"[BATCH] Job {job_id} algoritmo não suportado.")
+                    return
+                end_time = time.time()
+                end_dt = datetime.now().strftime('%Y-%m-%d %H:%M:%S')
+                f = f.flatten()
+                f_min, f_max = f.min(), f.max()
+                if f_max != f_min:
+                    f_norm = (f - f_min) / (f_max - f_min) * 255
+                else:
+                    f_norm = np.full_like(f, 128)
+                lado = int(np.sqrt(len(f_norm)))
+                imagem_array = f_norm[:lado*lado].reshape((lado, lado), order='F')
+                imagem_array = np.clip(imagem_array, 0, 255)
+                imagem = Image.fromarray(imagem_array.astype('uint8'))
+                output_path = os.path.join("outputs", f"{job_id}_{user}_{algorithm}_{os.path.basename(model_path)}_{os.path.basename(signal_path)}.png")
+                imagem.save(output_path)
+                mem = psutil.virtual_memory()
+                cpu = psutil.cpu_percent(interval=0.2)
+                # Salva metadados em memória para consulta pelo cliente
+                batch_status_dict[job_id] = {
+                    "usuario": user,
+                    "algoritmo": algorithm,
+                    "inicio": start_dt,
+                    "fim": end_dt,
+                    "tamanho": f"{lado}x{lado}",
+                    "iteracoes": iters,
+                    "tempo": round(end_time - start_time, 2),
+                    "cpu": round(cpu, 1),
+                    "mem": round(mem.percent, 1),
+                    "imagem": os.path.basename(output_path)
+                }
+                logging.info(f"[BATCH] Job {job_id} salvo em {output_path} e metadados em memória.")
+            except Exception as e:
+                logging.error(f"[BATCH] Erro no job {job_id}: {e}")
+        request_queue.put((process_job, [], {}))
+
+    # Retorna resposta imediatamente após enfileirar os jobs
+    return jsonify({
+        "status": "Jobs recebidos",
+        "job_ids": ids,
+        "msg": "As imagens serão processadas e salvas em 'outputs/'."
+    }), 202
+
+# Endpoint para consultar status dos jobs batch
+@app.route('/batch_status', methods=['GET'])
+def batch_status():
+    job_ids = request.args.get('job_ids')
+    if not job_ids:
+        return jsonify({"error": "Forneça job_ids separados por vírgula."}), 400
+    ids = [jid.strip() for jid in job_ids.split(',') if jid.strip()]
+    result = {jid: batch_status_dict.get(jid, None) for jid in ids}
+    return jsonify(result)
 
 os.makedirs("log", exist_ok=True)
 logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(levelname)s - %(message)s', handlers=[logging.FileHandler(os.path.join("log", "server.log")), logging.StreamHandler()])
@@ -165,8 +277,6 @@ def process_queue_worker():
 # Inicia o worker da fila
 worker_thread = threading.Thread(target=process_queue_worker, daemon=True)
 worker_thread.start()
-
-app = Flask(__name__)
 
 @app.route('/reconstruct', methods=['POST'])
 def handle_reconstruction():

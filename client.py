@@ -72,28 +72,79 @@ class ReconstructionClientApp(tk.Tk):
         thread.start()
 
     def run_auto_mode(self):
+        import time
         n = self.n_execucoes.get()
-        intervalo_min = self.intervalo_min.get()
-        intervalo_max = self.intervalo_max.get()
+        jobs = []
         for i in range(n):
             user = random.choice(USUARIOS)
             modelo = random.choice(MODELOS)
-            # REQUISITO ATENDIDO: Seleciona sinal compatível com o modelo
-            if modelo.lower().endswith('h-1.csv'):  # cobre ambos os nomes
+            # Seleciona sinal compatível com o modelo
+            if modelo.lower().endswith('h-1.csv'):
                 sinal = random.choice(SINAIS60)
             else:
                 sinal = random.choice(SINAIS30)
             algoritmo = random.choice(["CGNR", "CGNE"])
-            self.username.set(user)
-            self.path_h.set(modelo)
-            self.path_g.set(sinal)
-            self.algorithm.set(algoritmo)
-            self.log(f"[{i+1}/{n}] Usuário: {user} | Modelo: {modelo} | Sinal: {sinal} | Algoritmo: {algoritmo}")
-            self.run_reconstruction(auto=True)
-            if i < n-1:
-                time.sleep(random.uniform(intervalo_min, intervalo_max))
+            job = {
+                "user": user,
+                "algorithm": algoritmo,
+                "model_path": modelo,
+                "signal_path": sinal,
+                "regularization": self.use_regularization.get(),
+                "reg_factor": self.reg_factor.get()
+            }
+            jobs.append(job)
+            self.log(f"[{i+1}/{n}] (batch) Usuário: {user} | Modelo: {modelo} | Sinal: {sinal} | Algoritmo: {algoritmo}")
+        # Envia todos os jobs de uma vez
+        try:
+            response = requests.post("http://127.0.0.1:5000/batch_reconstruct", json=jobs, timeout=60)
+            if response.status_code == 202:
+                self.log("Jobs enviados para o servidor! O processamento será feito em background.")
+                # Recupera os job_ids retornados
+                job_ids = response.json().get("job_ids", [])
+                if job_ids:
+                    self.log("Aguardando resultados dos jobs...")
+                    self.poll_batch_status(job_ids)
+            else:
+                self.log(f"[ERRO] Falha ao enviar batch: {response.text}")
+        except Exception as e:
+            self.log(f"[ERRO] Falha ao enviar batch: {e}")
         self.run_button.config(state="normal")
         self.log("Execução automática finalizada.")
+
+    def poll_batch_status(self, job_ids, interval=2, max_wait=300):
+        """
+        Consulta periodicamente o status dos jobs batch e exibe os resultados no log.
+        """
+        import time
+        import requests
+        start_time = time.time()
+        jobs_pendentes = set(job_ids)
+        jobs_exibidos = set()
+        while jobs_pendentes and (time.time() - start_time < max_wait):
+            try:
+                ids_str = ','.join(jobs_pendentes)
+                url = f"http://127.0.0.1:5000/batch_status?job_ids={ids_str}"
+                resp = requests.get(url, timeout=10)
+                if resp.status_code == 200:
+                    status_dict = resp.json()
+                    for jid, info in status_dict.items():
+                        if info and jid not in jobs_exibidos:
+                            self.log(f"\n--- RESULTADO BATCH {jid} ---")
+                            for k, v in info.items():
+                                self.log(f"{k:<12}: {v}")
+                            self.log(f"Diretório da imagem: outputs/{info.get('imagem','')}\n")
+                            jobs_exibidos.add(jid)
+                    jobs_pendentes = jobs_pendentes - jobs_exibidos
+                else:
+                    self.log(f"[ERRO] Falha ao consultar status dos jobs: {resp.text}")
+            except Exception as e:
+                self.log(f"[ERRO] Consulta batch_status: {e}")
+            self.update()
+            time.sleep(interval)
+        if jobs_pendentes:
+            self.log(f"[AVISO] Timeout aguardando jobs: {', '.join(jobs_pendentes)}")
+        else:
+            self.log("Todos os resultados dos jobs batch foram exibidos.")
 
     def log(self, message):
         logging.info(message); self.log_text.config(state="normal")
@@ -171,6 +222,7 @@ class ReconstructionClientApp(tk.Tk):
 
             # Extrai metadados dos headers
             metadados = {}
+            metadados_legiveis = []
             self.log("\n--- METADADOS DA RECONSTRUÇÃO ---")
             for key in [
                 'X-Usuario', 'X-Algoritmo', 'X-Inicio', 'X-Fim', 'X-Tamanho',
@@ -179,7 +231,17 @@ class ReconstructionClientApp(tk.Tk):
                 if value:
                     self.log(f"{key[2:]:<20}: {value}")
                     metadados[key] = value
+                    metadados_legiveis.append(f"{key[2:]:<12}: {value}")
             self.log("----------------------------------\n")
+
+            # Exibe relatório em popup
+            if metadados_legiveis:
+                try:
+                    import tkinter.messagebox as msgbox
+                    msgbox.showinfo("Relatório da Reconstrução",
+                        "\n".join(metadados_legiveis), parent=self)
+                except Exception as e:
+                    self.log(f"[ERRO] Falha ao exibir relatório popup: {e}")
 
             # Salva relatório de desempenho
             try:

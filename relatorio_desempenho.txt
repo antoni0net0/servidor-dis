@@ -50,3 +50,13 @@
 2025-07-04 16:53:08 | Usuario: Carol | Algoritmo: CGNE | CPU: 27.8% | MEM: 71.2% | Tempo: 0.12732243537902832s
 2025-07-04 16:53:45 | Usuario: Ana | Algoritmo: CGNR | CPU: 25.6% | MEM: 65.5% | Tempo: 33.67509841918945s
 2025-07-04 16:53:52 | Usuario: Leonardo | Algoritmo: CGNR | CPU: 71.1% | MEM: 68.5% | Tempo: 3.307279348373413s
+2025-07-04 17:11:41 | Usuario: Ana | Algoritmo: CGNE | CPU: 56.0% | MEM: 91.4% | Tempo: 22.05532455444336s
+2025-07-04 17:11:50 | Usuario: Eduarda | Algoritmo: CGNR | CPU: 73.3% | MEM: 82.3% | Tempo: 5.714744329452515s
+2025-07-04 17:12:08 | Usuario: Alice | Algoritmo: CGNE | CPU: 52.7% | MEM: 86.2% | Tempo: 47.72599124908447s
+2025-07-04 17:12:12 | Usuario: José | Algoritmo: CGNE | CPU: 27.4% | MEM: 86.5% | Tempo: 0.9241600036621094s
+2025-07-04 17:12:20 | Usuario: Lucas | Algoritmo: CGNR | CPU: 55.5% | MEM: 80.4% | Tempo: 5.275087118148804s
+2025-07-04 17:12:25 | Usuario: Alice | Algoritmo: CGNE | CPU: 47.9% | MEM: 86.7% | Tempo: 0.9813694953918457s
+2025-07-04 17:12:28 | Usuario: Alice | Algoritmo: CGNE | CPU: 45.0% | MEM: 78.1% | Tempo: 0.2124340534210205s
+2025-07-04 17:12:32 | Usuario: Maria | Algoritmo: CGNE | CPU: 40.9% | MEM: 82.9% | Tempo: 40.44018864631653s
+2025-07-04 17:12:38 | Usuario: Eduarda | Algoritmo: CGNR | CPU: 42.6% | MEM: 77.9% | Tempo: 2.8634181022644043s
+2025-07-04 17:12:42 | Usuario: Daniel | Algoritmo: CGNE | CPU: 40.4% | MEM: 83.4% | Tempo: 0.8263640403747559s
