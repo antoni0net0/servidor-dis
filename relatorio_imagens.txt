@@ -1,0 +1,2 @@
+2025-07-04 15:28:35 | Arquivo: outputs\resultado_user_default_CGNR_20250704_152835.png | Usuario: user_default | Algoritmo: CGNR | Iteracoes: 100 | Tempo: 43.26987409591675s | Tamanho: 30x30
+2025-07-04 15:28:35 | Arquivo: outputs\resultado_user1_CGNR_20250704_152835.png | Usuario: user1 | Algoritmo: CGNR | Iteracoes: 100 | Tempo: 44.64993762969971s | Tamanho: 30x30

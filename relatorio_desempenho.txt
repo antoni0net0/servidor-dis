@@ -1,0 +1,2 @@
+2025-07-04 15:28:35 | Usuario: user_default | Algoritmo: CGNR | CPU: 8.9% | MEM: 86.9% | Tempo: 43.26987409591675s
+2025-07-04 15:28:35 | Usuario: user1 | Algoritmo: CGNR | CPU: 8.5% | MEM: 83.9% | Tempo: 44.64993762969971s

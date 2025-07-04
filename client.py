@@ -141,6 +141,7 @@ class ReconstructionClientApp(tk.Tk):
             self.log(f"SUCESSO: Imagem salva em '{output_filename}' (zoom x{zoom})")
 
             # Extrai metadados dos headers
+            metadados = {}
             self.log("\n--- METADADOS DA RECONSTRUÇÃO ---")
             for key in [
                 'X-Usuario', 'X-Algoritmo', 'X-Inicio', 'X-Fim', 'X-Tamanho',
@@ -148,7 +149,22 @@ class ReconstructionClientApp(tk.Tk):
                 value = response.headers.get(key, '')
                 if value:
                     self.log(f"{key[2:]:<20}: {value}")
+                    metadados[key] = value
             self.log("----------------------------------\n")
+
+            # Salva relatório de desempenho
+            try:
+                with open("relatorio_desempenho.txt", "a", encoding="utf-8") as f:
+                    f.write(f"{datetime.now().strftime('%Y-%m-%d %H:%M:%S')} | Usuario: {metadados.get('X-Usuario','')} | Algoritmo: {metadados.get('X-Algoritmo','')} | CPU: {metadados.get('X-Cpu','')}% | MEM: {metadados.get('X-Mem','')}% | Tempo: {metadados.get('X-Tempo','')}s\n")
+            except Exception as e:
+                self.log(f"[ERRO] Falha ao salvar relatorio_desempenho.txt: {e}")
+
+            # Salva relatório de imagens
+            try:
+                with open("relatorio_imagens.txt", "a", encoding="utf-8") as f:
+                    f.write(f"{datetime.now().strftime('%Y-%m-%d %H:%M:%S')} | Arquivo: {output_filename} | Usuario: {metadados.get('X-Usuario','')} | Algoritmo: {metadados.get('X-Algoritmo','')} | Iteracoes: {metadados.get('X-Iteracoes','')} | Tempo: {metadados.get('X-Tempo','')}s | Tamanho: {metadados.get('X-Tamanho','')}\n")
+            except Exception as e:
+                self.log(f"[ERRO] Falha ao salvar relatorio_imagens.txt: {e}")
 
             self.last_result_data = None
             self.last_algorithm_used = algo
