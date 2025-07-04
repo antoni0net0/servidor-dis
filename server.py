@@ -4,6 +4,7 @@ from flask import Flask, request, jsonify, send_file, make_response
 import logging
 from numba import jit
 import threading
+import queue
 import os
 import io
 from PIL import Image
@@ -144,6 +145,27 @@ modelos = {}
 CPU_LIMIT = 95.0  
 MEM_LIMIT = 95.0 
 
+
+# Fila para requisições pendentes
+request_queue = queue.Queue()
+
+# Função worker para processar a fila
+def process_queue_worker():
+    while True:
+        item = request_queue.get()
+        if item is None:
+            break
+        func, args, kwargs = item
+        try:
+            func(*args, **kwargs)
+        except Exception as e:
+            logging.error(f"Erro no processamento da fila: {e}")
+        request_queue.task_done()
+
+# Inicia o worker da fila
+worker_thread = threading.Thread(target=process_queue_worker, daemon=True)
+worker_thread.start()
+
 app = Flask(__name__)
 
 @app.route('/reconstruct', methods=['POST'])
@@ -153,118 +175,134 @@ def handle_reconstruction():
     Recebe caminhos dos arquivos, valida, lê, processa e retorna PNG com metadados.
     """
     # Checagem dinâmica de recursos antes de aceitar a requisição
+    def process_request():
+        with semaforo_clientes:
+            data = request.get_json()
+            if not all(k in data for k in ['user', 'algorithm', 'model_path', 'signal_path']):
+                return jsonify({"error": "Requisição incompleta. Esperado: user, algorithm, model_path, signal_path"}), 400
+
+            user = data['user']
+            algorithm = data['algorithm']
+            model_path = data['model_path']
+            signal_path = data['signal_path']
+            use_regularization = data.get("regularization", False)
+            reg_factor = data.get("reg_factor", 0.1)
+
+            logging.info(f"[INICIO] Usuário: {user} | Algoritmo: {algorithm} | Reg: {use_regularization} | Fator: {reg_factor}")
+            start_time = time.time()
+            start_dt = datetime.now().strftime('%Y-%m-%d %H:%M:%S')
+
+            # Validação de existência dos arquivos
+            if not os.path.isfile(model_path):
+                logging.error(f"Arquivo de modelo não encontrado: {model_path}")
+                return jsonify({"error": f"Arquivo de modelo não encontrado: {model_path}"}), 400
+            if not os.path.isfile(signal_path):
+                logging.error(f"Arquivo de sinal não encontrado: {signal_path}")
+                return jsonify({"error": f"Arquivo de sinal não encontrado: {signal_path}"}), 400
+
+            with semaforo_processos:
+                try:
+                    # Carrega modelo (matriz H) do disco, com cache
+                    if model_path in modelos:
+                        H_matrix = modelos[model_path]
+                        logging.info(f"Matriz H carregada do cache: {model_path}")
+                    else:
+                        logging.info(f"Lendo matriz H do disco: {model_path}")
+                        H_matrix = np.loadtxt(model_path, delimiter=',', dtype=np.float32)
+                        modelos[model_path] = H_matrix
+                    logging.info(f"Matriz H: shape={H_matrix.shape}, dtype={H_matrix.dtype}")
+
+                    logging.info(f"Lendo vetor g do disco: {signal_path}")
+                    g_vector = np.loadtxt(signal_path, delimiter=',', dtype=np.float32)
+                    logging.info(f"Vetor g: shape={g_vector.shape}, dtype={g_vector.dtype}")
+
+                    g_processed = apply_signal_gain(g_vector)
+
+                    if use_regularization:
+                        lambda_reg = np.max(np.abs(H_matrix.T @ g_vector)) * reg_factor
+                        logging.info(f"Regularizacao ativada com lambda (fator {reg_factor}) = {lambda_reg:.4f}")
+                        H_to_use = np.vstack([H_matrix, lambda_reg * np.identity(H_matrix.shape[1], dtype=np.float32)])
+                        g_to_use = np.hstack([g_processed, np.zeros(H_matrix.shape[1], dtype=np.float32)])
+                    else:
+                        logging.info("Regularizacao nao solicitada.")
+                        H_to_use, g_to_use = H_matrix, g_processed
+
+                    # Reconstrução com tolerância conforme requisito (1e-4)
+                    tol_requisito = 1e-4
+                    logging.info(f"Iniciando reconstrução ({algorithm.upper()}) com tolerância {tol_requisito}...")
+                    if algorithm.upper() == 'CGNR':
+                        f, iters, final_error = reconstruct_cgnr(H_to_use, g_to_use, 5, tol=tol_requisito)
+                    elif algorithm.upper() == 'CGNE':
+                        f, iters, final_error = reconstruct_cgne(H_to_use, g_to_use, 5, tol=tol_requisito)
+                    else:
+                        return jsonify({"error": f"Algoritmo '{algorithm}' não suportado."}), 400
+                    logging.info(f"Reconstrução finalizada. Iterações: {iters} | Erro final: {final_error:.3e}")
+
+                    # Normaliza para 0–255
+                    f = f.flatten()
+                    f_min, f_max = f.min(), f.max()
+                    if f_max != f_min:
+                        f_norm = (f - f_min) / (f_max - f_min) * 255
+                    else:
+                        f_norm = np.full_like(f, 128)
+
+                    lado = int(np.sqrt(len(f_norm)))
+                    imagem_array = f_norm[:lado*lado].reshape((lado, lado), order='F')
+                    imagem_array = np.clip(imagem_array, 0, 255)
+                    imagem = Image.fromarray(imagem_array.astype('uint8'))
+
+                    img_bytes = io.BytesIO()
+                    imagem.save(img_bytes, format='PNG')
+                    img_bytes.seek(0)
+
+                    end_time = time.time()
+                    end_dt = datetime.now().strftime('%Y-%m-%d %H:%M:%S')
+
+                    mem = psutil.virtual_memory()
+                    cpu = psutil.cpu_percent(interval=1)
+
+                    # Libera memória de variáveis grandes
+                    del H_matrix, g_vector, g_processed, H_to_use, g_to_use, f, f_norm, imagem_array, imagem
+                    gc.collect()
+
+                    response = make_response(send_file(img_bytes, mimetype='image/png', download_name='reconstruida.png'))
+                    response.headers['X-Usuario'] = user
+                    response.headers['X-Algoritmo'] = algorithm
+                    response.headers['X-Inicio'] = start_dt
+                    response.headers['X-Fim'] = end_dt
+                    response.headers['X-Tamanho'] = f"{lado}x{lado}"
+                    response.headers['X-Iteracoes'] = str(iters)
+                    response.headers['X-Tempo'] = str(end_time - start_time)
+                    response.headers['X-Cpu'] = str(cpu)
+                    response.headers['X-Mem'] = str(mem.percent)
+                    logging.info(f"[FIM] Usuário: {user} | Tempo total: {end_time - start_time:.1f}s | Iterações: {iters}")
+                    return response
+                except Exception as e:
+                    logging.error(f"Erro ao executar reconstrução: {e}")
+                    return jsonify({'error': f'Erro interno: {str(e)}'}), 500
+
+    # Checagem dinâmica de recursos antes de aceitar a requisição
     cpu_percent = psutil.cpu_percent(interval=0.5)
     mem_percent = psutil.virtual_memory().percent
     if cpu_percent > CPU_LIMIT or mem_percent > MEM_LIMIT:
-        logging.warning(f"Recursos insuficientes: CPU={cpu_percent:.1f}%, MEM={mem_percent:.1f}% (limites: {CPU_LIMIT}%, {MEM_LIMIT}%)")
-        return jsonify({
-            "error": f"Servidor ocupado: uso de CPU ({cpu_percent:.1f}%) ou memória ({mem_percent:.1f}%) acima do limite. Tente novamente em instantes."
-        }), 503
-
-    with semaforo_clientes:
-        data = request.get_json()
-        if not all(k in data for k in ['user', 'algorithm', 'model_path', 'signal_path']):
-            return jsonify({"error": "Requisição incompleta. Esperado: user, algorithm, model_path, signal_path"}), 400
-
-        user = data['user']
-        algorithm = data['algorithm']
-        model_path = data['model_path']
-        signal_path = data['signal_path']
-        use_regularization = data.get("regularization", False)
-        reg_factor = data.get("reg_factor", 0.1)
-
-        logging.info(f"[INICIO] Usuário: {user} | Algoritmo: {algorithm} | Reg: {use_regularization} | Fator: {reg_factor}")
-        start_time = time.time()
-        start_dt = datetime.now().strftime('%Y-%m-%d %H:%M:%S')
-
-        # Validação de existência dos arquivos
-        if not os.path.isfile(model_path):
-            logging.error(f"Arquivo de modelo não encontrado: {model_path}")
-            return jsonify({"error": f"Arquivo de modelo não encontrado: {model_path}"}), 400
-        if not os.path.isfile(signal_path):
-            logging.error(f"Arquivo de sinal não encontrado: {signal_path}")
-            return jsonify({"error": f"Arquivo de sinal não encontrado: {signal_path}"}), 400
-
-        with semaforo_processos:
-            try:
-                # Carrega modelo (matriz H) do disco, com cache
-                if model_path in modelos:
-                    H_matrix = modelos[model_path]
-                    logging.info(f"Matriz H carregada do cache: {model_path}")
-                else:
-                    logging.info(f"Lendo matriz H do disco: {model_path}")
-                    H_matrix = np.loadtxt(model_path, delimiter=',', dtype=np.float32)
-                    modelos[model_path] = H_matrix
-                logging.info(f"Matriz H: shape={H_matrix.shape}, dtype={H_matrix.dtype}")
-
-                logging.info(f"Lendo vetor g do disco: {signal_path}")
-                g_vector = np.loadtxt(signal_path, delimiter=',', dtype=np.float32)
-                logging.info(f"Vetor g: shape={g_vector.shape}, dtype={g_vector.dtype}")
-
-                g_processed = apply_signal_gain(g_vector)
-
-                if use_regularization:
-                    lambda_reg = np.max(np.abs(H_matrix.T @ g_vector)) * reg_factor
-                    logging.info(f"Regularizacao ativada com lambda (fator {reg_factor}) = {lambda_reg:.4f}")
-                    H_to_use = np.vstack([H_matrix, lambda_reg * np.identity(H_matrix.shape[1], dtype=np.float32)])
-                    g_to_use = np.hstack([g_processed, np.zeros(H_matrix.shape[1], dtype=np.float32)])
-                else:
-                    logging.info("Regularizacao nao solicitada.")
-                    H_to_use, g_to_use = H_matrix, g_processed
-
-                # Reconstrução com tolerância conforme requisito (1e-4)
-                tol_requisito = 1e-4
-                logging.info(f"Iniciando reconstrução ({algorithm.upper()}) com tolerância {tol_requisito}...")
-                if algorithm.upper() == 'CGNR':
-                    f, iters, final_error = reconstruct_cgnr(H_to_use, g_to_use, 5, tol=tol_requisito)
-                elif algorithm.upper() == 'CGNE':
-                    f, iters, final_error = reconstruct_cgne(H_to_use, g_to_use, 5, tol=tol_requisito)
-                else:
-                    return jsonify({"error": f"Algoritmo '{algorithm}' não suportado."}), 400
-                logging.info(f"Reconstrução finalizada. Iterações: {iters} | Erro final: {final_error:.3e}")
-
-                # Normaliza para 0–255
-                f = f.flatten()
-                f_min, f_max = f.min(), f.max()
-                if f_max != f_min:
-                    f_norm = (f - f_min) / (f_max - f_min) * 255
-                else:
-                    f_norm = np.full_like(f, 128)
-
-                lado = int(np.sqrt(len(f_norm)))
-                imagem_array = f_norm[:lado*lado].reshape((lado, lado), order='F')
-                imagem_array = np.clip(imagem_array, 0, 255)
-                imagem = Image.fromarray(imagem_array.astype('uint8'))
-
-                img_bytes = io.BytesIO()
-                imagem.save(img_bytes, format='PNG')
-                img_bytes.seek(0)
-
-                end_time = time.time()
-                end_dt = datetime.now().strftime('%Y-%m-%d %H:%M:%S')
-
-                mem = psutil.virtual_memory()
-                cpu = psutil.cpu_percent(interval=1)
-
-                # Libera memória de variáveis grandes
-                del H_matrix, g_vector, g_processed, H_to_use, g_to_use, f, f_norm, imagem_array, imagem
-                gc.collect()
-
-                response = make_response(send_file(img_bytes, mimetype='image/png', download_name='reconstruida.png'))
-                response.headers['X-Usuario'] = user
-                response.headers['X-Algoritmo'] = algorithm
-                response.headers['X-Inicio'] = start_dt
-                response.headers['X-Fim'] = end_dt
-                response.headers['X-Tamanho'] = f"{lado}x{lado}"
-                response.headers['X-Iteracoes'] = str(iters)
-                response.headers['X-Tempo'] = str(end_time - start_time)
-                response.headers['X-Cpu'] = str(cpu)
-                response.headers['X-Mem'] = str(mem.percent)
-                logging.info(f"[FIM] Usuário: {user} | Tempo total: {end_time - start_time:.1f}s | Iterações: {iters}")
-                return response
-            except Exception as e:
-                logging.error(f"Erro ao executar reconstrução: {e}")
-                return jsonify({'error': f'Erro interno: {str(e)}'}), 500
+        logging.warning(f"Recursos insuficientes: CPU={cpu_percent:.1f}%, MEM={mem_percent:.1f}% (limites: {CPU_LIMIT}%, {MEM_LIMIT}%) - Requisição será enfileirada.")
+        # Enfileira a requisição para ser processada depois
+        def delayed_response():
+            # Aguarda até recursos ficarem disponíveis
+            while True:
+                cpu = psutil.cpu_percent(interval=0.5)
+                mem = psutil.virtual_memory().percent
+                if cpu <= CPU_LIMIT and mem <= MEM_LIMIT:
+                    break
+                time.sleep(1)
+            # Processa normalmente
+            with app.app_context():
+                return process_request()
+        # Adiciona na fila
+        request_queue.put((process_request, [], {}))
+        return jsonify({"status": "Aguardando na fila. Sua requisição será processada assim que possível."}), 202
+    else:
+        return process_request()
 
 
 # endpoint para verificar se o servidor ligou
