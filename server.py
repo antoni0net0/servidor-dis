@@ -134,14 +134,17 @@ def reconstruct_cgne(H: np.ndarray, g: np.ndarray, max_iterations: int, tol=1e-6
 
 
 # Semáforos para concorrência
-semaforo_clientes = threading.Semaphore(2)
+semaforo_clientes = threading.Semaphore(3)
 semaforo_processos = threading.Semaphore(5)
 
 # Cache de modelos
 modelos = {}
 
-app = Flask(__name__)
+# Limites dinâmicos de uso de recursos
+CPU_LIMIT = 95.0  
+MEM_LIMIT = 95.0 
 
+app = Flask(__name__)
 
 @app.route('/reconstruct', methods=['POST'])
 def handle_reconstruction():
@@ -149,6 +152,15 @@ def handle_reconstruction():
     Endpoint robusto para reconstrução de imagem.
     Recebe caminhos dos arquivos, valida, lê, processa e retorna PNG com metadados.
     """
+    # Checagem dinâmica de recursos antes de aceitar a requisição
+    cpu_percent = psutil.cpu_percent(interval=0.5)
+    mem_percent = psutil.virtual_memory().percent
+    if cpu_percent > CPU_LIMIT or mem_percent > MEM_LIMIT:
+        logging.warning(f"Recursos insuficientes: CPU={cpu_percent:.1f}%, MEM={mem_percent:.1f}% (limites: {CPU_LIMIT}%, {MEM_LIMIT}%)")
+        return jsonify({
+            "error": f"Servidor ocupado: uso de CPU ({cpu_percent:.1f}%) ou memória ({mem_percent:.1f}%) acima do limite. Tente novamente em instantes."
+        }), 503
+
     with semaforo_clientes:
         data = request.get_json()
         if not all(k in data for k in ['user', 'algorithm', 'model_path', 'signal_path']):
