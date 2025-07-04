@@ -243,19 +243,20 @@ class ReconstructionClientApp(tk.Tk):
                 except Exception as e:
                     self.log(f"[ERRO] Falha ao exibir relatório popup: {e}")
 
-            # Salva relatório de desempenho
+            # Salva relatórios na pasta relatorios/
             try:
-                with open("relatorio_desempenho.txt", "a", encoding="utf-8") as f:
+                os.makedirs("relatorios", exist_ok=True)
+                with open(os.path.join("relatorios", "relatorio_desempenho.txt"), "a", encoding="utf-8") as f:
                     f.write(f"{datetime.now().strftime('%Y-%m-%d %H:%M:%S')} | Usuario: {metadados.get('X-Usuario','')} | Algoritmo: {metadados.get('X-Algoritmo','')} | CPU: {metadados.get('X-Cpu','')}% | MEM: {metadados.get('X-Mem','')}% | Tempo: {metadados.get('X-Tempo','')}s\n")
             except Exception as e:
-                self.log(f"[ERRO] Falha ao salvar relatorio_desempenho.txt: {e}")
+                self.log(f"[ERRO] Falha ao salvar relatorios/relatorio_desempenho.txt: {e}")
 
-            # Salva relatório de imagens
             try:
-                with open("relatorio_imagens.txt", "a", encoding="utf-8") as f:
+                os.makedirs("relatorios", exist_ok=True)
+                with open(os.path.join("relatorios", "relatorio_imagens.txt"), "a", encoding="utf-8") as f:
                     f.write(f"{datetime.now().strftime('%Y-%m-%d %H:%M:%S')} | Arquivo: {output_filename} | Usuario: {metadados.get('X-Usuario','')} | Algoritmo: {metadados.get('X-Algoritmo','')} | Iteracoes: {metadados.get('X-Iteracoes','')} | Tempo: {metadados.get('X-Tempo','')}s | Tamanho: {metadados.get('X-Tamanho','')}\n")
             except Exception as e:
-                self.log(f"[ERRO] Falha ao salvar relatorio_imagens.txt: {e}")
+                self.log(f"[ERRO] Falha ao salvar relatorios/relatorio_imagens.txt: {e}")
 
             self.last_result_data = None
             self.last_algorithm_used = algo
