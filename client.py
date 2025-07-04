@@ -17,17 +17,16 @@ class ReconstructionClientApp(tk.Tk):
         self.title("Cliente de Reconstrução de Imagem v2.6")
         self.geometry("700x680")
 
-        # --- Variáveis de estado ---
+        # Variáveis de estado
         self.last_result_data, self.last_algorithm_used = None, None
         self.path_h, self.path_g = tk.StringVar(), tk.StringVar()
         self.username = tk.StringVar(value="user_default")
-        self.algorithm = tk.StringVar(value="CGNE") # Padrão para o algoritmo que gerou a imagem de referência
+        self.algorithm = tk.StringVar(value="CGNE") # algoritmo padrão
         self.use_regularization = tk.BooleanVar(value=False)
         self.use_log_scale = tk.BooleanVar(value=False)
-        self.reg_factor = tk.DoubleVar(value=0.1) # Novo: Variável para o fator de regularização
-        self.zoom_factor = tk.IntVar(value=1) # Novo: Fator de zoom
-
-        # --- Construção da Interface ---
+        self.reg_factor = tk.DoubleVar(value=0.1) # regularização
+        self.zoom_factor = tk.IntVar(value=1) # zoom
+        # Construção da InterfacE
         main_frame = ttk.Frame(self, padding="10")
         main_frame.pack(fill="both", expand=True)
         input_frame = ttk.LabelFrame(main_frame, text="Configuração da Reconstrução", padding="10")
@@ -88,7 +87,8 @@ class ReconstructionClientApp(tk.Tk):
         try:
             user, algo, path_h, path_g = self.username.get(), self.algorithm.get(), self.path_h.get(), self.path_g.get()
             if not all([user, algo, path_h, path_g]):
-                self.log("ERRO: Todos os campos devem ser preenchidos."); return
+                self.log("ERRO: Todos os campos devem ser preenchidos.")
+                return
 
             payload = {
                 "user": user,
@@ -100,8 +100,17 @@ class ReconstructionClientApp(tk.Tk):
             }
 
             self.log(f"Enviando requisição (Alg: {algo}, Reg: {self.use_regularization.get()}, Fator: {self.reg_factor.get()})...")
-            response = requests.post("http://127.0.0.1:5000/reconstruct", json=payload, timeout=3600)
-            response.raise_for_status()
+            try:
+                response = requests.post("http://127.0.0.1:5000/reconstruct", json=payload, timeout=3600)
+                response.raise_for_status()
+            except requests.exceptions.Timeout:
+                self.log("[ERRO] Tempo limite excedido. O servidor demorou demais para responder. Tente aumentar o timeout ou otimize os arquivos.")
+                self.run_button.config(state="normal")
+                return
+            except requests.exceptions.ConnectionError:
+                self.log("[ERRO] Não foi possível conectar ao servidor. Verifique se o servidor está rodando.")
+                self.run_button.config(state="normal")
+                return
 
             # Salva imagem recebida e aplica zoom se necessário
             output_dir = "outputs"
@@ -126,7 +135,6 @@ class ReconstructionClientApp(tk.Tk):
                 img.save(output_filename)
                 os.remove(temp_filename)
             except Exception as e:
-                # Se não conseguir abrir, só renomeia
                 os.rename(temp_filename, output_filename)
                 self.log(f"[AVISO] Não foi possível aplicar zoom: {e}")
 

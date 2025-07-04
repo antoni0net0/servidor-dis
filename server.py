@@ -1,7 +1,3 @@
-# -----------------------------------------------------------------------------
-# server.py - Servidor de Reconstrução de Imagem (v2.6)
-# -----------------------------------------------------------------------------
-
 import numpy as np
 from datetime import datetime
 from flask import Flask, request, jsonify, send_file, make_response
@@ -14,6 +10,7 @@ from PIL import Image
 import psutil
 import time
 import matplotlib.pyplot as plt
+import gc
 
 os.makedirs("log", exist_ok=True)
 logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(levelname)s - %(message)s', handlers=[logging.FileHandler(os.path.join("log", "server.log")), logging.StreamHandler()])
@@ -26,7 +23,6 @@ def apply_signal_gain(g_vector: np.ndarray) -> np.ndarray:
 
 def reconstruct_cgnr(H: np.ndarray, g: np.ndarray, max_iterations: int, tol=5e-3, min_iterations=10, lambda_reg: float = 0.0, logger=None) -> tuple:
     m, n = H.shape
-    # 1. Normalizacao automatica
     H_norm = np.linalg.norm(H)
     g_norm = np.linalg.norm(g)
     if H_norm == 0 or g_norm == 0:
@@ -34,16 +30,13 @@ def reconstruct_cgnr(H: np.ndarray, g: np.ndarray, max_iterations: int, tol=5e-3
     Hn = H / H_norm
     gn = g.reshape(-1, 1) / g_norm
 
-    # 1b. Regularizacao de Tikhonov (adiciona linhas a matriz e zeros ao vetor)
     if lambda_reg > 0:
         Hn = np.vstack([Hn, np.sqrt(lambda_reg) * np.eye(n)])
         gn = np.vstack([gn, np.zeros((n, 1))])
 
-    # 2. Tolerancia adaptativa (relativa a escala dos dados)
     tol = max(tol, 1e-12)
     tol = tol * np.linalg.norm(gn)
 
-    # 3. Inicializacao
     f = np.zeros((n, 1))
     r = gn - Hn @ f
     z = Hn.T @ r
@@ -85,13 +78,8 @@ def reconstruct_cgnr(H: np.ndarray, g: np.ndarray, max_iterations: int, tol=5e-3
         f, r, z, p = f_new, r_new, z_new, p_new
         number_iterations += 1
 
-    # 4. Desnormalizacao do resultado
     f = f * (g_norm / H_norm)
-
-    # 5. Regularizacao e nao-negatividade (mantem para compatibilidade)
     f = np.maximum(f, 0)
-
-    # 6. Erro final na escala original
     final_residual = g.reshape(-1, 1) - H @ f.reshape(-1, 1)
     final_error = np.linalg.norm(final_residual) / (np.linalg.norm(g) + min_div)
 
@@ -158,13 +146,13 @@ app = Flask(__name__)
 @app.route('/reconstruct', methods=['POST'])
 def handle_reconstruction():
     """
-    Novo endpoint: recebe caminho dos arquivos, lê do disco, processa e retorna PNG com metadados nos headers.
-    Espera JSON: {"user":..., "algorithm":..., "model_path":..., "signal_path":..., ...}
+    Endpoint robusto para reconstrução de imagem.
+    Recebe caminhos dos arquivos, valida, lê, processa e retorna PNG com metadados.
     """
     with semaforo_clientes:
         data = request.get_json()
         if not all(k in data for k in ['user', 'algorithm', 'model_path', 'signal_path']):
-            return jsonify({"error": "Requisicao incompleta. Esperado: user, algorithm, model_path, signal_path"}), 400
+            return jsonify({"error": "Requisição incompleta. Esperado: user, algorithm, model_path, signal_path"}), 400
 
         user = data['user']
         algorithm = data['algorithm']
@@ -173,21 +161,34 @@ def handle_reconstruction():
         use_regularization = data.get("regularization", False)
         reg_factor = data.get("reg_factor", 0.1)
 
-        logging.info(f"Req de '{user}' para '{algorithm}' (Reg: {use_regularization}, Fator: {reg_factor})")
-
+        logging.info(f"[INICIO] Usuário: {user} | Algoritmo: {algorithm} | Reg: {use_regularization} | Fator: {reg_factor}")
         start_time = time.time()
         start_dt = datetime.now().strftime('%Y-%m-%d %H:%M:%S')
+
+        # Validação de existência dos arquivos
+        if not os.path.isfile(model_path):
+            logging.error(f"Arquivo de modelo não encontrado: {model_path}")
+            return jsonify({"error": f"Arquivo de modelo não encontrado: {model_path}"}), 400
+        if not os.path.isfile(signal_path):
+            logging.error(f"Arquivo de sinal não encontrado: {signal_path}")
+            return jsonify({"error": f"Arquivo de sinal não encontrado: {signal_path}"}), 400
 
         with semaforo_processos:
             try:
                 # Carrega modelo (matriz H) do disco, com cache
                 if model_path in modelos:
                     H_matrix = modelos[model_path]
+                    logging.info(f"Matriz H carregada do cache: {model_path}")
                 else:
+                    logging.info(f"Lendo matriz H do disco: {model_path}")
                     H_matrix = np.loadtxt(model_path, delimiter=',', dtype=np.float32)
                     modelos[model_path] = H_matrix
+                logging.info(f"Matriz H: shape={H_matrix.shape}, dtype={H_matrix.dtype}")
 
+                logging.info(f"Lendo vetor g do disco: {signal_path}")
                 g_vector = np.loadtxt(signal_path, delimiter=',', dtype=np.float32)
+                logging.info(f"Vetor g: shape={g_vector.shape}, dtype={g_vector.dtype}")
+
                 g_processed = apply_signal_gain(g_vector)
 
                 if use_regularization:
@@ -199,13 +200,16 @@ def handle_reconstruction():
                     logging.info("Regularizacao nao solicitada.")
                     H_to_use, g_to_use = H_matrix, g_processed
 
-                # Reconstrução
+                # Reconstrução com tolerância conforme requisito (1e-4)
+                tol_requisito = 1e-4
+                logging.info(f"Iniciando reconstrução ({algorithm.upper()}) com tolerância {tol_requisito}...")
                 if algorithm.upper() == 'CGNR':
-                    f, iters, final_error = reconstruct_cgnr(H_to_use, g_to_use, 100)
+                    f, iters, final_error = reconstruct_cgnr(H_to_use, g_to_use, 100, tol=tol_requisito)
                 elif algorithm.upper() == 'CGNE':
-                    f, iters, final_error = reconstruct_cgne(H_to_use, g_to_use, 100)
+                    f, iters, final_error = reconstruct_cgne(H_to_use, g_to_use, 100, tol=tol_requisito)
                 else:
                     return jsonify({"error": f"Algoritmo '{algorithm}' não suportado."}), 400
+                logging.info(f"Reconstrução finalizada. Iterações: {iters} | Erro final: {final_error:.3e}")
 
                 # Normaliza para 0–255
                 f = f.flatten()
@@ -230,6 +234,10 @@ def handle_reconstruction():
                 mem = psutil.virtual_memory()
                 cpu = psutil.cpu_percent(interval=1)
 
+                # Libera memória de variáveis grandes
+                del H_matrix, g_vector, g_processed, H_to_use, g_to_use, f, f_norm, imagem_array, imagem
+                gc.collect()
+
                 response = make_response(send_file(img_bytes, mimetype='image/png', download_name='reconstruida.png'))
                 response.headers['X-Usuario'] = user
                 response.headers['X-Algoritmo'] = algorithm
@@ -240,10 +248,11 @@ def handle_reconstruction():
                 response.headers['X-Tempo'] = str(end_time - start_time)
                 response.headers['X-Cpu'] = str(cpu)
                 response.headers['X-Mem'] = str(mem.percent)
+                logging.info(f"[FIM] Usuário: {user} | Tempo total: {end_time - start_time:.1f}s | Iterações: {iters}")
                 return response
             except Exception as e:
                 logging.error(f"Erro ao executar reconstrução: {e}")
-                return jsonify({'error': str(e)}), 500
+                return jsonify({'error': f'Erro interno: {str(e)}'}), 500
 
 
 # endpoint para verificar se o servidor ligou
