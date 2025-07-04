@@ -216,9 +216,9 @@ def handle_reconstruction():
                 tol_requisito = 1e-4
                 logging.info(f"Iniciando reconstrução ({algorithm.upper()}) com tolerância {tol_requisito}...")
                 if algorithm.upper() == 'CGNR':
-                    f, iters, final_error = reconstruct_cgnr(H_to_use, g_to_use, 100, tol=tol_requisito)
+                    f, iters, final_error = reconstruct_cgnr(H_to_use, g_to_use, 5, tol=tol_requisito)
                 elif algorithm.upper() == 'CGNE':
-                    f, iters, final_error = reconstruct_cgne(H_to_use, g_to_use, 100, tol=tol_requisito)
+                    f, iters, final_error = reconstruct_cgne(H_to_use, g_to_use, 5, tol=tol_requisito)
                 else:
                     return jsonify({"error": f"Algoritmo '{algorithm}' não suportado."}), 400
                 logging.info(f"Reconstrução finalizada. Iterações: {iters} | Erro final: {final_error:.3e}")

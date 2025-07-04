@@ -1,3 +1,4 @@
+
 import tkinter as tk
 from tkinter import ttk, scrolledtext, filedialog
 import numpy as np
@@ -7,6 +8,15 @@ import threading
 from datetime import datetime
 from matplotlib import pyplot as plt
 import os
+import random
+import time
+
+# Listas para modo automático
+USUARIOS = ['Alice', 'José', 'Carol', 'Daniel','Murilo','Maria','Ana','Leonardo','Eduarda','Lucas']
+MODELOS = ['data/H-1.csv', 'data/H-2.csv']
+SINAIS60 = ['data/G-1.csv', 'data/G-2.csv', 'data/A-60x60-1.csv']
+SINAIS30 = ['data/g-30x30-1.csv','data/g-30x30-2.csv','data/A-30x30-1.csv']
+TODOS_SINAIS = SINAIS60 + SINAIS30
 
 os.makedirs("log", exist_ok=True)
 logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(message)s', handlers=[logging.FileHandler(os.path.join("log", "client.log"))])
@@ -26,37 +36,25 @@ class ReconstructionClientApp(tk.Tk):
         self.use_log_scale = tk.BooleanVar(value=False)
         self.reg_factor = tk.DoubleVar(value=0.1) # regularização
         self.zoom_factor = tk.IntVar(value=1) # zoom
-        # Construção da InterfacE
+        # Construção da Interface
         main_frame = ttk.Frame(self, padding="10")
         main_frame.pack(fill="both", expand=True)
         input_frame = ttk.LabelFrame(main_frame, text="Configuração da Reconstrução", padding="10")
         input_frame.pack(fill="x")
 
-        ttk.Label(input_frame, text="Nome de Usuário:").grid(row=0, column=0, sticky="w", padx=5, pady=2)
-        ttk.Entry(input_frame, textvariable=self.username).grid(row=0, column=1, columnspan=2, sticky="ew", padx=5)
-        ttk.Label(input_frame, text="Algoritmo:").grid(row=1, column=0, sticky="w", padx=5, pady=2)
-        ttk.Radiobutton(input_frame, text="CGNR", variable=self.algorithm, value="CGNR").grid(row=1, column=1, sticky="w", padx=5)
-        ttk.Radiobutton(input_frame, text="CGNE", variable=self.algorithm, value="CGNE").grid(row=1, column=2, sticky="w", padx=5)
-        ttk.Button(input_frame, text="Selecionar Matriz H (.csv)", command=self.select_h_file).grid(row=2, column=0, sticky="ew", padx=5, pady=2)
-        ttk.Label(input_frame, textvariable=self.path_h, wraplength=450).grid(row=2, column=1, columnspan=2, sticky="w", padx=5)
-        ttk.Button(input_frame, text="Selecionar Vetor G (.csv)", command=self.select_g_file).grid(row=3, column=0, sticky="ew", padx=5, pady=2)
-        ttk.Label(input_frame, textvariable=self.path_g, wraplength=450).grid(row=3, column=1, columnspan=2, sticky="w", padx=5)
-        
+        ttk.Label(input_frame, text="Execuções automáticas:").grid(row=0, column=0, sticky="w", padx=5, pady=2)
+        self.n_execucoes = tk.IntVar(value=5)
+        ttk.Spinbox(input_frame, from_=1, to=100, textvariable=self.n_execucoes, width=6).grid(row=0, column=1, sticky="w", padx=5)
 
-        # Frame para os controles de regularização e zoom
-        reg_frame = ttk.Frame(input_frame)
-        reg_frame.grid(row=4, column=0, columnspan=3, sticky="w")
-        ttk.Checkbutton(reg_frame, text="Usar Regularização", variable=self.use_regularization).pack(side="left", padx=5, pady=5)
-        ttk.Label(reg_frame, text="Fator:").pack(side="left", pady=5)
-        ttk.Entry(reg_frame, textvariable=self.reg_factor, width=8).pack(side="left", pady=5)
-        # Novo: Zoom
-        ttk.Label(reg_frame, text="Zoom:").pack(side="left", padx=10)
-        ttk.Spinbox(reg_frame, from_=1, to=10, textvariable=self.zoom_factor, width=4).pack(side="left", pady=5)
-
-        ttk.Checkbutton(input_frame, text="Usar Escala Logarítmica (Visualização)", variable=self.use_log_scale).grid(row=5, column=0, columnspan=3, sticky="w", padx=5, pady=5)
+        ttk.Label(input_frame, text="Intervalo (s):").grid(row=0, column=2, sticky="w", padx=5)
+        self.intervalo_min = tk.DoubleVar(value=0.5)
+        self.intervalo_max = tk.DoubleVar(value=2.0)
+        ttk.Entry(input_frame, textvariable=self.intervalo_min, width=5).grid(row=0, column=3, sticky="w")
+        ttk.Label(input_frame, text="a").grid(row=0, column=4, sticky="w")
+        ttk.Entry(input_frame, textvariable=self.intervalo_max, width=5).grid(row=0, column=5, sticky="w")
 
         action_frame = ttk.Frame(main_frame); action_frame.pack(pady=10)
-        self.run_button = ttk.Button(action_frame, text="Iniciar Reconstrução", command=self.start_reconstruction_thread)
+        self.run_button = ttk.Button(action_frame, text="Iniciar Execução Automática", command=self.start_auto_thread)
         self.run_button.pack(side="left", padx=5)
         self.plot_button = ttk.Button(action_frame, text="Plotar Resultado", command=self.plot_result, state="disabled")
         self.plot_button.pack(side="left", padx=5)
@@ -65,6 +63,37 @@ class ReconstructionClientApp(tk.Tk):
         log_frame.pack(fill="both", expand=True)
         self.log_text = scrolledtext.ScrolledText(log_frame, wrap=tk.WORD, state="disabled")
         self.log_text.pack(fill="both", expand=True)
+
+    def start_auto_thread(self):
+        self.run_button.config(state="disabled")
+        self.plot_button.config(state="disabled")
+        self.log("Iniciando execuções automáticas...")
+        thread = threading.Thread(target=self.run_auto_mode)
+        thread.start()
+
+    def run_auto_mode(self):
+        n = self.n_execucoes.get()
+        intervalo_min = self.intervalo_min.get()
+        intervalo_max = self.intervalo_max.get()
+        for i in range(n):
+            user = random.choice(USUARIOS)
+            modelo = random.choice(MODELOS)
+            # REQUISITO ATENDIDO: Seleciona sinal compatível com o modelo
+            if modelo.lower().endswith('h-1.csv'):  # cobre ambos os nomes
+                sinal = random.choice(SINAIS60)
+            else:
+                sinal = random.choice(SINAIS30)
+            algoritmo = random.choice(["CGNR", "CGNE"])
+            self.username.set(user)
+            self.path_h.set(modelo)
+            self.path_g.set(sinal)
+            self.algorithm.set(algoritmo)
+            self.log(f"[{i+1}/{n}] Usuário: {user} | Modelo: {modelo} | Sinal: {sinal} | Algoritmo: {algoritmo}")
+            self.run_reconstruction(auto=True)
+            if i < n-1:
+                time.sleep(random.uniform(intervalo_min, intervalo_max))
+        self.run_button.config(state="normal")
+        self.log("Execução automática finalizada.")
 
     def log(self, message):
         logging.info(message); self.log_text.config(state="normal")
@@ -83,7 +112,7 @@ class ReconstructionClientApp(tk.Tk):
         self.run_button.config(state="disabled"); self.plot_button.config(state="disabled")
         self.log("Iniciando processo de reconstrução..."); thread = threading.Thread(target=self.run_reconstruction); thread.start()
         
-    def run_reconstruction(self):
+    def run_reconstruction(self, auto=False):
         try:
             user, algo, path_h, path_g = self.username.get(), self.algorithm.get(), self.path_h.get(), self.path_g.get()
             if not all([user, algo, path_h, path_g]):
@@ -174,7 +203,8 @@ class ReconstructionClientApp(tk.Tk):
         except Exception as e:
             self.log(f"ERRO INESPERADO: {e}")
         finally:
-            self.run_button.config(state="normal")
+            if not auto:
+                self.run_button.config(state="normal")
 
     def process_image_for_display(self, data_vector):
         if self.use_log_scale.get(): self.log("Aplicando escala logarítmica."); return np.log1p(np.abs(data_vector))
