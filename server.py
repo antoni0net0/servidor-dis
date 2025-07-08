@@ -17,6 +17,9 @@ from algoritmos import *
 app = Flask(__name__)
 batch_status_dict = {}
 
+# Fila de prioridade para jobs batch
+batch_priority_queue = queue.PriorityQueue()
+
 @app.route('/batch_reconstruct', methods=['POST'])
 def batch_reconstruct():
     """
@@ -31,10 +34,12 @@ def batch_reconstruct():
     os.makedirs("outputs", exist_ok=True)
     ids = []
 
+
     for job in jobs:
         # Gera um id único para cada job
         job_id = f"job_{int(time.time()*1000)}_{random.randint(1000,9999)}"
         ids.append(job_id)
+
         def process_job(job=job, job_id=job_id):
             try:
                 user = job.get('user', 'anon')
@@ -105,7 +110,20 @@ def batch_reconstruct():
                 logging.info(f"[BATCH] Job {job_id} salvo em {output_path} e metadados em memória.")
             except Exception as e:
                 logging.error(f"[BATCH] Erro no job {job_id}: {e}")
-        request_queue.put((process_job, [], {}))
+
+        # Define prioridade: menor valor = maior prioridade
+        # matriz H-2 + CGNE = prioridade 0
+        # matriz H-2 ou CGNE = prioridade 1
+        # outros = prioridade 2
+        model_name = os.path.basename(job.get('model_path', '')).lower()
+        alg_name = job.get('algorithm', '').upper()
+        if 'h-2' in model_name and alg_name == 'CGNE':
+            priority = 0
+        elif 'h-2' in model_name or alg_name == 'CGNE':
+            priority = 1
+        else:
+            priority = 2
+        batch_priority_queue.put((priority, time.time(), process_job, [], {}))
 
     # Retorna resposta imediatamente após enfileirar os jobs
     return jsonify({
@@ -113,6 +131,30 @@ def batch_reconstruct():
         "job_ids": ids,
         "msg": "As imagens serão processadas e salvas em 'outputs/'."
     }), 202
+    
+@app.route('/download_image', methods=['GET'])
+def download_image():
+    """
+    Permite ao cliente baixar a imagem reconstruída de um job pelo job_id.
+    O cliente deve consultar /batch_status até o job estar pronto, depois chamar este endpoint.
+    Exemplo: GET /download_image?job_id=job_1234
+    """
+    job_id = request.args.get('job_id')
+    if not job_id:
+        return jsonify({"error": "Forneça o parâmetro job_id na query."}), 400
+    job_info = batch_status_dict.get(job_id)
+    if not job_info:
+        return jsonify({"error": "Job não encontrado ou ainda não processado."}), 404
+    image_name = job_info.get("imagem")
+    if not image_name:
+        return jsonify({"error": "Imagem não disponível para este job."}), 404
+    image_path = os.path.join("outputs", image_name)
+    if not os.path.isfile(image_path):
+        return jsonify({"error": "Arquivo de imagem não encontrado."}), 404
+    try:
+        return send_file(image_path, mimetype='image/png', download_name=image_name)
+    except Exception as e:
+        return jsonify({"error": f"Erro ao enviar imagem: {str(e)}"}), 500
 
 # Endpoint para consultar status dos jobs batch
 @app.route('/batch_status', methods=['GET'])
@@ -144,10 +186,25 @@ modelos = {}
 CPU_LIMIT = 95.0  
 MEM_LIMIT = 95.0 
 
-# Fila para requisições pendentes
+
+# Fila para requisições pendentes (reconstrução individual)
 request_queue = queue.Queue()
 
-# Função worker para processar a fila
+
+# Função worker para processar a fila de prioridade dos jobs batch
+def process_batch_priority_queue_worker():
+    while True:
+        item = batch_priority_queue.get()
+        if item is None:
+            break
+        _, _, func, args, kwargs = item
+        try:
+            func(*args, **kwargs)
+        except Exception as e:
+            logging.error(f"Erro no processamento da fila batch: {e}")
+        batch_priority_queue.task_done()
+
+# Função worker para processar a fila de requisições individuais
 def process_queue_worker():
     while True:
         item = request_queue.get()
@@ -160,9 +217,11 @@ def process_queue_worker():
             logging.error(f"Erro no processamento da fila: {e}")
         request_queue.task_done()
 
-# Inicia o worker da fila
+# Inicia os workers das filas
 worker_thread = threading.Thread(target=process_queue_worker, daemon=True)
 worker_thread.start()
+batch_worker_thread = threading.Thread(target=process_batch_priority_queue_worker, daemon=True)
+batch_worker_thread.start()
 
 @app.route('/reconstruct', methods=['POST'])
 def handle_reconstruction():
