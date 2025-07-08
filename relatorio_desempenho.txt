@@ -1,0 +1,5 @@
+2025-07-08 19:20:24 | Usuario: Alice | Algoritmo: CGNR | CPU: 21.2% | MEM: 76.1% | Tempo: 34.54s
+2025-07-08 19:20:48 | Usuario: Murilo | Algoritmo: CGNE | CPU: 97.6% | MEM: 77.9% | Tempo: 39.7s
+2025-07-08 19:20:55 | Usuario: Ana | Algoritmo: CGNR | CPU: 38.1% | MEM: 81.2% | Tempo: 2.14s
+2025-07-08 19:21:27 | Usuario: Murilo | Algoritmo: CGNE | CPU: 100.0% | MEM: 75.3% | Tempo: 33.5s
+2025-07-08 19:22:03 | Usuario: Eduarda | Algoritmo: CGNE | CPU: 30.8% | MEM: 79.7% | Tempo: 33.18s

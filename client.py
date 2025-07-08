@@ -25,7 +25,7 @@ class ReconstructionClientApp(tk.Tk):
     def __init__(self):
         super().__init__()
         self.title("Cliente de Reconstrução de Imagem v2.6")
-        self.geometry("700x680")
+        self.geometry("700x700")
 
         # Variáveis de estado
         self.last_result_data, self.last_algorithm_used = None, None
@@ -58,6 +58,7 @@ class ReconstructionClientApp(tk.Tk):
         self.run_button.pack(side="left", padx=5)
         self.plot_button = ttk.Button(action_frame, text="Plotar Resultado", command=self.plot_result, state="disabled")
         self.plot_button.pack(side="left", padx=5)
+
 
         log_frame = ttk.LabelFrame(main_frame, text="Log de Execução e Resultados", padding="10")
         log_frame.pack(fill="both", expand=True)
@@ -113,7 +114,7 @@ class ReconstructionClientApp(tk.Tk):
 
     def poll_batch_status(self, job_ids, interval=2, max_wait=300):
         """
-        Consulta periodicamente o status dos jobs batch e exibe os resultados no log.
+        Consulta periodicamente o status dos jobs batch, exibe os resultados no log e salva nos relatórios.
         """
         import time
         import requests
@@ -133,6 +134,16 @@ class ReconstructionClientApp(tk.Tk):
                             for k, v in info.items():
                                 self.log(f"{k:<12}: {v}")
                             self.log(f"Diretório da imagem: outputs/{info.get('imagem','')}\n")
+                            # Salva nos relatórios
+                            try:
+                                # relatorio_imagens.txt
+                                with open("relatorio_imagens.txt", "a", encoding="utf-8") as fimg:
+                                    fimg.write(f"{datetime.now().strftime('%Y-%m-%d %H:%M:%S')} | Imagem: outputs/{info.get('imagem','')} | Usuario: {info.get('usuario','')} | Iteracoes: {info.get('iteracoes','')} | Tempo: {info.get('tempo','')}s\n")
+                                # relatorio_desempenho.txt
+                                with open("relatorio_desempenho.txt", "a", encoding="utf-8") as fdes:
+                                    fdes.write(f"{datetime.now().strftime('%Y-%m-%d %H:%M:%S')} | Usuario: {info.get('usuario','')} | Algoritmo: {info.get('algoritmo','')} | CPU: {info.get('cpu','')}% | MEM: {info.get('mem','')}% | Tempo: {info.get('tempo','')}s\n")
+                            except Exception as e:
+                                self.log(f"[ERRO] Falha ao salvar relatórios batch: {e}")
                             jobs_exibidos.add(jid)
                     jobs_pendentes = jobs_pendentes - jobs_exibidos
                 else:
@@ -245,18 +256,14 @@ class ReconstructionClientApp(tk.Tk):
 
             # Salva relatórios na pasta relatorios/
             try:
-                os.makedirs("relatorios", exist_ok=True)
-                with open(os.path.join("relatorios", "relatorio_desempenho.txt"), "a", encoding="utf-8") as f:
+                # Relatório de desempenho (CPU/MEM/TEMPO) -> relatorio_desempenho.txt
+                with open("relatorio_desempenho.txt", "a", encoding="utf-8") as f:
                     f.write(f"{datetime.now().strftime('%Y-%m-%d %H:%M:%S')} | Usuario: {metadados.get('X-Usuario','')} | Algoritmo: {metadados.get('X-Algoritmo','')} | CPU: {metadados.get('X-Cpu','')}% | MEM: {metadados.get('X-Mem','')}% | Tempo: {metadados.get('X-Tempo','')}s\n")
+                # Relatório de imagens reconstruídas -> relatorio_imagens.txt
+                with open("relatorio_imagens.txt", "a", encoding="utf-8") as f:
+                    f.write(f"{datetime.now().strftime('%Y-%m-%d %H:%M:%S')} | Imagem: {output_filename} | Usuario: {metadados.get('X-Usuario','')} | Iteracoes: {metadados.get('X-Iteracoes','')} | Tempo: {metadados.get('X-Tempo','')}s\n")
             except Exception as e:
-                self.log(f"[ERRO] Falha ao salvar relatorios/relatorio_desempenho.txt: {e}")
-
-            try:
-                os.makedirs("relatorios", exist_ok=True)
-                with open(os.path.join("relatorios", "relatorio_imagens.txt"), "a", encoding="utf-8") as f:
-                    f.write(f"{datetime.now().strftime('%Y-%m-%d %H:%M:%S')} | Arquivo: {output_filename} | Usuario: {metadados.get('X-Usuario','')} | Algoritmo: {metadados.get('X-Algoritmo','')} | Iteracoes: {metadados.get('X-Iteracoes','')} | Tempo: {metadados.get('X-Tempo','')}s | Tamanho: {metadados.get('X-Tamanho','')}\n")
-            except Exception as e:
-                self.log(f"[ERRO] Falha ao salvar relatorios/relatorio_imagens.txt: {e}")
+                self.log(f"[ERRO] Falha ao salvar relatórios: {e}")
 
             self.last_result_data = None
             self.last_algorithm_used = algo
@@ -268,6 +275,8 @@ class ReconstructionClientApp(tk.Tk):
         finally:
             if not auto:
                 self.run_button.config(state="normal")
+
+
 
     def process_image_for_display(self, data_vector):
         if self.use_log_scale.get(): self.log("Aplicando escala logarítmica."); return np.log1p(np.abs(data_vector))

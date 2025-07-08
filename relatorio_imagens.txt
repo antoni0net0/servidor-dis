@@ -1,0 +1,5 @@
+2025-07-08 19:20:24 | Imagem: outputs/job_1752013142209_5526_Alice_CGNR_H-1.csv_G-2.csv.png | Usuario: Alice | Iteracoes: 5 | Tempo: 34.54s
+2025-07-08 19:20:48 | Imagem: outputs/job_1752013142209_4178_Murilo_CGNE_H-1.csv_A-60x60-1.csv.png | Usuario: Murilo | Iteracoes: 5 | Tempo: 39.7s
+2025-07-08 19:20:55 | Imagem: outputs/job_1752013142209_3562_Ana_CGNR_H-2.csv_g-30x30-1.csv.png | Usuario: Ana | Iteracoes: 5 | Tempo: 2.14s
+2025-07-08 19:21:27 | Imagem: outputs/job_1752013142209_4953_Murilo_CGNE_H-1.csv_G-1.csv.png | Usuario: Murilo | Iteracoes: 5 | Tempo: 33.5s
+2025-07-08 19:22:03 | Imagem: outputs/job_1752013142209_6202_Eduarda_CGNE_H-1.csv_A-60x60-1.csv.png | Usuario: Eduarda | Iteracoes: 5 | Tempo: 33.18s
