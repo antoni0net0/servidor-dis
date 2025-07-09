@@ -136,9 +136,18 @@ class ReconstructionClientApp(tk.Tk):
                             self.log(f"Diretório da imagem: outputs/{info.get('imagem','')}\n")
                             # Salva nos relatórios
                             try:
-                                # relatorio_imagens.txt
+                                # relatorio_imagens.txt (com todos os requisitos)
                                 with open("relatorio_imagens.txt", "a", encoding="utf-8") as fimg:
-                                    fimg.write(f"{datetime.now().strftime('%Y-%m-%d %H:%M:%S')} | Imagem: outputs/{info.get('imagem','')} | Usuario: {info.get('usuario','')} | Iteracoes: {info.get('iteracoes','')} | Tempo: {info.get('tempo','')}s\n")
+                                    fimg.write(
+                                        f"{datetime.now().strftime('%Y-%m-%d %H:%M:%S')} | "
+                                        f"Imagem: outputs/{info.get('imagem','')} | "
+                                        f"Usuario: {info.get('usuario','')} | "
+                                        f"Algoritmo: {info.get('algoritmo','')} | "
+                                        f"Inicio: {info.get('inicio','')} | "
+                                        f"Fim: {info.get('fim','')} | "
+                                        f"Tamanho: {info.get('tamanho','')} | "
+                                        f"Iteracoes: {info.get('iteracoes','')}\n"
+                                    )
                                 # relatorio_desempenho.txt
                                 with open("relatorio_desempenho.txt", "a", encoding="utf-8") as fdes:
                                     fdes.write(f"{datetime.now().strftime('%Y-%m-%d %H:%M:%S')} | Usuario: {info.get('usuario','')} | Algoritmo: {info.get('algoritmo','')} | CPU: {info.get('cpu','')}% | MEM: {info.get('mem','')}% | Tempo: {info.get('tempo','')}s\n")
@@ -255,13 +264,25 @@ class ReconstructionClientApp(tk.Tk):
                     self.log(f"[ERRO] Falha ao exibir relatório popup: {e}")
 
             # Salva relatórios na pasta relatorios/
+
             try:
                 # Relatório de desempenho (CPU/MEM/TEMPO) -> relatorio_desempenho.txt
                 with open("relatorio_desempenho.txt", "a", encoding="utf-8") as f:
                     f.write(f"{datetime.now().strftime('%Y-%m-%d %H:%M:%S')} | Usuario: {metadados.get('X-Usuario','')} | Algoritmo: {metadados.get('X-Algoritmo','')} | CPU: {metadados.get('X-Cpu','')}% | MEM: {metadados.get('X-Mem','')}% | Tempo: {metadados.get('X-Tempo','')}s\n")
+
                 # Relatório de imagens reconstruídas -> relatorio_imagens.txt
+                # Inclui todos os dados obrigatórios
                 with open("relatorio_imagens.txt", "a", encoding="utf-8") as f:
-                    f.write(f"{datetime.now().strftime('%Y-%m-%d %H:%M:%S')} | Imagem: {output_filename} | Usuario: {metadados.get('X-Usuario','')} | Iteracoes: {metadados.get('X-Iteracoes','')} | Tempo: {metadados.get('X-Tempo','')}s\n")
+                    f.write(
+                        f"{datetime.now().strftime('%Y-%m-%d %H:%M:%S')} | "
+                        f"Imagem: {output_filename} | "
+                        f"Usuario: {metadados.get('X-Usuario','')} | "
+                        f"Algoritmo: {metadados.get('X-Algoritmo','')} | "
+                        f"Inicio: {metadados.get('X-Inicio','')} | "
+                        f"Fim: {metadados.get('X-Fim','')} | "
+                        f"Tamanho: {metadados.get('X-Tamanho','')} | "
+                        f"Iteracoes: {metadados.get('X-Iteracoes','')}\n"
+                    )
             except Exception as e:
                 self.log(f"[ERRO] Falha ao salvar relatórios: {e}")
 

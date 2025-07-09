@@ -54,3 +54,10 @@
 2025-07-08 21:32:51 | Usuario: Eduarda | Algoritmo: CGNR | CPU: 20.8% | MEM: 72.2% | Tempo: 19.46s
 2025-07-08 21:33:14 | Usuario: Leonardo | Algoritmo: CGNR | CPU: 37.1% | MEM: 78.8% | Tempo: 22.74s
 2025-07-08 21:33:38 | Usuario: José | Algoritmo: CGNR | CPU: 19.0% | MEM: 75.8% | Tempo: 22.94s
+2025-07-08 21:39:15 | Usuario: Lucas | Algoritmo: CGNE | CPU: 14.3% | MEM: 88.5% | Tempo: 2.27s
+2025-07-08 21:40:00 | Usuario: Alice | Algoritmo: CGNE | CPU: 37.1% | MEM: 74.3% | Tempo: 25.39s
+2025-07-08 21:40:29 | Usuario: Leonardo | Algoritmo: CGNE | CPU: 50.5% | MEM: 74.7% | Tempo: 28.33s
+2025-07-08 21:40:54 | Usuario: Carol | Algoritmo: CGNR | CPU: 100.0% | MEM: 74.2% | Tempo: 22.95s
+2025-07-08 21:41:39 | Usuario: Murilo | Algoritmo: CGNE | CPU: 17.3% | MEM: 75.1% | Tempo: 2.33s
+2025-07-08 21:41:41 | Usuario: Murilo | Algoritmo: CGNR | CPU: 42.5% | MEM: 75.7% | Tempo: 3.29s
+2025-07-08 21:41:43 | Usuario: Eduarda | Algoritmo: CGNR | CPU: 45.3% | MEM: 76.3% | Tempo: 2.18s
