@@ -24,3 +24,8 @@
 2025-07-08 21:09:57 | Usuario: José | Algoritmo: CGNR | CPU: 15.4% | MEM: 85.6% | Tempo: 2.1s
 2025-07-08 21:10:34 | Usuario: Carol | Algoritmo: CGNR | CPU: 15.4% | MEM: 69.0% | Tempo: 18.59s
 2025-07-08 21:10:50 | Usuario: Ana | Algoritmo: CGNR | CPU: 18.2% | MEM: 73.0% | Tempo: 16.68s
+2025-07-08 21:17:23 | Usuario: Murilo | Algoritmo: CGNE | CPU: 11.4% | MEM: 83.4% | Tempo: 1.94s
+2025-07-08 21:18:08 | Usuario: Daniel | Algoritmo: CGNE | CPU: 100.0% | MEM: 72.5% | Tempo: 25.81s
+2025-07-08 21:18:11 | Usuario: Daniel | Algoritmo: CGNR | CPU: 26.7% | MEM: 75.4% | Tempo: 2.85s
+2025-07-08 21:18:13 | Usuario: Leonardo | Algoritmo: CGNR | CPU: 18.3% | MEM: 75.9% | Tempo: 1.93s
+2025-07-08 21:18:37 | Usuario: Ana | Algoritmo: CGNR | CPU: 35.8% | MEM: 71.7% | Tempo: 22.57s

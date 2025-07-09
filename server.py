@@ -89,9 +89,15 @@ def batch_reconstruct():
                 lado = int(np.sqrt(len(f_norm)))
                 imagem_array = f_norm[:lado*lado].reshape((lado, lado), order='F')
                 imagem_array = np.clip(imagem_array, 0, 255)
-                imagem = Image.fromarray(imagem_array.astype('uint8'))
+                # Salva usando matplotlib
+                import matplotlib.pyplot as plt
                 output_path = os.path.join("outputs", f"{job_id}_{user}_{algorithm}_{os.path.basename(model_path)}_{os.path.basename(signal_path)}.png")
-                imagem.save(output_path)
+                plt.figure(figsize=(6,6))
+                plt.imshow(imagem_array, cmap="gray")
+                plt.axis("off")
+                plt.tight_layout(pad=0)
+                plt.savefig(output_path, bbox_inches='tight', pad_inches=0)
+                plt.close()
                 mem = psutil.virtual_memory()
                 cpu = psutil.cpu_percent(interval=0.2)
                 # Salva metadados em memória para consulta pelo cliente
