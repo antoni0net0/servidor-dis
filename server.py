@@ -117,18 +117,21 @@ def batch_reconstruct():
             except Exception as e:
                 logging.error(f"[BATCH] Erro no job {job_id}: {e}")
 
-        # Define prioridade: menor valor = maior prioridade
-        # matriz H-2 + CGNE = prioridade 0
-        # matriz H-2 ou CGNE = prioridade 1
-        # outros = prioridade 2
+        # Nova prioridade:
+        # 0: h-2 (qualquer algoritmo)
+        # 1: h-1 + CGNE
+        # 2: outros
         model_name = os.path.basename(job.get('model_path', '')).lower()
         alg_name = job.get('algorithm', '').upper()
-        if 'h-2' in model_name and alg_name == 'CGNE':
-            priority = 0
-        elif 'h-2' in model_name or alg_name == 'CGNE':
-            priority = 1
-        else:
+        if 'h-2' in model_name:
+            if alg_name == 'CGNE':
+                priority = 0
+            else:
+                priority = 1
+        elif 'h-1' in model_name and alg_name == 'CGNE':
             priority = 2
+        else:
+            priority = 3
         batch_priority_queue.put((priority, time.time(), process_job, [], {}))
 
     # Retorna resposta imediatamente após enfileirar os jobs
