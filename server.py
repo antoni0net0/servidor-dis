@@ -182,9 +182,22 @@ semaforo_processos = threading.Semaphore(5)
 # Cache de modelos
 modelos = {}
 
-# Limites dinâmicos de uso de recursos
-CPU_LIMIT = 95.0  
-MEM_LIMIT = 95.0 
+
+# Funções para limites dinâmicos de uso de recursos
+def get_dynamic_cpu_limit():
+    # Limite: 80% dos núcleos lógicos
+    n_cores = psutil.cpu_count(logical=True)
+    return max(50.0, min(90.0, n_cores * 80.0 / n_cores))  # 80% (ajustável)
+
+def get_dynamic_mem_limit():
+    # Limite: 80% da RAM total, mas sempre deixa pelo menos 1GB livre
+    mem = psutil.virtual_memory()
+    total_gb = mem.total / (1024**3)
+    if total_gb <= 2:
+        return 70.0  # Em PCs com pouca RAM, seja mais conservador
+    # 80% do total, mas nunca usar mais que total-1GB
+    max_percent = 100.0 - (1.0 / total_gb) * 100.0
+    return min(80.0, max_percent)
 
 
 # Fila para requisições pendentes (reconstrução individual)
@@ -337,17 +350,20 @@ def handle_reconstruction():
                     return jsonify({'error': f'Erro interno: {str(e)}'}), 500
 
     # Checagem dinâmica de recursos antes de aceitar a requisição
+
+    cpu_limit = get_dynamic_cpu_limit()
+    mem_limit = get_dynamic_mem_limit()
     cpu_percent = psutil.cpu_percent(interval=0.5)
     mem_percent = psutil.virtual_memory().percent
-    if cpu_percent > CPU_LIMIT or mem_percent > MEM_LIMIT:
-        logging.warning(f"Recursos insuficientes: CPU={cpu_percent:.1f}%, MEM={mem_percent:.1f}% (limites: {CPU_LIMIT}%, {MEM_LIMIT}%) - Requisição será enfileirada.")
+    if cpu_percent > cpu_limit or mem_percent > mem_limit:
+        logging.warning(f"Recursos insuficientes: CPU={cpu_percent:.1f}%, MEM={mem_percent:.1f}% (limites dinâmicos: CPU={cpu_limit:.1f}%, MEM={mem_limit:.1f}%) - Requisição será enfileirada.")
         # Enfileira a requisição para ser processada depois
         def delayed_response():
             # Aguarda até recursos ficarem disponíveis
             while True:
                 cpu = psutil.cpu_percent(interval=0.5)
                 mem = psutil.virtual_memory().percent
-                if cpu <= CPU_LIMIT and mem <= MEM_LIMIT:
+                if cpu <= cpu_limit and mem <= mem_limit:
                     break
                 time.sleep(1)
             # Processa normalmente

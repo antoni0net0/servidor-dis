@@ -19,3 +19,8 @@
 2025-07-08 19:56:17 | Imagem: outputs/job_1752015282827_9688_Daniel_CGNE_H-1.csv_G-1.csv.png | Usuario: Daniel | Iteracoes: 5 | Tempo: 23.99s
 2025-07-08 19:56:20 | Imagem: outputs/job_1752015284571_7652_Alice_CGNR_H-2.csv_A-30x30-1.csv.png | Usuario: Alice | Iteracoes: 5 | Tempo: 3.23s
 2025-07-08 19:56:49 | Imagem: outputs/job_1752015284571_3085_Eduarda_CGNE_H-1.csv_G-2.csv.png | Usuario: Eduarda | Iteracoes: 5 | Tempo: 27.55s
+2025-07-08 21:09:52 | Imagem: outputs/job_1752019780912_9235_Ana_CGNE_H-2.csv_g-30x30-1.csv.png | Usuario: Ana | Iteracoes: 5 | Tempo: 2.22s
+2025-07-08 21:09:55 | Imagem: outputs/job_1752019780912_8153_Leonardo_CGNE_H-2.csv_g-30x30-1.csv.png | Usuario: Leonardo | Iteracoes: 5 | Tempo: 2.58s
+2025-07-08 21:09:57 | Imagem: outputs/job_1752019780912_3959_José_CGNR_H-2.csv_A-30x30-1.csv.png | Usuario: José | Iteracoes: 5 | Tempo: 2.1s
+2025-07-08 21:10:34 | Imagem: outputs/job_1752019780912_6654_Carol_CGNR_H-1.csv_A-60x60-1.csv.png | Usuario: Carol | Iteracoes: 5 | Tempo: 18.59s
+2025-07-08 21:10:50 | Imagem: outputs/job_1752019780912_7344_Ana_CGNR_H-1.csv_A-60x60-1.csv.png | Usuario: Ana | Iteracoes: 5 | Tempo: 16.68s
